@@ -1,24 +1,43 @@
-import logo from './logo.svg';
 import './App.css';
-
+import { Route, Routes } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
+import Loading from "./Loading.js"
+import { ProtectedRoute } from './ProtectedRoute';
+import Home from "./components/public/Home.js"
+import About from "./components/public/About.js"
+import GetStarted from './components/public/GetStarted';
+import MyAccount from './components/private/MyAccount';
+import Card from './components/public/Card';
+import SignUp from './components/private/SignUp';
+import Approved from './components/private/Approved';
+import Denied from './components/private/Denied';
+import NotFoundPage from './components/public/PageNotFound';
 function App() {
+
+  const { isLoading } = useAuth0();
+
+  if (isLoading) {
+    return <Loading />;
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Routes>
+      <Route path="/myaccount" element={
+        <ProtectedRoute component={MyAccount} />
+      } />
+      <Route path="/approved" element={
+        <ProtectedRoute component={Approved} />
+      } />
+      <Route path="/signup" element={
+        <ProtectedRoute component={SignUp} />
+      } />
+      <Route path="/card" element={<Card/>}/>
+      <Route path="/denied" element={<Denied/>}/>
+      <Route path="/get_started" element={<GetStarted />} />
+      <Route path="/about" element={<About />} />
+      <Route path="/" element={<Home />} />
+      <Route path="*" element={<NotFoundPage/>} />
+    </Routes>
   );
 }
 

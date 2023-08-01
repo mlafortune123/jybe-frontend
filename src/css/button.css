@@ -1,0 +1,152 @@
+.intro-text {
+    width: 80%;
+    margin-bottom: 35px;
+    margin-left: auto;
+    margin-right: auto;
+  }
+
+  .intro-header {
+    height: 620px;
+    color: #fff;
+    background-color: #f4f4f4;
+    background-image: linear-gradient(#216ad9, #fff);
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 100px;
+    display: flex;
+  }
+
+  .intro-content {
+    width: 70%;
+    max-width: 1140px;
+    text-align: center;
+  }
+  
+  .intro-content.cc-homepage {
+    margin-bottom: 20px;
+  }
+
+  .heading-jumbo {
+    font-size: 56px;
+    line-height: 70px;
+  }
+
+.button {
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    justify-content: center;
+    background-color: teal;
+    color: white;
+    padding: 8px 16px;
+    border-radius: 4px;
+    text-decoration: none;
+    width:70%;
+    text-align: center;
+    height: 55px;
+  }
+
+  .rich-text {
+    width: 90%;
+    max-width: 470px;
+    text-align: left;
+  }
+
+  .heading-jumbo {
+    font-size: 50px;
+    line-height: 64px;
+  }
+
+  .heading-jumbo-small {
+    font-size: 50px;
+    line-height: 52px;
+  }
+  .container {
+    width: 80%;
+    max-width: 1140px;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+}
+
+.divider {
+    height: 1px;
+    background-color: #eee;
+}
+
+.section {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+  .section.cc-cta {
+    background-color: #f4f4f4;
+    padding: 15px;
+  }
+
+  .section.cc-home-wrap, .section.cc-store-home-wrap {
+    margin-left: 15px;
+    margin-right: 15px;
+  }
+
+.flex-center{
+    display: flex;
+    justify-content: center;
+}
+.flex-center-wrap{
+    display: flex;
+    justify-content: center;
+    align-content: center;
+    flex-wrap: wrap;
+}
+
+.how-it-works {
+    margin: 50px;
+    display: flex;
+    text-align: center;
+  }
+
+  .step {
+    border-radius: 8px;
+    flex: 1;
+    background-color: teal;
+    color: white;
+    padding: 20px;
+    margin-right: 10px;
+    text-align: center;
+  }
+  input::placeholder {
+    font-family: 'Montserrat';
+    color: white;
+  }
+  .step:last-child {
+    margin-right: 0;
+  }
+
+  .step-title {
+    font-weight: bold;
+    font-size: 20px;
+    margin-top: 0;
+  }
+
+  .step-description {
+    font-size: 16px;
+    margin-bottom: 0;
+    text-align: center;
+  }
+
+  .savings{
+    display: flex;
+    justify-content: space-around;
+  }
+
+  .blue-text{
+    display: flex;
+    color: blue;
+    margin-left: 50px;
+    margin-right: 50px;
+    width: 300px;
+    text-align: center;
+    align-content: center;
+    flex-wrap: wrap;
+  }
