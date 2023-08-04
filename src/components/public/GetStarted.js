@@ -43,7 +43,7 @@ const GetStarted = () => {
         </div>
         <h1 style={{textAlign:'center'}} >See how much you'd save</h1>
         <div class="savings" >
-          <input class="step" type="number" value={inputValue} onChange={handleChange} placeholder="Insert $$$ here" style={{ color: 'white' }}/>
+          <input class="step" type="number" value={inputValue} onChange={handleChange} placeholder="Insert $$$ here" style={{ color: 'white', border:'none' }}/>
           <span class="step" >Your monthly cost would be ${result || '...'}</span>
           <a class="step step-description" href="/signup">Continue</a>
         </div>

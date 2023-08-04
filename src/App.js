@@ -12,6 +12,7 @@ import SignUp from './components/private/SignUp';
 import Approved from './components/private/Approved';
 import Denied from './components/private/Denied';
 import NotFoundPage from './components/public/PageNotFound';
+import Contact from './components/public/Contact';
 function App() {
 
   const { isLoading } = useAuth0();
@@ -31,6 +32,7 @@ function App() {
       <Route path="/signup" element={
         <ProtectedRoute component={SignUp} />
       } />
+      <Route path="/contact" element={<Contact/>}/>
       <Route path="/card" element={<Card/>}/>
       <Route path="/denied" element={<Denied/>}/>
       <Route path="/get_started" element={<GetStarted />} />
