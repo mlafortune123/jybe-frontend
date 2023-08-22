@@ -1,29 +1,44 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { Grid, TextField, Button } from '@mui/material';
 import TopBar from "../TopBar";
+import Select from 'react-select';
 import FlinksConnect from "../private/FlinksConnect";
 import { AccountContext } from '../../ProtectedRoute';
 const API_URL = process.env.REACT_APP_API_URL
 const SignUpForm = () => {
     const context = useContext(AccountContext);
     const {accountContext, setAccountContext, user, accessToken, navigate } = context
+    const [selectedProvince, setSelectedProvince] = useState('ON');
+    const provinceOptions = [
+      { value: 'AB', label: 'Alberta' },
+      { value: 'BC', label: 'British Columbia' },
+      { value: 'MB', label: 'Manitoba' },
+      { value: 'NB', label: 'New Brunswick' },
+      { value: 'NL', label: 'Newfoundland and Labrador' },
+      { value: 'NS', label: 'Nova Scotia' },
+      { value: 'NT', label: 'Northwest Territories' },
+      { value: 'NU', label: 'Nunavut' },
+      { value: 'ON', label: 'Ontario' },
+      { value: 'PE', label: 'Prince Edward Island' },
+      { value: 'QC', label: 'Quebec' },
+      { value: 'SK', label: 'Saskatchewan' },
+      { value: 'YT', label: 'Yukon' }
+    ];
     const [formData, setFormData] = useState({
-        firstName: '',
-        lastName: '',
-        address: '',
-        zip: '',
-        phone: '',
-        dob: '',
-        country: '',
-        city: '',
-        cost: 99,
+        firstName: 'Taylor',
+        lastName: 'Nyon',
+        address: '1066 Heenan Terr',
+        zip: 'N2A4C9',
+        phone: '1231231234',
+        dob: '1976-03-13',
+        country: 'Canada',
+        city: 'Kitchener',
+        cost: 100,
         merchant_url:'',
-        merchant_name:'',
-        email: user.email
+        merchant_name:''
     });
 
     useEffect(() => {
-        console.log(accessToken)
         accessToken && fetch(`${API_URL}/users/get`, {
             method : "GET",
             headers:{
@@ -47,16 +62,34 @@ const SignUpForm = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setFormData({...formData, 'email':user.email})
+    if (
+      !formData.firstName ||
+      !formData.lastName ||
+      !formData.address ||
+      !formData.zip ||
+      !formData.phone ||
+      !formData.dob ||
+      !formData.country ||
+      !formData.city ||
+      !formData.merchant_url ||
+      !formData.merchant_name
+    ) {
+      window.alert('Please fill out all required fields.');
+      return; // Stop further execution
+    }
+    setFormData({...formData})
     fetch(`${API_URL}/users/create`, {
         method:'POST',
         headers:{
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${accessToken}`
         },
-        body: JSON.stringify({formData})
+        body: JSON.stringify({...formData, 'email':user.email, province: selectedProvince.value})
     })
-    .then(response => response.json())
+    .then(response => {
+      if (response.status == 401) window.location.reload()
+      return response.json()
+    })
     .then(res => {
         if (res.error) {
             window.alert(res.error)
@@ -66,13 +99,6 @@ const SignUpForm = () => {
             res.approved ? navigate("/approved") : navigate("/denied")
         }
     })
-    // setFormData({
-    //   firstName: '',
-    //   lastName: '',
-    //   address: '',
-    //   zipCode: '',
-    //   phone: '',
-    // });
   };
 
   return (
@@ -115,6 +141,15 @@ const SignUpForm = () => {
             </Grid>
             <Grid item xs={12}>
               <TextField
+                label="Zip Code"
+                fullWidth
+                name="zip"
+                value={formData.zip}
+                onChange={handleChange}
+              />
+            </Grid>
+            <Grid item xs={12}>
+              <TextField
                 label="City"
                 fullWidth
                 name="city"
@@ -123,12 +158,12 @@ const SignUpForm = () => {
               />
             </Grid>
             <Grid item xs={12}>
-              <TextField
-                label="Zip Code"
-                fullWidth
-                name="zip"
-                value={formData.zip}
-                onChange={handleChange}
+              <Select
+                options={provinceOptions}
+                onChange={(val) => setSelectedProvince(val)}
+                value={selectedProvince}
+                name="province"
+                placeholder="Select a province..."
               />
             </Grid>
             <Grid item xs={12}>

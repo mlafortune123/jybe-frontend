@@ -2,7 +2,7 @@ import React, { createContext, useEffect, useState } from 'react';
 import { useAuth0 } from '@auth0/auth0-react';
 import Loading from './Loading';
 import { useNavigate } from "react-router-dom";
-
+const API_URL = process.env.REACT_APP_API_URL
 export const AccountContext = createContext();
 
 export const ProtectedRoute = ({ component: Component, ...props }) => {
@@ -14,6 +14,20 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     const getToken = async () => {
       const token = await getAccessTokenSilently();
       setAccessToken(token)
+      token && fetch(`${API_URL}/users/get`, {
+        method : "GET",
+        headers:{
+            'Authorization': `Bearer ${token}`
+        }
+    })
+    .then(response => response.json())
+    .then(res => {
+        if (res[0]) {
+            setAccountContext({user:res[0]})
+            window.alert('You appear to already have an account, you will now be redirected to the MyAccount page.')
+            //navigate("/approved")
+        }
+    })
     }
     getToken()
   },[getAccessTokenSilently])

@@ -1,0 +1,589 @@
+.button {
+    align-items: center;
+    display: inline-flex;
+    justify-content: center;
+    overflow: hidden;
+    position: relative;
+  }
+  
+  .button .class {
+    align-self: stretch !important;
+    position: relative !important;
+    width: 20px !important;
+  }
+  
+  .button .class-2 {
+    height: 20px !important;
+    position: relative !important;
+    width: 20px !important;
+  }
+  
+  .button .class-3 {
+    height: 16px !important;
+    position: relative !important;
+    width: 16px !important;
+  }
+  
+  .button .class-4 {
+    height: 24px !important;
+    position: relative !important;
+    width: 24px !important;
+  }
+  
+  .button .add {
+    align-self: stretch !important;
+    position: relative !important;
+    width: 16px !important;
+  }
+  
+  .button .text {
+    position: relative;
+    width: fit-content;
+  }
+  
+  .button.inverted {
+    background-color: #ffffff;
+    box-shadow: 0px 10px 10px #0000001a;
+  }
+  
+  .button.only {
+    border-radius: 12px;
+  }
+  
+  .button.circular {
+    background-color: #1a4ab1;
+    box-shadow: 0px 10px 10px #0000001a;
+  }
+  
+  .button.xl {
+    border-radius: 12px;
+    padding: 13px;
+  }
+  
+  .button.lg {
+    border-radius: 12px;
+  }
+  
+  .button.xs.only {
+    padding: 5px;
+  }
+  
+  .button.right.focus {
+    border: 2px solid;
+    border-color: #000000;
+  }
+  
+  .button.lg.right {
+    padding: 12px 24px;
+  }
+  
+  .button.false.focus {
+    border: 2px solid;
+    border-color: #000000;
+  }
+  
+  .button.right.secondary {
+    gap: 4px;
+  }
+  
+  .button.xs.right {
+    border-radius: 4px;
+  }
+  
+  .button.hover.primary {
+    background-color: #0f337f;
+  }
+  
+  .button.left.sm {
+    border-radius: 8px;
+  }
+  
+  .button.xs.left {
+    border-radius: 4px;
+  }
+  
+  .button.hover.outlined {
+    background-color: var(--neutralswhite);
+    border: 1px solid;
+    border-color: #0f337f;
+  }
+  
+  .button.md.only {
+    padding: 9px;
+  }
+  
+  .button.right.sm {
+    border-radius: 8px;
+  }
+  
+  .button.lg.left {
+    padding: 12px 24px;
+  }
+  
+  .button.sm.secondary {
+    padding: 8px;
+  }
+  
+  .button.lg.only {
+    padding: 9px;
+  }
+  
+  .button.xs.false {
+    border-radius: 4px;
+  }
+  
+  .button.default.primary {
+    background-color: #1a4ab1;
+  }
+  
+  .button.left.md {
+    border-radius: 8px;
+  }
+  
+  .button.lg.false {
+    padding: 12px 24px;
+  }
+  
+  .button.primary.focus {
+    background-color: #0f337f;
+  }
+  
+  .button.sm.circular {
+    padding: 7px;
+  }
+  
+  .button.sm.false {
+    border-radius: 8px;
+  }
+  
+  .button.default.outlined {
+    border: 1px solid;
+    border-color: #1a4ab1;
+  }
+  
+  .button.right.md {
+    border-radius: 8px;
+  }
+  
+  .button.md.false {
+    border-radius: 8px;
+  }
+  
+  .button.left.focus {
+    border: 2px solid;
+    border-color: #000000;
+  }
+  
+  .button.left.secondary {
+    gap: 4px;
+  }
+  
+  .button.sm.inverted {
+    padding: 9px 15px;
+  }
+  
+  .button.xs.false.secondary {
+    padding: 8px;
+  }
+  
+  .button.lg.left.primary {
+    gap: 12px;
+  }
+  
+  .button.xs.default.only {
+    height: 26px;
+  }
+  
+  .button.lg.left.outlined {
+    gap: 12px;
+  }
+  
+  .button.left.sm.primary {
+    gap: 8px;
+    padding: 9px 13px 9px 11px;
+  }
+  
+  .button.xs.left.outlined {
+    gap: 8px;
+    padding: 7px 11px 7px 9px;
+  }
+  
+  .button.xs.right.primary {
+    gap: 8px;
+    padding: 7px 9px 7px 11px;
+  }
+  
+  .button.right.md.primary {
+    gap: 8px;
+    padding: 9px 15px 9px 17px;
+  }
+  
+  .button.right.sm.outlined {
+    gap: 8px;
+    padding: 9px 11px 9px 13px;
+  }
+  
+  .button.right.md.secondary {
+    padding: 8px;
+  }
+  
+  .button.sm.false.primary {
+    padding: 9px 13px;
+  }
+  
+  .button.xs.right.inverted {
+    padding: 7px 13px;
+  }
+  
+  .button.xs.right.outlined {
+    gap: 8px;
+    padding: 7px 9px 7px 11px;
+  }
+  
+  .button.default.false.outlined {
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .button.right.sm.primary {
+    gap: 8px;
+    padding: 9px 11px 9px 13px;
+  }
+  
+  .button.md.false.secondary {
+    padding: 8px;
+  }
+  
+  .button.sm.false.outlined {
+    padding: 9px 13px;
+  }
+  
+  .button.left.md.inverted {
+    padding: 9px 17px;
+  }
+  
+  .button.left.sm.outlined {
+    gap: 8px;
+    padding: 9px 13px 9px 11px;
+  }
+  
+  .button.left.md.secondary {
+    padding: 8px;
+  }
+  
+  .button.lg.right.outlined {
+    gap: 12px;
+  }
+  
+  .button.xs.left.secondary {
+    padding: 8px;
+  }
+  
+  .button.xs.left.primary {
+    gap: 8px;
+    padding: 7px 11px 7px 9px;
+  }
+  
+  .button.right.md.inverted {
+    padding: 9px 17px;
+  }
+  
+  .button.right.md.outlined {
+    gap: 8px;
+    padding: 9px 15px 9px 17px;
+  }
+  
+  .button.xs.left.inverted {
+    padding: 7px 13px;
+  }
+  
+  .button.md.false.outlined {
+    padding: 9px 17px;
+  }
+  
+  .button.md.false.inverted {
+    padding: 9px 17px;
+  }
+  
+  .button.default.false.secondary {
+    box-shadow: var(--shadow-sm);
+  }
+  
+  .button.xs.right.secondary {
+    padding: 8px;
+  }
+  
+  .button.lg.right.primary {
+    gap: 12px;
+  }
+  
+  .button.left.md.outlined {
+    gap: 8px;
+    padding: 9px 17px 9px 15px;
+  }
+  
+  .button.xs.false.inverted {
+    padding: 7px 13px;
+  }
+  
+  .button.xs.false.outlined {
+    padding: 7px 11px;
+  }
+  
+  .button.left.md.primary {
+    gap: 8px;
+    padding: 9px 17px 9px 15px;
+  }
+  
+  .button.md.false.primary {
+    padding: 9px 17px;
+  }
+  
+  .button.xs.false.primary {
+    padding: 7px 11px;
+  }
+  
+  .button.inverted .text {
+    margin-top: -1px;
+  }
+  
+  .button.md .text {
+    font-family: var(--body-text-body-3-med-font-family);
+    font-size: var(--body-text-body-3-med-font-size);
+    font-style: var(--body-text-body-3-med-font-style);
+    font-weight: var(--body-text-body-3-med-font-weight);
+    letter-spacing: var(--body-text-body-3-med-letter-spacing);
+    line-height: var(--body-text-body-3-med-line-height);
+  }
+  
+  .button.sm .text {
+    font-family: var(--body-text-body-4-med-font-family);
+    font-size: var(--body-text-body-4-med-font-size);
+    font-style: var(--body-text-body-4-med-font-style);
+    font-weight: var(--body-text-body-4-med-font-weight);
+    letter-spacing: var(--body-text-body-4-med-letter-spacing);
+    line-height: var(--body-text-body-4-med-line-height);
+  }
+  
+  .button.secondary .text {
+    margin-top: -1px;
+  }
+  
+  .button.focus .text {
+    margin-top: -1px;
+  }
+  
+  .button.lg .text {
+    font-family: var(--body-text-body-2-med-font-family);
+    font-size: var(--body-text-body-2-med-font-size);
+    font-style: var(--body-text-body-2-med-font-style);
+    font-weight: var(--body-text-body-2-med-font-weight);
+    letter-spacing: var(--body-text-body-2-med-letter-spacing);
+    line-height: var(--body-text-body-2-med-line-height);
+  }
+  
+  .button.primary .text {
+    color: var(--defaultwhite);
+    margin-top: -1px;
+  }
+  
+  .button.xs .text {
+    font-family: var(--body-text-body-4-med-font-family);
+    font-size: var(--body-text-body-4-med-font-size);
+    font-style: var(--body-text-body-4-med-font-style);
+    font-weight: var(--body-text-body-4-med-font-weight);
+    letter-spacing: var(--body-text-body-4-med-letter-spacing);
+    line-height: var(--body-text-body-4-med-line-height);
+  }
+  
+  .button.default.secondary .text {
+    color: #1a4ab1;
+  }
+  
+  .button.default.outlined .text {
+    color: #1a4ab1;
+    margin-top: -0.5px;
+  }
+  
+  .button.hover.secondary .text {
+    color: #0f337f;
+  }
+  
+  .button.hover.inverted .text {
+    color: #0f337f;
+  }
+  
+  .button.outlined.focus .text {
+    color: #0f337f;
+  }
+  
+  .button.hover.outlined .text {
+    color: #0f337f;
+    margin-top: -0.5px;
+  }
+  
+  .button.inverted.focus .text {
+    color: #0f337f;
+  }
+  
+  .button.default.inverted .text {
+    color: #1a4ab1;
+  }
+  
+  .button.secondary.focus .text {
+    color: #0f337f;
+  }
+  
+
+  .concrete-component-node {
+    height: 24px;
+    position: relative;
+    width: 24px;
+  }
+  
+  .concrete-component-node .rectangle {
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: var(--neutralsgray-300);
+    border-radius: 4px;
+    height: 20px;
+    left: 2px;
+    position: relative;
+    top: 2px;
+    width: 20px;
+  }
+  
+  .concrete-component-node .state-selected {
+    height: 24px !important;
+    left: 0 !important;
+    position: absolute !important;
+    top: 0 !important;
+    width: 24px !important;
+  }
+
+  .navbar {
+    align-items: center;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    justify-content: center;
+    padding: 0px 240px 16px;
+    position: relative;
+    width: 1920px;
+  }
+  
+  .navbar .frame {
+    align-items: center;
+    align-self: stretch;
+    background-color: #ffffff;
+    border-radius: 0px 0px 16px 16px;
+    box-shadow: 0px 10px 10px #0000001a;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    padding: 16px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .navbar .logo {
+    align-self: stretch;
+    flex: 0 0 auto;
+    position: relative;
+  }
+  
+  .navbar .frame-2 {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    position: relative;
+  }
+  
+  .navbar .design-component-instance-node {
+    flex: 0 0 auto !important;
+  }
+  
+  .navbar .inactive-text-tab-wrapper {
+    align-items: center;
+    border-radius: 8px;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: center;
+    padding: 16px 20px;
+    position: relative;
+  }
+  
+  .navbar .inactive-text-tab {
+    color: var(--neutralsgray-400);
+    font-family: var(--body-text-body-2-med-font-family);
+    font-size: var(--body-text-body-2-med-font-size);
+    font-style: var(--body-text-body-2-med-font-style);
+    font-weight: var(--body-text-body-2-med-font-weight);
+    letter-spacing: var(--body-text-body-2-med-letter-spacing);
+    line-height: var(--body-text-body-2-med-line-height);
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .text-tab-item {
+    align-items: center;
+    border-radius: 8px;
+    display: inline-flex;
+    justify-content: center;
+    padding: 16px 20px;
+    position: relative;
+  }
+  
+  .text-tab-item .instance-node {
+    height: 24px !important;
+    position: relative !important;
+    width: 24px !important;
+  }
+  
+  .text-tab-item .active-text-tab {
+    font-family: var(--body-text-body-2-med-font-family);
+    font-size: var(--body-text-body-2-med-font-size);
+    font-style: var(--body-text-body-2-med-font-style);
+    font-weight: var(--body-text-body-2-med-font-weight);
+    letter-spacing: var(--body-text-body-2-med-letter-spacing);
+    line-height: var(--body-text-body-2-med-line-height);
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+    width: fit-content;
+  }
+  
+  .text-tab-item.icon-right-true {
+    gap: 4px;
+  }
+  
+  .text-tab-item.property-1-default {
+    background-color: #eef3ff;
+  }
+  
+  .text-tab-item.icon-right-false.icon-left-true {
+    gap: 8px;
+  }
+  
+  .text-tab-item.icon-right-false.icon-left-false {
+    gap: 10px;
+  }
+  
+  .text-tab-item.property-1-hover .active-text-tab {
+    color: #1a4ab1;
+  }
+  
+  .text-tab-item.property-1-inactive .active-text-tab {
+    color: var(--neutralsgray-400);
+  }
+  
+  .text-tab-item.property-1-default .active-text-tab {
+    color: #1a4ab1;
+  }
+  
+  .widthten{
+    width: 10%!important;
+  }

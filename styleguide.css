@@ -1,0 +1,37 @@
+:root {
+    --body-text-body-2-med-font-family: "Poppins-Medium", Helvetica;
+    --body-text-body-2-med-font-size: 16px;
+    --body-text-body-2-med-font-style: normal;
+    --body-text-body-2-med-font-weight: 500;
+    --body-text-body-2-med-letter-spacing: 0px;
+    --body-text-body-2-med-line-height: normal;
+    --body-text-body-3-med-font-family: "Poppins-Medium", Helvetica;
+    --body-text-body-3-med-font-size: 14px;
+    --body-text-body-3-med-font-style: normal;
+    --body-text-body-3-med-font-weight: 500;
+    --body-text-body-3-med-letter-spacing: 0px;
+    --body-text-body-3-med-line-height: normal;
+    --body-text-body-4-med-font-family: "Poppins-Medium", Helvetica;
+    --body-text-body-4-med-font-size: 12px;
+    --body-text-body-4-med-font-style: normal;
+    --body-text-body-4-med-font-weight: 500;
+    --body-text-body-4-med-letter-spacing: 0px;
+    --body-text-body-4-med-line-height: normal;
+    --defaultwhite: rgba(255, 255, 255, 1);
+    --headings-subheading-1-font-family: "Poppins-Regular", Helvetica;
+    --headings-subheading-1-font-size: 24px;
+    --headings-subheading-1-font-style: normal;
+    --headings-subheading-1-font-weight: 400;
+    --headings-subheading-1-letter-spacing: 0px;
+    --headings-subheading-1-line-height: normal;
+    --neutralsblack: rgba(0, 0, 0, 1);
+    --neutralsgray-000: rgba(241, 245, 248, 1);
+    --neutralsgray-100: rgba(226, 232, 237, 1);
+    --neutralsgray-200: rgba(200, 213, 224, 1);
+    --neutralsgray-300: rgba(155, 166, 176, 1);
+    --neutralsgray-400: rgba(96, 105, 112, 1);
+    --neutralswhite: rgba(255, 255, 255, 1);
+    --shadow-02: 0px 20px 20px 0px rgba(0, 0, 0, 0.2);
+    --shadow-sm: 0px 1px 2px 0px rgba(0, 0, 0, 0.05);
+  }
+  

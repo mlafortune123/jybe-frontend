@@ -116,7 +116,7 @@
     text-align: center;
   }
   input::placeholder {
-    font-family: 'Montserrat';
+    font-family: 'Poppins';
     color: white;
   }
   .step:last-child {

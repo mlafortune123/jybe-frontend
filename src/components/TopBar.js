@@ -19,7 +19,7 @@ const TopBar = () => {
           <a href="/about" className="button" >About</a>
         </Grid>
         <Grid item xs={2}>
-          <a href="/login" className="button" >Login</a>
+          <a href="/myaccount" className="button" >Login</a>
         </Grid>
       </Grid>
     </Grid>
