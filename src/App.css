@@ -1,5 +1,7 @@
 .App {
   text-align: center;
+  overflow-x: hidden;
+
 }
 
 .App-logo {
@@ -35,4 +37,99 @@
   to {
     transform: rotate(360deg);
   }
+}
+/* Customize the scrollbar track (background) */
+.calculator::-webkit-scrollbar {
+  width: 11px; /* Set the width of the scrollbar */
+}
+
+/* Customize the scrollbar thumb (the draggable part) */
+.calculator::-webkit-scrollbar-thumb {
+  background-color: #606970; /* Background color of the scrollbar thumb */
+  border-radius: 34px; /* Border radius for rounded corners */
+  height: 84px; /* Height of the scrollbar thumb */
+}
+
+/* Customize the scrollbar track (background) when hovered */
+.calculator::-webkit-scrollbar-thumb:hover {
+  background-color: #808890; /* Change color on hover if desired */
+}
+
+.select-subscription-frame-6::-webkit-scrollbar {
+  width: 11px; /* Set the width of the scrollbar */
+}
+
+/* Customize the scrollbar thumb (the draggable part) */
+.select-subscription-frame-6::-webkit-scrollbar-thumb {
+  background-color: #606970; /* Background color of the scrollbar thumb */
+  border-radius: 34px; /* Border radius for rounded corners */
+  height: 84px; /* Height of the scrollbar thumb */
+}
+
+/* Customize the scrollbar track (background) when hovered */
+.select-subscription-frame-6::-webkit-scrollbar-thumb:hover {
+  background-color: #808890; /* Change color on hover if desired */
+}
+
+*, *::before, *::after {
+  box-sizing: inherit;
+}
+
+html {
+  /* this makes sure the padding and the border is included in the box sizing */
+  box-sizing: border-box;
+  overflow-x: hidden!important;
+}
+
+html body {
+  padding: 0;
+  margin: 0;
+  overflow-y: inherit;
+}
+
+input:focus {
+  outline: none;
+}
+input{
+  border-width: 0px;
+}
+/* select option {
+  color: #000;
+  padding: 0 10px;
+}
+
+select::after {
+  content: '\25BC';
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  font-size: 25px;
+  border: 1px solid #565656;
+  background: #0e7b53;
+  color: black;
+  padding: 11px 15px;
+  pointer-events: none;
+} */
+select:focus{
+  border: none!important;
+  outline: none;
+}
+select{
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  background: transparent;
+  background-image: url("https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64ee7c544c339b0ef858e2ac/img/frame-123.svg");
+  background-repeat: no-repeat;
+  background-position-x: 100%;
+  background-position-y: 5px;
+  border: 1px solid #dfdfdf;
+  border-radius: 2px;
+  margin-right: 2rem;
+  padding: 4px;
+  padding-right: 2rem;
+}
+.thirty{
+  width: 30%!important;
 }

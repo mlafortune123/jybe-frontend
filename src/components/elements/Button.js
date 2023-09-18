@@ -6,9 +6,9 @@ import { Arrow14 } from "./Arrow14";
 import { Arrow6 } from "./Arrow6";
 import "./style.css";
 
-export const Button = ({ type, size, icon, state, className, text = "Button text" }) => {
+export const Button = ({ type, size, icon, state, className, text = "Button text", onClick }) => {
   return (
-    <div className={`button ${type} ${icon} ${size} ${state} ${className}`}>
+    <div onClick={onClick} className={`button ${type} ${icon} ${size} ${state} ${className}`}>
       {((icon === "only" && size === "lg" && state === "default") ||
         (icon === "only" && size === "md" && state === "default") ||
         (icon === "only" && size === "sm" && state === "default") ||
@@ -63,5 +63,5 @@ Button.propTypes = {
   size: PropTypes.oneOf(["xl", "xs", "lg", "sm", "md"]),
   icon: PropTypes.oneOf(["false", "right", "only", "left"]),
   state: PropTypes.oneOf(["default", "hover", "focus"]),
-  text: PropTypes.string,
+  text: PropTypes.string
 };

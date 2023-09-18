@@ -1,0 +1,37 @@
+.index .microsoft-fluentui {
+    margin-top: 10vh;
+}
+
+.index .frame-2 {
+    text-align: center;
+}
+
+.index .jybe-virtual-card-wrapper {
+    align-items: center;
+    align-self: stretch;
+    border-radius: 16px;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 10px;
+    padding: 16px;
+    position: relative;
+    width: 100%;
+  }
+
+  .index .jybe-virtual-card {
+    height: 232px;
+    position: relative;
+    width: 370px;
+  }
+
+  .index .button-frame {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    justify-content: center;
+    position: relative;
+    width: 100%;
+  }

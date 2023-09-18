@@ -1,4 +1,5 @@
 import './App.css';
+import './styleguide.css';
 import { Route, Routes } from "react-router-dom";
 import { useAuth0 } from "@auth0/auth0-react";
 import Loading from "./Loading.js"
@@ -7,8 +8,10 @@ import Home from "./components/public/Home.js"
 import About from "./components/public/About.js"
 import GetStarted from './components/public/GetStarted';
 import MyAccount from './components/private/MyAccount';
-import Card from './components/public/Card';
-import SignUp from './components/private/SignUp';
+import Card from './components/private/Card';
+import SignUp from './components/public/Signup';
+import UserInfo from './components/private/UserInfo';
+import SelectSubscription from './components/private/SelectSubscription';
 import Approved from './components/private/Approved';
 import Denied from './components/private/Denied';
 import NotFoundPage from './components/public/PageNotFound';
@@ -29,16 +32,26 @@ function App() {
       <Route path="/approved" element={
         <ProtectedRoute component={Approved} />
       } />
-      <Route path="/signup" element={
+      {/* <Route path="/signup" element={
         <ProtectedRoute component={SignUp} />
+      } /> */}
+      <Route path="/userinfo" element={
+        <ProtectedRoute component={UserInfo} />
       } />
-      <Route path="/contact" element={<Contact/>}/>
-      <Route path="/card" element={<Card/>}/>
-      <Route path="/denied" element={<Denied/>}/>
+      <Route path="/select_subscription" element={
+        <ProtectedRoute component={SelectSubscription} />
+      } />
+      <Route path="/card" element={
+        <ProtectedRoute component={Card} />
+      } />
+      <Route path="/contact" element={<Contact />} />
+      <Route path="/card" element={<Card />} />
+      <Route path="/denied" element={<Denied />} />
       <Route path="/get_started" element={<GetStarted />} />
       <Route path="/about" element={<About />} />
-      <Route path="/" element={<Home />} />
-      <Route path="*" element={<NotFoundPage/>} />
+      <Route path="/home" element={<Home />} />
+      <Route path="/" element={<SignUp />} />
+      <Route path="*" element={<NotFoundPage />} />
     </Routes>
   );
 }

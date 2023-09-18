@@ -33,17 +33,15 @@
 
 .button {
     display: flex;
-    flex-wrap: wrap;
-    align-content: center;
-    justify-content: center;
-    background-color: teal;
+    flex-wrap: nowrap;
+    background-color: #1a4ab1;
     color: white;
-    padding: 8px 16px;
     border-radius: 4px;
-    text-decoration: none;
-    width:70%;
-    text-align: center;
-    height: 55px;
+    width:120%;
+    border: 0px;
+    padding: 1vh 0px;
+    font-size: 2vh;
+    cursor: pointer;
   }
 
   .rich-text {

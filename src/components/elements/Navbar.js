@@ -4,39 +4,41 @@ import { Button } from "./Button";
 import { TextTabItem } from "./TextTabItem";
 import "./style.css";
 
-export const Navbar = ({
-  className,
-  logo = "https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/logo-3.svg",
-}) => {
+export const Navbar = () => {
   return (
-    <div className={`navbar ${className}`}>
+    <div className={`navbar navbar-instance`}>
       <div className="frame">
-        <img className="logo" alt="Logo" src={logo} />
+        <a href="/"  >
+          <img className="logo" alt="Logo" src='/logo.svg' />
+        </a>
         <div className="frame-2">
-          <TextTabItem
-            className="design-component-instance-node"
-            iconLeft={false}
-            iconRight={false}
-            property1="default"
-            text="Home"
-          />
-          <div className="inactive-text-tab-wrapper">
-            <div className="inactive-text-tab">About</div>
-          </div>
-          <div className="inactive-text-tab-wrapper">
-            <div className="inactive-text-tab">Start Jybing</div>
-          </div>
-          <div className="inactive-text-tab-wrapper">
-            <div className="inactive-text-tab">Contact</div>
-          </div>
+          <a
+            href="/"
+            className={window.location.pathname == "/" ? "selected-tab" : "inactive-text-tab-wrapper"}>
+            Home
+          </a>
+          <a
+            //href="/about"
+            className={window.location.pathname == "/about" ? "selected-tab" : "inactive-text-tab-wrapper"}>
+            About
+          </a>
+          <a
+            //href="/start_jybing"
+            className={window.location.pathname == "/userinfo" ? "selected-tab" : "inactive-text-tab-wrapper"}>
+            Start Jybing
+          </a>
+          <a onClick={() => window.open("mailto:michaeltiller@jybe.ca")} className={window.location.pathname == "/contact" ? "selected-tab" : "inactive-text-tab-wrapper"}>
+            Contact
+          </a>
         </div>
         <Button
-            className="design-component-instance-node widthten"
-            icon="false"
-            size="lg"
-            state="default"
-            text="Contact Us"
-            type="primary"
+          className="design-component-instance-node widthten"
+          icon="false"
+          size="lg"
+          state="default"
+          text="Contact Us"
+          type="primary"
+          onClick={() => window.open("mailto:michaeltiller@jybe.ca")}
         />
       </div>
     </div>

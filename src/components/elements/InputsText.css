@@ -1,0 +1,118 @@
+.inputs-text {
+    align-items: flex-start;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+    width: 343px;
+  }
+  
+  .inputs-text .frame-2 {
+    align-self: stretch;
+    border: 1px solid;
+    border-radius: 8px;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    padding: 12px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .inputs-text .password-2 {
+    flex: 1;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 26px;
+    margin-top: -1px;
+    position: relative;
+  }
+  
+  .inputs-text .text-wrapper {
+    color: #000000;
+  }
+  
+  .inputs-text .span {
+    color: #9ba6b0;
+  }
+  
+  .inputs-text .eye-no {
+    height: 16px;
+    position: relative;
+    width: 16px;
+  }
+  
+  .inputs-text .icon {
+    height: 14px;
+    left: 1px;
+    position: absolute;
+    top: 1px;
+    width: 15px;
+  }
+  
+  .inputs-text .text-wrapper-2 {
+    align-self: stretch;
+    color: var(--alertsdanger);
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 26px;
+    position: relative;
+  }
+  
+  .inputs-text .focus {
+    background-color: #ffffff;
+    border-color: #333399;
+  }
+  
+  .inputs-text .password {
+    align-items: center;
+  }
+  
+  .inputs-text .text {
+    align-items: flex-start;
+  }
+  
+  .inputs-text .default {
+    background-color: #ffffff;
+    border-color: var(--neutralsgray-200);
+  }
+  
+  .inputs-text .typing {
+    background-color: #ffffff;
+    border-color: #333399;
+  }
+  
+  .inputs-text .disable {
+    background-color: var(--neutralsgray-000);
+    border-color: var(--neutralsgray-200);
+  }
+  
+  .inputs-text .error {
+    background-color: #ffffff;
+    border-color: var(--alertsdanger);
+  }
+  
+  .inputs-text .frame-2.focus .password-2 {
+    color: transparent;
+  }
+  
+  .inputs-text .frame-2.default .password-2 {
+    color: var(--neutralsgray-300);
+  }
+  
+  .inputs-text .frame-2.typing .password-2 {
+    color: var(--neutralsblack);
+  }
+  
+  .inputs-text .frame-2.disable .password-2 {
+    color: var(--neutralsgray-400);
+  }
+  
+  .inputs-text .frame-2.error .password-2 {
+    color: var(--neutralsblack);
+  }
+  

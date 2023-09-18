@@ -1,0 +1,954 @@
+.select-subscription {
+    background-color: #ffffff;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    width: 100%;
+  }
+  
+  .select-subscription-div-2 {
+    background-color: #ffffff;
+    height: 1983px;
+    overflow: hidden;
+    position: relative;
+    width: 100vw;
+  }
+  
+  .select-subscription-body {
+    align-items: flex-start;
+    display: inline-flex;
+    flex-direction: column;
+    gap: 182px;
+    left: 0;
+    position: absolute;
+    top: 0;
+  }
+  
+  .select-subscription-section {
+    align-items: center;
+    display: flex;
+    height: 1060px;
+    justify-content: center;
+    position: relative;
+    width: 100vw;
+  }
+  
+  .select-subscription-div-3 {
+    align-items: center;
+    align-self: stretch;
+    background-color: #ffffff;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 40px;
+    padding: 20vh 4vw 4vw;
+    position: relative;
+    z-index: 1;
+    width: 60vw;
+  }
+  
+  .select-subscription-div-4 {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-stepper-instance {
+    display: flex !important;
+    flex: 1 !important;
+    flex-grow: 1 !important;
+  }
+  
+  .select-subscription-icon-instance-node {
+    height: 24px !important;
+    position: relative !important;
+    width: 24px !important;
+  }
+  
+  .select-subscription-stepper-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+  }
+  
+  .select-subscription-frame-4 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 8px;
+    position: relative;
+  }
+  
+  .select-subscription-text-wrapper {
+    color: #00000099;
+    font-family: "Poppins", Helvetica;
+    font-size: 14px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .select-subscription-google-account-2 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .select-subscription-text-wrapper-2 {
+    color: var(--neutralsgray-300);
+    font-family: "Poppins", Helvetica;
+    font-size: 12px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .select-subscription-form {
+    align-items: flex-start;
+    align-self: stretch;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: var(--neutralsgray-100);
+    border-radius: 16px;
+    box-shadow: var(--shadow-01);
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    margin-bottom: -171px;
+    padding: 24px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-text-wrapper-3 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 32px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    width: fit-content;
+  }
+  
+  .select-subscription-almost-there-select {
+    color: #28384c;
+    flex: 1;
+    font-family: "Poppins", Helvetica;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 26px;
+    position: relative;
+    width: 760px;
+  }
+  
+  .select-subscription-span {
+    color: #28384c;
+    font-family: "Poppins", Helvetica;
+    font-size: 18px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 26px;
+  }
+  
+  .select-subscription-text-wrapper-4 {
+    font-weight: 700;
+  }
+  
+  .select-subscription-just-add-your {
+    color: #28384c;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    height: 26px;
+    letter-spacing: 0;
+    line-height: 26px;
+    position: relative;
+    white-space: nowrap;
+    width: 760px;
+  }
+  
+  .select-subscription-text-wrapper-5 {
+    color: #28384c;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 26px;
+  }
+  
+  .select-subscription-frame-5 {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-field {
+    align-items: center;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: var(--neutralsgray-200);
+    border-radius: 8px;
+    display: flex;
+    flex: 1;
+    flex-grow: 1;
+    gap: 10px;
+    justify-content: space-around;
+    padding: 16px;
+    position: relative;
+  }
+  
+  .select-subscription-text-wrapper-6 {
+    color: #28384c80;
+    flex: 1;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 26px;
+    margin-top: -1px;
+    position: relative;
+  }
+  
+  .select-subscription-frame-6 {
+    align-items: flex-start;
+    align-self: stretch;
+    display: flex;
+    gap: 16px;
+    justify-content: center;
+    overflow: scroll;
+    overflow-x: hidden;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-frame-7 {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    margin-bottom: -147px;
+    position: relative;
+  }
+  
+  .select-subscription-logo-2 {
+    align-items: center;
+    align-self: stretch;
+    background-color: #ffffff;
+    border: 1px solid;
+    border-color: var(--neutralsgray-200);
+    border-radius: 8px;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    padding: 16px;
+    position: relative;
+    width: 95%;
+  }
+  
+  .select-subscription-fill {
+    height: 31px;
+    position: relative;
+    width: 114px;
+  }
+  
+  .select-subscription-design-component-instance-node-2 {
+    height: 36px !important;
+    left: unset !important;
+    position: relative !important;
+    top: unset !important;
+    width: 103px !important;
+  }
+  
+  .select-subscription-toggle-checkmark {
+    border-radius: 500px !important;
+    overflow: hidden !important;
+  }
+  
+  .select-subscription-toggle-checkmark-instance {
+    border-radius: 500px !important;
+  }
+  
+  .select-subscription-adobe-instance {
+    height: 30px !important;
+    left: unset !important;
+    position: relative !important;
+    top: unset !important;
+    width: 108px !important;
+  }
+  
+  .select-subscription-disney-logo {
+    height: 56px;
+    position: relative;
+    width: 103.18px;
+  }
+  
+  .select-subscription-zoom-instance {
+    height: 31px !important;
+    left: unset !important;
+    position: relative !important;
+    top: unset !important;
+    width: 123px !important;
+  }
+  
+  .select-subscription-you-tube-instance {
+    height: 31px !important;
+    left: unset !important;
+    margin-left: -16949px !important;
+    margin-top: -8453px !important;
+    position: relative !important;
+    top: unset !important;
+    width: 103px !important;
+  }
+  
+  .select-subscription-vimeo-instance {
+    height: 36px !important;
+    left: unset !important;
+    margin-left: -16949px !important;
+    margin-top: -8532px !important;
+    position: relative !important;
+    top: unset !important;
+    width: 103px !important;
+  }
+  
+  .select-subscription-rectangle-wrapper {
+    align-items: flex-start;
+    align-self: stretch;
+    background-color: var(--neutralsgray-100);
+    border-radius: 23px;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 10px;
+    padding: 37px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-rectangle-2 {
+    background-color: #606970;
+    border-radius: 34px;
+    height: 84px;
+    position: relative;
+    width: 11px;
+  }
+  
+  .select-subscription-div-5 {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: space-between;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-button-instance {
+    flex: 0 0 auto !important;
+  }
+  
+  .select-subscription-img {
+    align-self: stretch;
+    background-color: #ffd958;
+    position: relative;
+    width: 40vw;
+    z-index: 0;
+  }
+  
+  .select-subscription-overlap {
+    height: 787px;
+    left: 48px;
+    position: absolute;
+    top: 273px;
+    width: 862px;
+  }
+  
+  .select-subscription-overlap-group {
+    height: 787px;
+    left: 2px;
+    position: absolute;
+    top: 0;
+    width: 860px;
+  }
+  
+  .select-subscription-img-2 {
+    height: 787px;
+    left: 37px;
+    position: absolute;
+    top: 0;
+    width: 786px;
+  }
+  
+  .select-subscription-twitter-instance {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/tw2octdenoiserbeauty-002-copy@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 59px !important;
+    left: 635px !important;
+    opacity: 0.5 !important;
+    position: absolute !important;
+    top: 138px !important;
+    width: 60px !important;
+  }
+  
+  .select-subscription-whatsapp-instance {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/wa2octdenoiserbeauty-002-copy@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 38px !important;
+    left: 823px !important;
+    opacity: 0.5 !important;
+    position: absolute !important;
+    top: 645px !important;
+    width: 37px !important;
+  }
+  
+  .select-subscription-ptoctdenoiserbeauty {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/pt2octdenoiserbeauty-002-copy-1@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 59px !important;
+    left: 123px !important;
+    opacity: 0.5 !important;
+    position: absolute !important;
+    top: 179px !important;
+    width: 60px !important;
+  }
+  
+  .select-subscription-linked-in-instance {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64efdb6cc9b892e896e63841/img/lk2octdenoiserbeauty-002-copy@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 83px !important;
+    left: 775px !important;
+    position: absolute !important;
+    top: 362px !important;
+    width: 85px !important;
+  }
+  
+  .select-subscription-spotify-instance {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64efdb6cc9b892e896e63841/img/sp2octdenoiserbeauty-002-copy@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 59px !important;
+    left: 0 !important;
+    position: absolute !important;
+    top: 394px !important;
+    width: 57px !important;
+  }
+  
+  .select-subscription-vk2octdenoiserbeauty-002 {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64efdb6cc9b892e896e63841/img/vk2octdenoiserbeauty-002@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 36px !important;
+    left: 57px !important;
+    opacity: 0.5 !important;
+    position: absolute !important;
+    top: 664px !important;
+    width: 35px !important;
+  }
+  
+  .select-subscription-vimeo-2 {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64efdb6cc9b892e896e63841/img/v2octdenoiserbeauty-002-copy@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 31px !important;
+    left: 0 !important;
+    position: absolute !important;
+    top: 28px !important;
+    width: 31px !important;
+  }
+  
+  .select-subscription-youtube-instance {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/yt2octdenoiserbeauty-002-copy@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 66px !important;
+    left: 792px !important;
+    position: absolute !important;
+    top: 142px !important;
+    width: 65px !important;
+  }
+  
+  .select-subscription-facebook-instance {
+    background-image: url(https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/fb2octdenoiserbeauty-002@2x.png) !important;
+    box-shadow: var(--shadow-02) !important;
+    height: 59px !important;
+    left: 259px !important;
+    position: absolute !important;
+    top: 112px !important;
+    width: 59px !important;
+  }
+  
+  .select-subscription-footer {
+    align-items: flex-start;
+    background-color: var(--neutralsgray-100);
+    display: flex;
+    flex: 0 0 auto;
+    justify-content: center;
+    padding: 0px 240px;
+    position: relative;
+    width: 100vw;
+  }
+  
+  .select-subscription-group {
+    height: 705px;
+    left: 457px;
+    opacity: 0.5;
+    position: absolute;
+    top: -93px;
+    width: 1007px;
+  }
+  
+  .select-subscription-overlap-2 {
+    height: 705px;
+    position: relative;
+  }
+  
+  .select-subscription-pyramid {
+    height: 550px;
+    left: 77px;
+    opacity: 0.5;
+    position: absolute;
+    top: 77px;
+    transform: rotate(-110deg);
+    width: 550px;
+  }
+  
+  .select-subscription-overlap-group-2 {
+    height: 872px;
+    left: -177px;
+    position: relative;
+    top: -177px;
+    width: 816px;
+  }
+  
+  .select-subscription-pyramid-2 {
+    height: 612px;
+    left: 56px;
+    object-fit: cover;
+    position: absolute;
+    top: 130px;
+    transform: rotate(110deg);
+    width: 705px;
+  }
+  
+  .select-subscription-mask-group {
+    height: 612px;
+    left: 56px;
+    position: absolute;
+    top: 130px;
+    transform: rotate(110deg);
+    width: 705px;
+  }
+  
+  .select-subscription-overlap-wrapper {
+    height: 550px;
+    left: 273px;
+    opacity: 0.5;
+    position: absolute;
+    top: 54px;
+    transform: rotate(-95deg);
+    width: 550px;
+  }
+  
+  .select-subscription-overlap-3 {
+    height: 640px;
+    left: -48px;
+    position: relative;
+    top: -48px;
+    width: 584px;
+  }
+  
+  .select-subscription-pyramid-3 {
+    height: 534px;
+    left: -6px;
+    object-fit: cover;
+    position: absolute;
+    top: 53px;
+    transform: rotate(95deg);
+    width: 596px;
+  }
+  
+  .select-subscription-mask-group-2 {
+    height: 534px;
+    left: -6px;
+    position: absolute;
+    top: 53px;
+    transform: rotate(95deg);
+    width: 596px;
+  }
+  
+  .select-subscription-overlap-group-wrapper {
+    height: 550px;
+    left: 434px;
+    opacity: 0.5;
+    position: absolute;
+    top: 31px;
+    transform: rotate(-85deg);
+    width: 550px;
+  }
+  
+  .select-subscription-overlap-4 {
+    height: 638px;
+    left: -48px;
+    position: relative;
+    top: -40px;
+    width: 561px;
+  }
+  
+  .select-subscription-pyramid-4 {
+    height: 511px;
+    left: -18px;
+    object-fit: cover;
+    position: absolute;
+    top: 64px;
+    transform: rotate(85deg);
+    width: 596px;
+  }
+  
+  .select-subscription-mask-group-3 {
+    height: 511px;
+    left: -18px;
+    position: absolute;
+    top: 64px;
+    transform: rotate(85deg);
+    width: 596px;
+  }
+  
+  .select-subscription-div-relative {
+    align-items: flex-start;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    max-width: 1440px;
+    padding: 32px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-div-relative-2 {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 24px;
+    padding: 64px 240px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-heading {
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 16px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-text-wrapper-7 {
+    align-self: stretch;
+    color: var(--neutralsblack);
+    font-family: "Poppins", Helvetica;
+    font-size: 64px;
+    font-weight: 600;
+    letter-spacing: 0;
+    line-height: normal;
+    margin-top: -1px;
+    position: relative;
+    text-align: center;
+  }
+  
+  .select-subscription-p {
+    align-self: stretch;
+    color: #00000099;
+    font-family: var(--headings-subheading-1-font-family);
+    font-size: var(--headings-subheading-1-font-size);
+    font-style: var(--headings-subheading-1-font-style);
+    font-weight: var(--headings-subheading-1-font-weight);
+    letter-spacing: var(--headings-subheading-1-letter-spacing);
+    line-height: var(--headings-subheading-1-line-height);
+    position: relative;
+    text-align: center;
+  }
+  
+  .select-subscription-div-relative-3 {
+    align-items: flex-start;
+    align-self: stretch;
+    background-color: var(--neutralsgray-000);
+    border-radius: 16px;
+    display: flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 64px;
+    padding: 51px 50px 62px;
+    position: relative;
+    width: 100%;
+  }
+  
+  .select-subscription-div-grid {
+    align-items: center;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 120px;
+    justify-content: center;
+    padding: 0px 1.53e-5px 0px 0px;
+    position: relative;
+    width: 1280px;
+  }
+  
+  .select-subscription-div-wforest-full {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 53.77px 0px 39.91px;
+    position: relative;
+  }
+  
+  .select-subscription-nav {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    padding: 0px 0px 3.81e-6px;
+    position: relative;
+  }
+  
+  .select-subscription-link-margin {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 0px 41.7px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-text-wrapper-8 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 16px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 24px;
+    margin-top: -1px;
+    position: relative;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  
+  .select-subscription-link-start-with-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 4.7px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-sign-in-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 88.7px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-contact-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 82.7px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-pricing-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 0px 26.08px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-blog-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 38.81px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-glossary-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 10.81px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-careers-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 17.81px 20.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-nav-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 53.77px 0px 79.94px;
+    position: relative;
+  }
+  
+  .select-subscription-link-wrapper {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 0px 0px 16px;
+    position: relative;
+  }
+  
+  .select-subscription-link {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 20px;
+    padding: 0px 13.67px 4.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-SVG {
+    height: 20px;
+    position: relative;
+    width: 20px;
+  }
+  
+  .select-subscription-div-wrapper {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    margin-top: -4.2px;
+    padding: 0px 0px 16px;
+    position: relative;
+  }
+  
+  .select-subscription-link-2 {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 20px;
+    padding: 0px 25.67px 4.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-3 {
+    align-items: center;
+    display: inline-flex;
+    flex: 0 0 auto;
+    gap: 20px;
+    padding: 0px 2.67px 4.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-div-wforest-full-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 53.77px 0px 120px;
+    position: relative;
+  }
+  
+  .select-subscription-nav-2 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    flex-direction: column;
+    gap: 11.77px;
+    padding: 0px 0px 16px;
+    position: relative;
+  }
+  
+  .select-subscription-terms-conditions-wrapper {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 0px 3.02px 4.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-link-4 {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    padding: 0px 48.02px 4.23px 0px;
+    position: relative;
+  }
+  
+  .select-subscription-logo-3 {
+    height: 40px;
+    margin-left: -17151px;
+    margin-top: -9405px;
+    position: relative;
+    width: 167.92px;
+  }
+  
+  .select-subscription-p-t {
+    align-items: flex-start;
+    display: inline-flex;
+    flex: 0 0 auto;
+    justify-content: flex-end;
+    padding: 0px 0.14px 0.91px 2px;
+    position: relative;
+  }
+  
+  .select-subscription-text-wrapper-9 {
+    color: #000000;
+    font-family: "Poppins", Helvetica;
+    font-size: 12px;
+    font-weight: 400;
+    letter-spacing: 0;
+    line-height: 19.9px;
+    margin-top: -1px;
+    position: relative;
+    text-align: right;
+    white-space: nowrap;
+    width: fit-content;
+  }
+  
+  .select-subscription-navbar-instance {
+    left: 0 !important;
+    position: fixed !important;
+    top: 0 !important;
+  }
+  
+  .select-subscription-navbar-2 {
+    opacity: 0 !important;
+  }
+  

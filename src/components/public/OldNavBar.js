@@ -3,7 +3,7 @@ import "./navbar.css"
 const Navbar = () => {
 
     return (
-<div className="navigation-wrap">
+<div className="navigation-wrap navbar-instance">
   <a
     href="/"
     aria-current="page"
