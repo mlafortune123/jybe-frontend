@@ -6,10 +6,11 @@ import Loading from "./Loading.js"
 import { ProtectedRoute } from './ProtectedRoute';
 import Home from "./components/public/Home.js"
 import About from "./components/public/About.js"
-import GetStarted from './components/public/GetStarted';
-import MyAccount from './components/private/MyAccount';
+// import GetStarted from './components/public/GetStarted';
+// import MyAccount from './components/private/MyAccount';
 import Card from './components/private/Card';
 import SignUp from './components/public/Signup';
+import HowItWorks from './components/public/HowItWorks';
 import UserInfo from './components/private/UserInfo';
 import SelectSubscription from './components/private/SelectSubscription';
 import Approved from './components/private/Approved';
@@ -26,28 +27,25 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/myaccount" element={
+      {/* <Route path="/myaccount" element={
         <ProtectedRoute component={MyAccount} />
-      } />
+      } /> */}
       <Route path="/approved" element={
         <ProtectedRoute component={Approved} />
       } />
-      {/* <Route path="/signup" element={
-        <ProtectedRoute component={SignUp} />
-      } /> */}
-      <Route path="/userinfo" element={
+      <Route path="/select_subscription" element={
         <ProtectedRoute component={UserInfo} />
       } />
-      <Route path="/select_subscription" element={
+      <Route path="/userinfo" element={
         <ProtectedRoute component={SelectSubscription} />
       } />
       <Route path="/card" element={
         <ProtectedRoute component={Card} />
       } />
+      <Route path="/howitworks" element={<HowItWorks/>}/>
       <Route path="/contact" element={<Contact />} />
       <Route path="/card" element={<Card />} />
       <Route path="/denied" element={<Denied />} />
-      <Route path="/get_started" element={<GetStarted />} />
       <Route path="/about" element={<About />} />
       <Route path="/home" element={<Home />} />
       <Route path="/" element={<SignUp />} />

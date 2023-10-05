@@ -34,9 +34,10 @@
     flex: 0 0 auto;
     flex-direction: column;
     gap: 24px;
-    padding: 4vw 240px;
+    /* padding: 4vw 240px; */
     position: relative;
     width: 100%;
+    margin-bottom: 24px;
   }
   
   .footer .text-wrapper-22 {
@@ -70,7 +71,6 @@
     align-items: center;
     display: flex;
     flex: 0 0 auto;
-    gap: 12vw;
     justify-content: center;
     position: relative;
     width: 100%;
@@ -102,9 +102,10 @@
     padding: 0px 41.7px 20.23px 0px;
     position: relative;
     cursor: pointer;
+    width: 10px;
   }
   
-  .footer .text-wrapper-23 {
+  /* .footer .text-wrapper-23 {
     color: #000000;
     font-family: "Poppins", Helvetica;
     font-size: 16px;
@@ -115,7 +116,7 @@
     position: relative;
     white-space: nowrap;
     width: fit-content;
-  }
+  } */
   
   .footer .link-start-with-wrapper {
     align-items: flex-start;
@@ -262,14 +263,16 @@
     flex: 0 0 auto;
     padding: 0px 3.02px 4.23px 0px;
     position: relative;
+    width: 10px;
+    cursor: pointer;
   }
   
   .footer .link-4 {
     align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
-    padding: 0px 48.02px 4.23px 0px;
     position: relative;
+    cursor: pointer;
   }
   
   .footer .logo-10 {
@@ -315,14 +318,32 @@
     flex-wrap: nowrap;
     background-color: #1a4ab1!important;
     color: white;
-    border-radius: 4px;
-    width:120%;
     border: 0px;
-    padding: 1vh 0px;
     font-size: 2vh;
     border-radius: 12px;
   }
 
   .footer .text-wrapper-3{
     text-align: center;
+  }
+
+  @media screen and (min-width: 451px) {
+    .div-relative-2{
+      padding: 4vw 240px;
+    }
+    .div-grid{
+      gap: 12vw;
+    }
+    .link-margin{
+      width: auto;
+    }
+    .terms-conditions-wrapper{
+      width: auto;
+    }
+    .link-4{
+      padding: 0px 48.02px 4.23px 0px;
+    }
+    .link-margin{
+      width: auto!important;
+    }
   }

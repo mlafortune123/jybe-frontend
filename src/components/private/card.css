@@ -1,22 +1,17 @@
-.index .microsoft-fluentui {
-    margin-top: 10vh;
-}
-
 .index .frame-2 {
     text-align: center;
 }
 
 .index .jybe-virtual-card-wrapper {
     align-items: center;
-    align-self: stretch;
     border-radius: 16px;
-    display: flex;
-    flex: 0 0 auto;
-    flex-direction: column;
-    gap: 10px;
+    flex-direction: row;
     padding: 16px;
     position: relative;
-    width: 100%;
+    width: 1000px;
+    margin: 0 auto 40px;
+    justify-content: space-around;
+    display: flex;
   }
 
   .index .jybe-virtual-card {
@@ -35,3 +30,73 @@
     position: relative;
     width: 100%;
   }
+
+  .card-div{
+    margin-top: 20vh;
+  }
+
+  .overlay{
+    color: white;
+    font-size: 14px;
+  }
+
+  .expiry{
+    position: absolute; /* Position the overlay relative to the container */
+    top: 78%; /* Position from the top */
+    left: 24.4%; /* Position from the left */
+    /* transform: translate(-50%, -50%); */
+  }
+
+  .name{
+    position: absolute; /* Position the overlay relative to the container */
+    top: 78%; /* Position from the top */
+    left: 10%; /* Position from the left */
+    /* transform: translate(-50%, -50%); */
+  }
+
+  .card-img{
+    position: absolute; /* Position the overlay relative to the container */
+    top: 44%; /* Position from the top */
+    left: 10%; /* Position from the left */
+    font-size: 28px;
+  }
+
+  .cvv{
+    position: absolute;
+    top: 47%;
+    left: 87.5%;
+    background-color: #f9f8fc;
+    color: black;
+    z-index: 10;
+    font-style: italic;
+    width: 35px;
+    height: 25px;
+  }
+
+  .microsoft-fluentui{
+    height: 10vh;
+  }
+
+  .card-title{
+
+    font-size: 4vw;
+    font-weight: 600;
+
+  }
+
+  .card-header-div{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+.card-text-wrapper{
+  font-size: 4vw;
+  font-weight: 600;
+}
+
+.card-loading-div{
+  margin-top: 17vh;
+  display: flex;
+  flex-direction: column;
+}

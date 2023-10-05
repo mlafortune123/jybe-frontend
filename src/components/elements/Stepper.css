@@ -33,7 +33,7 @@
   }
   
   .stepper-step {
-    color: #00000099;
+    
     font-family: "Poppins", Helvetica;
     font-size: 14px;
     font-weight: 400;
@@ -53,6 +53,7 @@
     line-height: normal;
     position: relative;
     width: fit-content;
+    height: 30px;
   }
   
   .stepper-completed-2 {
@@ -96,3 +97,14 @@
     flex: 1 !important;
     flex-grow: 1 !important;
   }
+
+.step-completed{
+  color:black
+}
+.step-pending{
+  color: #00000099;
+}
+.step-in-progress{
+  color: black;
+  font-weight: bold;
+}

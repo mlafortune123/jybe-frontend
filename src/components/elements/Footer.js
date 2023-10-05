@@ -63,7 +63,7 @@ export const Footer = () => {
               </p>
             </div>
             <Button
-              className="button-instance thirty"
+              className="button-instance"
               icon="false"
               size="lg"
               state="default"
@@ -76,9 +76,9 @@ export const Footer = () => {
             <div className="div-grid">
               <div className="div-wforest-full">
                 <div className="nav">
-                  <div className="link-margin">
+                  {/* <div className="link-margin">
                     About
-                  </div>
+                  </div> */}
                   <div className="link-margin">
                     Start With Jybe
                   </div>
@@ -142,10 +142,10 @@ export const Footer = () => {
               </div>
               <div className="div-wforest-full-2">
                 <div className="nav-2">
-                  <div className="terms-conditions-wrapper">
+                  <div className="terms-conditions-wrapper" onClick={() => window.open("https://app.jybe.ca/privacy.pdf")}>
                     <div className="text-wrapper-23">Terms &amp; Conditions</div>
                   </div>
-                  <div className="link-4">
+                  <div className="link-4" onClick={() => window.open("https://app.jybe.ca/privacy.pdf")} >
                     <div className="text-wrapper-23">Privacy Policy</div>
                   </div>
                 </div>

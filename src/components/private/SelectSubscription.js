@@ -47,47 +47,78 @@ const SelectSubscription = () => {
         const requiredFields = [
             "cost",
             "merchantName"
-          ];
+        ];
         if (merchantName == "Error") {
             window.alert("We don't like this merchant")
             return
         }
         e.preventDefault();
-        if (!merchantName && !selectedItem && !ogMonthlyCost || !cost) {
-            console.log(merchantName, selectedItem, cost)
-            // const missingFields = requiredFields.filter((field) => !formData[field]);
-            // setEmptyFields(missingFields);
-            window.alert("Please fill out all required fields.");
+        if ((!merchantName && !selectedItem)) {
+            window.alert("Please select a merchant from the list, or put your subscription in the custom subscription field.");
             return;
         }
-        fetch(`${API_URL}/orders/create`, {
-            method: 'POST',
+        else if (!cost) {
+            window.alert("Please fill in the annual cost field.");
+            return;
+        }
+        else {
+            fetch(`${API_URL}/orders/select`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${accessToken}`
+                },
+                body: JSON.stringify({
+                    // formData: accountContext.formData,
+                    // province: accountContext.province,
+                    cost,
+                    og_monthly_cost: ogMonthlyCost,
+                    merchant_name: selectedItem ? selectedItem.name : merchantName
+                })
+            })
+                .then(response => {
+                    if (response.status == 401) window.location.reload()
+                    return response.json()
+                })
+                .then(res => {
+                    if (res.error) {
+                        window.alert(res.error)
+                    }
+                    else {
+                        //setAccountContext((prevContext) => ({ ...prevContext, order_id: res.order_id, merchant_id: res.merchant_id, cost, }))
+                        setAccountContext((prevContext) => ({ ...prevContext, order_id: res.order_id, cost, merchantName : selectedItem ? selectedItem : merchantName, og_monthly_cost: ogMonthlyCost, merchant_id : res.merchant_id }))
+                        navigate("/select_subscription")
+
+                        //res.approved ? navigate("/approved") : navigate("/denied")
+                    }
+                })
+        }
+    };
+
+    const testingReset = () => {
+        fetch(`${API_URL}/orders/delete/asasd`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
-            },
-            body: JSON.stringify({ 
-                formData: accountContext.formData,
-                province: accountContext.province,
-                cost,
-                og_monthly_cost : ogMonthlyCost,
-                merchant_name: selectedItem ? selectedItem : merchantName.image.replace(/\/.*\./, '')
-            })
+            }
         })
-            .then(response => {
-                if (response.status == 401) window.location.reload()
-                return response.json()
-            })
-            .then(res => {
-                if (res.error) {
-                    window.alert(res.error)
-                }
-                else {
-                    setAccountContext((prevContext) => ({ ...prevContext, order_id: res.order_id, cost, merchantName : selectedItem ? selectedItem : merchantName, og_monthly_cost: ogMonthlyCost }))
-                    res.approved ? navigate("/approved") : navigate("/denied")
-                }
-            })
-    };
+        .then(we =>     
+            fetch(`${API_URL}/users/delete/asasd`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            }
+        }))
+        .then(we2 => window.alert("reset complete"))
+    }
+
+const handleMerchantChange = (e) => {
+    setSelectedItem(e.target.value.toLowerCase())
+    setMerchantName(e.target.value)
+
+}
 
     return (
         <div className="select-subscription">
@@ -95,7 +126,7 @@ const SelectSubscription = () => {
                 <div className="select-subscription-body">
                     <div className="select-subscription-section">
                         <div className="select-subscription-div-3">
-                            <Steps selected={2} />
+                            <Steps selected={1} />
                             <div className="select-subscription-form">
                                 <div className="select-subscription-text-wrapper-3">Select Your Subscription</div>
                                 <p className="select-subscription-almost-there-select">
@@ -112,37 +143,35 @@ const SelectSubscription = () => {
                                 </p>
                                 <div className="select-subscription-frame-5">
                                     <div className="select-subscription-field">
-                                    <input 
-                                        type="text"
-                                        id="cost"
-                                        name="cost"
-                                        className="select-subscription-text-wrapper-6"
-                                        placeholder='Subscription Name'
-                                        value={merchantName}
-                                        onChange={e => {
-                                            setSelectedItem("")
-                                            setMerchantName(e.target.value)}}
-                                        onClick={clearNamePlaceHolder}
-                                        onBlur={restoreNamePlaceHolder}
-                                    />
+                                        <input
+                                            type="text"
+                                            id="cost"
+                                            name="cost"
+                                            className="select-subscription-text-wrapper-6"
+                                            placeholder='Subscription Name'
+                                            value={merchantName}
+                                            onChange={handleMerchantChange}
+                                            onClick={clearNamePlaceHolder}
+                                            onBlur={restoreNamePlaceHolder}
+                                        />
                                     </div>
                                 </div>
                                 <div className="select-subscription-frame-6">
                                     <div className="select-subscription-frame-7">
-                                        {subs.map((sub) => 
-                                        <div className="select-subscription-logo-2">
-                                        <img src={sub.image} className="select-subscription-design-component-instance-node-2" />
-                                        <ConcreteComponentNode
-                                        rectangleclassName="select-subscription-toggle-checkmark-2"
-                                        stateDefaultLargerclassName="select-subscription-toggle-checkmark-instance"
-                                        stateProp="default-larger"
-                                        onClick={() => {
-                                            setMerchantName("")
-                                            setSelectedItem(sub)
-                                        }}
-                                        isChecked={selectedItem == sub}
-                                        />  
-                                    </div>
+                                        {subs.map((sub) =>
+                                            <div className="select-subscription-logo-2">
+                                                <img src={sub.image} className="select-subscription-design-component-instance-node-2" />
+                                                <ConcreteComponentNode
+                                                    rectangleClassName="select-subscription-toggle-checkmark"
+                                                    stateDefaultLargerClassName="select-subscription-toggle-checkmark-instance"
+                                                    stateProp="default-larger"
+                                                    onClick={() => {
+                                                        setMerchantName("")
+                                                        setSelectedItem(sub.name)
+                                                    }}
+                                                    isChecked={selectedItem == sub.name}
+                                                />
+                                            </div>
                                         )}
                                     </div>
                                     {/* <div className="select-subscription-rectangle-wrapper">
@@ -152,8 +181,8 @@ const SelectSubscription = () => {
                                 {/* <div className="select-subscription-field">
                                     <div className="select-subscription-text-wrapper-6">Annual Subscription Cost</div>
                                 </div> */}
-                                <div className="select-subscription-field" style={{width:"100%"}} >
-                                    <input 
+                                <div className="select-subscription-field" style={{ width: "100%" }} >
+                                    <input
                                         type="text"
                                         id="cost"
                                         name="cost"
@@ -165,8 +194,8 @@ const SelectSubscription = () => {
                                         onBlur={restoreOgCostPlaceHolder}
                                     />
                                 </div>
-                                <div className="select-subscription-field" style={{width:"100%"}}>
-                                    <input 
+                                <div className="select-subscription-field" style={{ width: "100%" }}>
+                                    <input
                                         type="text"
                                         id="cost"
                                         name="cost"
@@ -186,7 +215,7 @@ const SelectSubscription = () => {
                                     onChange={e => setCost(e.target.value)}
                                 /> */}
                                 <div className="select-subscription-div-5">
-                                    <img src="/back.png" />
+                                    {/* <img src="/back.png" /> */}
                                     {/* <Button
                                         className="select-subscription-button-instance"
                                         icon="left"
@@ -195,6 +224,15 @@ const SelectSubscription = () => {
                                         text="Back"
                                         type="secondary"
                                     /> */}
+                                    {(API_URL == "http://localhost:3000" || API_URL == "https://api.jybe.ca") && <Button
+                                        className="user-info-button-instance thirty"
+                                        icon="right"
+                                        size="lg"
+                                        state="default"
+                                        text="testingReset"
+                                        type="primary"
+                                        onClick={testingReset}
+                                    />}
                                     <Button
                                         className={`select-subscription-button-instance thirty ${!cost || isNaN(cost) || parseInt(cost) < 100 ? "disabled" : ""}`}
                                         icon="right"
@@ -212,7 +250,7 @@ const SelectSubscription = () => {
                     </div>
                     <Footer />
                 </div>
-                <Navbar/>
+                <Navbar />
             </div>
         </div>
     )

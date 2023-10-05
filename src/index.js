@@ -7,6 +7,7 @@ import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from 'react-router-dom';
 const domain = process.env.REACT_APP_DOMAIN;
 const clientId = process.env.REACT_APP_CLIENT_ID;
+
 //const redirectUri = process.env.REACT_APP_AUTH0_CALLBACK_URL;
 
 const root = ReactDOM.createRoot(document.getElementById("root"));

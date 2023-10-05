@@ -1,5 +1,4 @@
 import React, { useState, useEffect, useContext } from 'react';
-import TopBar from "../TopBar";
 import FlinksConnect from "../private/FlinksConnect";
 import { AccountContext } from '../../ProtectedRoute';
 import { Elements } from '@stripe/react-stripe-js';
@@ -17,7 +16,7 @@ const Approved = () => {
     const [checkoutUrl, setCheckoutUrl] = useState()
     const context = useContext(AccountContext);
     const { accountContext, setAccountContext, user, accessToken, navigate } = context
-    console.log(accountContext)
+    // console.log(accountContext)
 
 
     useEffect(() => {
@@ -27,7 +26,11 @@ const Approved = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify({ merchant_name: 'netflix', merchant_id: '70563657-c036-47e5-9248-1bc9bd7c95d8', amount: accountContext.cost, email: user.email, user_id: accountContext.user_id, order_id:accountContext.order_id })
+            body: JSON.stringify({ 
+                merchant_name: accountContext.merchantName, merchant_id: accountContext.merchant_id, 
+                amount: accountContext.cost, email: user.email, user_id: accountContext.user_id, 
+                order_id:accountContext.order_id, origin: window.location.origin 
+            })
         })
             .then(response => response.json())
             .then(res => setCheckoutUrl(res.url))
@@ -61,11 +64,11 @@ const Approved = () => {
                                             <div className="approved-text-wrapper-6">For 12 months</div>
                                         </div>
                                     </div>
-                                    <div className="approved-frame-7">
+                                    {accountContext.og_monthly_cost && <div className="approved-frame-7">
                                         <div className="approved-text-wrapper-7">You Save</div>
-                                        <div className="approved-text-wrapper-7">${(((accountContext.cost/12) * 1.15) - accountContext.og_monthly_cost).toFixed(2) }</div>
+                                        {accountContext.og_monthly_cost && <div className="approved-text-wrapper-7">${(parseFloat(accountContext.og_monthly_cost) - ((accountContext.cost/12) * 1.15)).toFixed(2)}</div>}
                                         <div className="approved-text-wrapper-5">/ month</div>
-                                    </div>
+                                    </div>}
                                     <div className="approved-frame-8">
                                         <div className="approved-frame-9">
                                             <div className="approved-text-wrapper-8">APR</div>
@@ -73,7 +76,7 @@ const Approved = () => {
                                         </div>
                                         <div className="approved-frame-10">
                                             <div className="approved-text-wrapper-8">INTEREST</div>
-                                            <div className="approved-text-wrapper-9">${accountContext.cost*0.15}  </div>
+                                            <div className="approved-text-wrapper-9">${(accountContext.cost*0.15).toFixed(2)}  </div>
                                         </div>
                                         <div className="approved-frame-11">
                                             <div className="approved-text-wrapper-8">TOTAL</div>
@@ -82,7 +85,7 @@ const Approved = () => {
                                     </div>
                                 </div> : <div>context error </div> }
                                 <div className="approved-div-5">
-                                    <img src="/back.png" />
+                                    {/* <img src="/back.png" /> */}
                                     <Button
                                         className="approved-button-instance thirty"
                                         icon="right"
@@ -90,6 +93,7 @@ const Approved = () => {
                                         state="default"
                                         text="Continue"
                                         type="primary"
+                                        onClick={() => window.location.replace(checkoutUrl)}
                                     />
                                 </div>
                             </div>

@@ -7,9 +7,11 @@ import "../../css/style.css";
 import { PaymentCalculator } from "./PaymentCalculator";
 import {Footer} from "../elements/Footer.js"
 import { useNavigate } from "react-router-dom";
+import { useAuth0 } from '@auth0/auth0-react';
 
 const Home = () => {
   const navigate = useNavigate();
+  const { loginWithRedirect } = useAuth0();
   const [selectedCarousel, setSelectedCarousel] = useState(1)
 
   return (
@@ -30,11 +32,15 @@ const Home = () => {
                   state="default"
                   text="Start Jybing"
                   type="primary"
-                  onClick={() => navigate("/userinfo")}
+                  onClick={() => loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})}
                 />
               </div>
               <div className="img-3">
-                <img
+                <img 
+                  style={{height:"100%"}}
+                  src="/savingswoman.png"
+                />
+                {/* <img
                   className="card"
                   alt="Card"
                   src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/card-1@2x.png"
@@ -64,7 +70,7 @@ const Home = () => {
                   className="woman"
                   alt="woman happy with savings"
                   src={Melatonin}
-                />
+                /> */}
               </div>
             </div>
             <div className="group">
@@ -256,7 +262,7 @@ const Home = () => {
                     state="default"
                     text="Start Jybing"
                     type="primary"
-                    onClick={() => navigate("/userinfo")}
+                    onClick={() => loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})}
                   />
                 </div>
               </div>
@@ -406,26 +412,6 @@ const Home = () => {
                       <div className="carousel-header">Enjoy Monthly Payments</div>
                       <div className="carousel-paragraph">You'll pay Jybe back in convenient cheaper monthly payments.</div>
                   </div>
-                  {/* <img
-                    className="card-3"
-                    alt="Card"
-                    src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/card.png"
-                  />
-                  <img
-                    className="card-4"
-                    alt="Card"
-                    src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/card-2.png"
-                  />
-                  <img
-                    className="card-4"
-                    alt="Card"
-                    src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/card-3.png"
-                  />
-                  <img
-                    className="card-4"
-                    alt="Card"
-                    src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/card-4.png"
-                  /> */}
                 </div>
               </div>
             </div>

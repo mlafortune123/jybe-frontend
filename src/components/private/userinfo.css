@@ -173,12 +173,7 @@
     position: relative;
     width: 100%;
   }
-  
-  .user-info-button-instance {
-    background-color: #243b6c !important;
-    flex: 0 0 auto !important;
-  }
-  
+
   .user-info .img-2 {
     align-self: stretch;
     position: relative;
@@ -836,3 +831,14 @@
   .red-outline {
     border: 1px solid red!important;
   }
+
+.consent-text{
+  font-size: 10px;
+  color: #5d5d5d;
+  font-weight: 400;
+}
+
+.conscon{
+  display: flex;
+    align-items: center;
+}

@@ -52,7 +52,7 @@ return (
               <div className="signup-frame-2">
                 <div className="signup-input">
                   <input 
-                  placeholder="you@example.com"
+                  placeholder="Enter your email here"
                   className="signup-text-wrapper-3"
                   value={email}
                   onChange={e => setEmail(e.target.value)}
@@ -64,17 +64,17 @@ return (
               </div>
             </div>
             <div className="signup-frame-3">
-              <div className="signup-form">
+              <div className="signup-frame-wrapper blue-border">
                 <div className="signup-frame-4">
-                  <div className="signup-text-wrapper-4">Over 20%</div>
+                  <div className="signup-header-wrapper blue-text">Over 20%</div>
                   <p className="signup-text-wrapper-5">
-                  The amount you could be saving every month off your subscriptions
+                  The amount you could save every month on your subscriptions
                   </p>
                 </div>
               </div>
-              <div className="signup-frame-wrapper">
+              <div className="signup-frame-wrapper green-border">
                 <div className="signup-frame-4">
-                  <div className="signup-text-wrapper-6">Save $892.5</div>
+                  <div className="signup-header-wrapper green-text">Save $892.50</div>
                   <p className="signup-text-wrapper-5">
                   This is how much you could be saving each year by using Jybe.
                   </p>

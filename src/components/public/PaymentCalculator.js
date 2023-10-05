@@ -100,7 +100,7 @@ export const PaymentCalculator = () => {
                                             (selectedItems[0].price * 0.15).toFixed(2)
                                         }
                                         </span>
-                                        <span className="text-wrapper-9"> Monthly</span>
+                                        <span className="text-wrapper-9">&nbsp;Monthly</span>
                                     </p>
                                 </div>
                                 <div className="text-wrapper-10">&amp;</div>
@@ -114,7 +114,7 @@ export const PaymentCalculator = () => {
                                                 (selectedItems[0].price * 12 * 0.15).toFixed(2)
                                             }
                                         </span>
-                                        <span className="text-wrapper-9"> Yearly</span>
+                                        <span className="text-wrapper-9">&nbsp;Yearly</span>
                                     </p>
                                 </div>
                             </div>}

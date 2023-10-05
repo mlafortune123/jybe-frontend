@@ -1,6 +1,5 @@
 import React, { useState, useEffect, useContext } from 'react';
 import { TextField } from '@mui/material';
-import TopBar from "../TopBar";
 import Select from 'react-select';
 import FlinksConnect from "../private/FlinksConnect";
 import { AccountContext } from '../../ProtectedRoute';
@@ -19,6 +18,7 @@ const UserInfo = () => {
     const context = useContext(AccountContext);
     const { accountContext, setAccountContext, user, accessToken, navigate } = context
     const [selectedProvince, setSelectedProvince] = useState('ON');
+    const [consent, setConsent] = useState(false)
     const [emptyFields, setEmptyFields] = useState([]);
     const provinceOptions = [
         { value: 'AB', label: 'Alberta' },
@@ -40,7 +40,7 @@ const UserInfo = () => {
         lastName: 'Nyon',
         address: '1066 Heenan Terr',
         zip: 'N2A4C9',
-        phone: '1231231234',
+        phone: 1231231234,
         dob: '1976-03-13',
         country: 'Canada',
         city: 'Kitchener'
@@ -63,28 +63,11 @@ const UserInfo = () => {
     //         })
     // }, [accessToken])
 
-    const handleChange = (name, newValue) => {
-        console.log(name, newValue)
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: newValue }));
+    const handleChange = (name, newValue, type) => {
+        console.log(name, newValue, type)
+        console.log(typeof (newValue))
+        typeof (newValue) == type && setFormData((prevFormData) => ({ ...prevFormData, [name]: newValue }));
     };
-
-const testingReset = () => {
-    fetch(`${API_URL}/orders/delete/asasd`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        }
-    })
-    .then(we =>     
-        fetch(`${API_URL}/users/delete/asasd`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        }
-    }))
-}
 
     const handleSubmit = (e) => {
         const requiredFields = [
@@ -96,7 +79,7 @@ const testingReset = () => {
             "dob",
             "country",
             "city"
-          ];
+        ];
         if (formData.country != "Canada") {
             window.alert("We can only provide services to those with Canadian addresses at this time")
             return
@@ -117,6 +100,10 @@ const testingReset = () => {
             window.alert("Please fill out all required fields.");
             return; // Stop further execution
         }
+        if (!consent) {
+            window.alert("Please consent to the transunion soft credit check")
+            return;
+        }
         setFormData({ ...formData })
         fetch(`${API_URL}/users/create`, {
             method: 'POST',
@@ -136,7 +123,8 @@ const testingReset = () => {
                 }
                 else {
                     setAccountContext((prevContext) => ({ ...prevContext, user_id: res.user_id, formData, province: selectedProvince.value }))
-                    res.user_id ? navigate("/select_subscription") : navigate("/error")
+                    // res.user_id ? navigate("/select_subscription") : navigate("/error")
+                    res.approved ? navigate("/approved") : navigate("/denied")
                 }
             })
     };
@@ -148,7 +136,7 @@ const testingReset = () => {
                 <div className="userinfo-body">
                     <div className="user-info-section">
                         <div className="div-3">
-                            <Steps selected={1} />
+                            <Steps selected={2} />
                             <div className="form">
                                 <div className="text-wrapper-6">Account Details</div>
                                 <p className="p">
@@ -162,6 +150,7 @@ const testingReset = () => {
                                         value={formData.firstName}
                                         onChange={handleChange}
                                         className={emptyFields.includes("firstName") && "red-outline"}
+                                        type="string"
                                     />
                                     <InputsText
                                         name="lastName"
@@ -169,6 +158,7 @@ const testingReset = () => {
                                         value={formData.lastName}
                                         onChange={handleChange}
                                         className={emptyFields.includes("lastName") && "red-outline"}
+                                        type="string"
                                     />
                                     <TextField
                                         className={emptyFields.includes("dob") ? "design-component-instance-node-2 red-outline" : "design-component-instance-node-2"}
@@ -177,24 +167,38 @@ const testingReset = () => {
                                         type="date"
                                         name="dob"
                                         value={formData.dob}
-                                        onChange={(e) => handleChange("dob", e.target.value)}
+                                        onChange={(e) => handleChange("dob", e.target.value, 'string')}
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
                                     />
-                                    <InputsText
+                                    {/* <InputsText
                                         className={emptyFields.includes("phone") && "red-outline"}
                                         name="phone"
-                                        label="Phone Number"
+                                        label={18002672001}
                                         value={formData.phone}
                                         onChange={handleChange}
-                                    />
+                                        type="number"
+                                    /> */}
+                                    <div className={`inputs-text design-component-instance-node-2`}>
+                                        <div className={`frame-2 default ${emptyFields.includes("phone") && "red-outline"}`}>
+                                            <div className="password-2">
+                                                <input
+                                                    value={formData.phone}
+                                                    onChange={(e) => handleChange("phone", parseInt(e.target.value), "number")}
+                                                    placeholder={18002672001}
+                                                    type="number"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <InputsText
                                         className={emptyFields.includes("address") && "red-outline"}
                                         name="address"
                                         label="Address"
                                         value={formData.address}
                                         onChange={handleChange}
+                                        type="string"
                                     />
                                     <InputsText
                                         className={emptyFields.includes("city") && "red-outline"}
@@ -202,6 +206,7 @@ const testingReset = () => {
                                         label="City"
                                         value={formData.city}
                                         onChange={handleChange}
+                                        type="string"
                                     />
                                     <InputsText
                                         className={emptyFields.includes("zip") && "red-outline"}
@@ -209,6 +214,7 @@ const testingReset = () => {
                                         label="Zip Code"
                                         value={formData.zip}
                                         onChange={handleChange}
+                                        type="string"
                                     />
                                     <div className={`${emptyFields.includes("province") && "red-outline"} select-field design-component-instance-node-2`}>
                                         <div className={`field property-1-default`}>
@@ -238,16 +244,15 @@ const testingReset = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="button-wrapper">
-                                    {(API_URL == "http://localhost:3000" || API_URL == "https://api.jybe.ca") && <Button
-                                        className="user-info-button-instance thirty"
-                                        icon="right"
-                                        size="lg"
-                                        state="default"
-                                        text="testingReset"
-                                        type="primary"
-                                        onClick={testingReset}
-                                    />}
+                                <div className="button-wrapper"  style={{justifyContent:"space-between", flexDirection:"row", alignItems:"center"}} >
+                                    <div className='conscon' >
+                                        <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)}  className="checkbox-input" />
+                                        <p style={{marginLeft:'5px'}} >I consent</p>
+                                    </div>
+                                    {/* <div className="consent-container">
+                                        <label htmlFor="check" className="checkbox-label">I consent</label>
+                                        <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)}  className="checkbox-input" />
+                                    </div> */}
                                     <Button
                                         className="user-info-button-instance thirty"
                                         icon="right"
@@ -258,6 +263,7 @@ const testingReset = () => {
                                         onClick={handleSubmit}
                                     />
                                 </div>
+                                <p class="consent-text">By clicking here you consent to us TransUnion doing a soft credit check on the given information.</p>
                             </div>
                         </div>
                         <img

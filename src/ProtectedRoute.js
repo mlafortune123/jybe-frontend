@@ -24,13 +24,13 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     .then(res => {
         if (res[0]) {
             setAccountContext({user:res[0]})
-            window.alert('You appear to already have an account, you will now be redirected to the MyAccount page.')
+            window.alert('You appear to already have an account, please click the testing reset button.')
             //navigate("/approved")
         }
     })
     }
     getToken()
-  },[getAccessTokenSilently])
+  },[])
 
     if (isLoading) {
         return <Loading />; // Render a loading indicator while authentication state is being determined
