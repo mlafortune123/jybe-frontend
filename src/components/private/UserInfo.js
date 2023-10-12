@@ -40,7 +40,7 @@ const UserInfo = () => {
         lastName: 'Nyon',
         address: '1066 Heenan Terr',
         zip: 'N2A4C9',
-        phone: 1231231234,
+        phone: 18002672001,
         dob: '1976-03-13',
         country: 'Canada',
         city: 'Kitchener'
@@ -105,13 +105,23 @@ const UserInfo = () => {
             return;
         }
         setFormData({ ...formData })
-        fetch(`${API_URL}/users/create`, {
+        //fetch(`${API_URL}/users/create`, {
+        const queryString = window.location.search;
+        const urlParams = new URLSearchParams(queryString);
+
+        // Access the data from the query parameters
+        const cost = urlParams.get('cost');
+        const merchantName = urlParams.get('merchantName');
+        const ogMonthlyCost = urlParams.get('ogMonthlyCost');
+        fetch(`${API_URL}/orders/create`, {    
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value })
+            body: JSON.stringify({ ...formData, email: user.email, province: selectedProvince.value, cost: cost, merchant_name : merchantName, og_monthly_cost: ogMonthlyCost
+            //body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value, order_id : accountContext.order_id 
+        })
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
@@ -122,7 +132,7 @@ const UserInfo = () => {
                     window.alert(res.error)
                 }
                 else {
-                    setAccountContext((prevContext) => ({ ...prevContext, user_id: res.user_id, formData, province: selectedProvince.value }))
+                    setAccountContext((prevContext) => ({ ...prevContext, user_id: res.user_id, order_id: res.order_id , merchant_id: res.merchant_id , formData, province: selectedProvince.value }))
                     // res.user_id ? navigate("/select_subscription") : navigate("/error")
                     res.approved ? navigate("/approved") : navigate("/denied")
                 }
@@ -263,7 +273,7 @@ const UserInfo = () => {
                                         onClick={handleSubmit}
                                     />
                                 </div>
-                                <p class="consent-text">By clicking here you consent to us TransUnion doing a soft credit check on the given information.</p>
+                                <p class="consent-text">I consent to Jybe sharing my data with and obtaining my credit history and credit score from TransUnion of Canada Inc. in order for Jybe to assess if credit will be granted. This will not affect my credit score. My consent is valid starting today and for as long as I use Jybes services.</p>
                             </div>
                         </div>
                         <img

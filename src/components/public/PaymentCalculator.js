@@ -15,7 +15,7 @@ export const PaymentCalculator = () => {
       };
 
     return (
-        <div className="div-3">
+        <div className="div-3 lose-the-padding">
             <div className="calculator">
                 <div className="frame-8">
                     <p className="text-wrapper-2">Calculate Your Savings With Jybe</p>
@@ -26,7 +26,7 @@ export const PaymentCalculator = () => {
                 <div className="frame-7">
                     <div className="frame-9">
                         <div className="brand-list">
-                            <div className="text-wrapper-4">Select Company</div>
+                            <div className="text-wrapper-4">Select Your Subscription</div>
                             <div className="frame-10">
                                 <div className="frame-11">
                                     {subs.map((sub) =>
@@ -75,10 +75,10 @@ export const PaymentCalculator = () => {
                                     <img
                                         className="frame-18"
                                         alt="Frame"
-                                        src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64e3abf57f6aa148a586a050/img/frame-15.svg"
+                                        src={window.screen.width > 761 ? "/bigarrow.png" : "/smallarrow.png"}
                                     />
                                     <div className="frame-16">
-                                        <div className="text-wrapper-7">Yearly Subscription</div>
+                                        <div className="text-wrapper-6">Yearly Subscription</div>
                                         <div className="frame-17">
                                             <div className="text-wrapper-5">${((item.price * 12) * 0.85).toFixed(2)}</div>
                                         </div>
@@ -100,10 +100,10 @@ export const PaymentCalculator = () => {
                                             (selectedItems[0].price * 0.15).toFixed(2)
                                         }
                                         </span>
-                                        <span className="text-wrapper-9">&nbsp;Monthly</span>
+                                        <span className="span">&nbsp;Monthly</span>
                                     </p>
                                 </div>
-                                <div className="text-wrapper-10">&amp;</div>
+                                <div className="span">&amp;</div>
                                 <div className="frame-22">
                                     <p className="div-4">
                                         <span className="span">
@@ -114,7 +114,7 @@ export const PaymentCalculator = () => {
                                                 (selectedItems[0].price * 12 * 0.15).toFixed(2)
                                             }
                                         </span>
-                                        <span className="text-wrapper-9">&nbsp;Yearly</span>
+                                        <span className="span">&nbsp;Yearly</span>
                                     </p>
                                 </div>
                             </div>}

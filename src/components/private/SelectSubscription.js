@@ -1,23 +1,45 @@
-import React, { useState, useContext } from 'react';
-import { AccountContext } from '../../ProtectedRoute';
+import React, { useState, useContext, useRef, useEffect } from 'react';
+//import { AccountContext } from '../../ProtectedRoute';
 import { Footer } from "../elements/Footer.js"
 import { Navbar } from "../elements/Navbar.js";
 import { Steps } from "../elements/Steps.js";
 import { Button } from "../elements/Button";
 import subs from "../public/subscriptions.json"
 import { ConcreteComponentNode } from "../elements/ConcreteComponentNode";
+import { useAuth0 } from '@auth0/auth0-react';
 import "./userinfo.css"
 import "../../css/style.css";
 import "./selectsubscription.css"
+import "../../css/phonecss.css"
 
 const API_URL = process.env.REACT_APP_API_URL
 const SelectSubscription = () => {
-    const context = useContext(AccountContext);
-    const { accountContext, setAccountContext, user, accessToken, navigate } = context
+    //const context = useContext(AccountContext);
+    const { loginWithRedirect } = useAuth0();
+    // const { 
+    //     //accountContext, 
+    //     setAccountContext
+    // //    , user, accessToken, navigate 
+    // } = context
     const [selectedItem, setSelectedItem] = useState();
     const [merchantName, setMerchantName] = useState()
     const [cost, setCost] = useState()
     const [ogMonthlyCost, setOgMonthlyCost] = useState()
+    // Create a ref for the div with class "select-subscription-div-3"
+    const selectSubscriptionDivRef = useRef(null);
+
+    // State to store the height of the target div
+    const [targetDivHeight, setTargetDivHeight] = useState(0);
+
+    useEffect(() => {
+        if (selectSubscriptionDivRef.current) {
+            // Get the height of the "select-subscription-div-3" div
+            const height = selectSubscriptionDivRef.current.offsetHeight;
+            // Update the state with the height
+            setTargetDivHeight(height);
+        }
+    }, []);
+
 
     const clearCostPlaceHolder = () => {
         cost == "Annual Subscription Cost" && setCost("")
@@ -62,70 +84,48 @@ const SelectSubscription = () => {
             return;
         }
         else {
-            fetch(`${API_URL}/orders/select`, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                    'Authorization': `Bearer ${accessToken}`
-                },
-                body: JSON.stringify({
-                    // formData: accountContext.formData,
-                    // province: accountContext.province,
-                    cost,
-                    og_monthly_cost: ogMonthlyCost,
-                    merchant_name: selectedItem ? selectedItem.name : merchantName
-                })
-            })
-                .then(response => {
-                    if (response.status == 401) window.location.reload()
-                    return response.json()
-                })
-                .then(res => {
-                    if (res.error) {
-                        window.alert(res.error)
-                    }
-                    else {
-                        //setAccountContext((prevContext) => ({ ...prevContext, order_id: res.order_id, merchant_id: res.merchant_id, cost, }))
-                        setAccountContext((prevContext) => ({ ...prevContext, order_id: res.order_id, cost, merchantName : selectedItem ? selectedItem : merchantName, og_monthly_cost: ogMonthlyCost, merchant_id : res.merchant_id }))
-                        navigate("/select_subscription")
+            const queryParams = new URLSearchParams();
+            queryParams.append('cost', cost);
+            queryParams.append('merchantName', selectedItem ? selectedItem : merchantName);
+            queryParams.append('ogMonthlyCost', ogMonthlyCost);
 
-                        //res.approved ? navigate("/approved") : navigate("/denied")
-                    }
-                })
+            const queryString = queryParams.toString();
+            //setAccountContext({ cost, merchantName: selectedItem ? selectedItem : merchantName, ogMonthlyCost })
+            loginWithRedirect({ openUrl: () => window.location.replace(`/select_subscription?${queryString}`) })
         }
     };
 
-    const testingReset = () => {
-        fetch(`${API_URL}/orders/delete/asasd`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
-            }
-        })
-        .then(we =>     
-            fetch(`${API_URL}/users/delete/asasd`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${accessToken}`
-            }
-        }))
-        .then(we2 => window.alert("reset complete"))
+    // const testingReset = () => {
+    //     fetch(`${API_URL}/orders/delete/asasd`, {
+    //         method: 'GET',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': `Bearer ${accessToken}`
+    //         }
+    //     })
+    //         .then(we =>
+    //             fetch(`${API_URL}/users/delete/asasd`, {
+    //                 method: 'GET',
+    //                 headers: {
+    //                     'Content-Type': 'application/json',
+    //                     'Authorization': `Bearer ${accessToken}`
+    //                 }
+    //             }))
+    //         .then(we2 => window.alert("reset complete"))
+    // }
+
+    const handleMerchantChange = (e) => {
+        setSelectedItem(e.target.value.toLowerCase())
+        setMerchantName(e.target.value)
+
     }
-
-const handleMerchantChange = (e) => {
-    setSelectedItem(e.target.value.toLowerCase())
-    setMerchantName(e.target.value)
-
-}
 
     return (
         <div className="select-subscription">
             <div className="select-subscription-div-2">
                 <div className="select-subscription-body">
                     <div className="select-subscription-section">
-                        <div className="select-subscription-div-3">
+                        <div className="select-subscription-div-3" ref={selectSubscriptionDivRef} >
                             <Steps selected={1} />
                             <div className="select-subscription-form">
                                 <div className="select-subscription-text-wrapper-3">Select Your Subscription</div>
@@ -187,7 +187,7 @@ const handleMerchantChange = (e) => {
                                         id="cost"
                                         name="cost"
                                         className="select-subscription-text-wrapper-6"
-                                        placeholder="Monthly Cost"
+                                        placeholder="Monthly Subscription Cost"
                                         value={ogMonthlyCost}
                                         onChange={e => setOgMonthlyCost(e.target.value)}
                                         onClick={clearOgCostPlaceHolder}
@@ -200,20 +200,25 @@ const handleMerchantChange = (e) => {
                                         id="cost"
                                         name="cost"
                                         className="select-subscription-text-wrapper-6"
-                                        placeholder="Annual Cost"
+                                        placeholder="Annual Subscription Cost"
                                         value={cost}
                                         onChange={e => setCost(e.target.value)}
                                         onClick={clearCostPlaceHolder}
                                         onBlur={restoreCostPlaceHolder}
                                     />
                                 </div>
-                                {/* <InputsText
-                                    className="select-subscription-field select-subscription-text-wrapper-6"
-                                    name="cost"
-                                    label="Annual Subscription Cost"
-                                    value={cost}
-                                    onChange={e => setCost(e.target.value)}
-                                /> */}
+                                <div className='prices-container' >
+                                    <div className='red-container' >
+                                        <div className='prices' >
+                                            Price: {cost && `$${((cost / 12) * 1.15).toFixed(2)}`}
+                                        </div>
+                                    </div>
+                                    <div className='savings-container' >
+                                        <div className='prices' >
+                                            You save: {cost && ogMonthlyCost && `$${(ogMonthlyCost - ((cost / 12) * 1.15)).toFixed(2)}`}
+                                        </div>
+                                    </div>
+                                </div>
                                 <div className="select-subscription-div-5">
                                     {/* <img src="/back.png" /> */}
                                     {/* <Button
@@ -224,7 +229,7 @@ const handleMerchantChange = (e) => {
                                         text="Back"
                                         type="secondary"
                                     /> */}
-                                    {(API_URL == "http://localhost:3000" || API_URL == "https://api.jybe.ca") && <Button
+                                    {/* {(API_URL == "http://localhost:3000" || API_URL == "https://api.jybe.ca") && <Button
                                         className="user-info-button-instance thirty"
                                         icon="right"
                                         size="lg"
@@ -232,7 +237,7 @@ const handleMerchantChange = (e) => {
                                         text="testingReset"
                                         type="primary"
                                         onClick={testingReset}
-                                    />}
+                                    />} */}
                                     <Button
                                         className={`select-subscription-button-instance thirty ${!cost || isNaN(cost) || parseInt(cost) < 100 ? "disabled" : ""}`}
                                         icon="right"
@@ -246,12 +251,15 @@ const handleMerchantChange = (e) => {
                                 </div>
                             </div>
                         </div>
-                        <img className="select-subscription-img" src="/subimg.png" />
+                        <div className='yellow-background' style={{ height: `${targetDivHeight + 50}px` }}>
+                            <img className="select-subscription-img" src="/subimg.png" />
+                        </div>
                     </div>
                     <Footer />
                 </div>
-                <Navbar />
+
             </div>
+            <Navbar />
         </div>
     )
 

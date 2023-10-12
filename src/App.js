@@ -36,9 +36,10 @@ function App() {
       <Route path="/select_subscription" element={
         <ProtectedRoute component={UserInfo} />
       } />
-      <Route path="/userinfo" element={
+      {/* <Route path="/userinfo" element={
         <ProtectedRoute component={SelectSubscription} />
-      } />
+      } /> */}
+      <Route path="/userinfo" element={<SelectSubscription/>}/>
       <Route path="/card" element={
         <ProtectedRoute component={Card} />
       } />

@@ -8,6 +8,7 @@ import { Navbar } from "../elements/Navbar.js";
 import { Steps } from "../elements/Steps.js";
 import { Button } from "../elements/Button";
 import "./approved.css"
+import subs from "../public/subscriptions.json"
 const STRIPE_KEY = process.env.REACT_APP_STRIPE_KEY
 const API_URL = process.env.REACT_APP_API_URL
 const stripePromise = loadStripe(STRIPE_KEY)
@@ -16,11 +17,25 @@ const Approved = () => {
     const [checkoutUrl, setCheckoutUrl] = useState()
     const context = useContext(AccountContext);
     const { accountContext, setAccountContext, user, accessToken, navigate } = context
+    const [selectedSub, setSelectedSub] = useState("")
     // console.log(accountContext)
 
+    useEffect(() => {
+        // Iterate through the subs array
+        for (const sub of subs) {
+          if (accountContext.merchantName === sub.name) {
+            // If there's a match, set the selected sub to the image
+            setSelectedSub(sub.image);
+            return; // Exit the loop if a match is found
+          }
+        }
+        
+        // If no match is found, set the selected sub to the default image
+        setSelectedSub("/genericsub.png");
+      }, [accountContext.merchantName, setSelectedSub]);
 
     useEffect(() => {
-        accessToken && fetch(`${API_URL}/stripe/create`, {
+        accountContext.merchantName && accessToken && fetch(`${API_URL}/stripe/create`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
@@ -55,14 +70,15 @@ const Approved = () => {
                                     <img
                                         className="approved-fill"
                                         alt="Fill"
-                                        src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64efdb6cc9b892e896e63841/img/fill-14.svg"
+                                        src={selectedSub}
                                     />
                                     <div className="approved-frame-6">
+                                        <div>12 monthly payments of</div>
                                         <div className="approved-text-wrapper-4">${((accountContext.cost/12) * 1.15).toFixed(2)} </div>
                                         <div className="approved-text-wrapper-5">/ month</div>
-                                        <div className="approved-div-wrapper">
+                                        {/* <div className="approved-div-wrapper">
                                             <div className="approved-text-wrapper-6">For 12 months</div>
-                                        </div>
+                                        </div> */}
                                     </div>
                                     {accountContext.og_monthly_cost && <div className="approved-frame-7">
                                         <div className="approved-text-wrapper-7">You Save</div>
