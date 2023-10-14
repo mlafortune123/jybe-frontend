@@ -9,22 +9,24 @@ const API_URL = process.env.REACT_APP_API_URL
 const Card = () => {
   const context = useContext(AccountContext);
   const { accountContext, setAccountContext, user, accessToken, navigate } = context
-    const [cardInfo, setCardInfo] = useState()
+  const [cardInfo, setCardInfo] = useState()
   useEffect(() => {
     accessToken && fetch(`${API_URL}/orders/activate`, {
       method: "GET",
       headers: {
-          'Authorization': `Bearer ${accessToken}`
-      }})
+        'Authorization': `Bearer ${accessToken}`
+      }
+    })
       .then(response => {
         if (response.status == 401) window.location.reload()
         if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
         return response.json()
-    })
+      })
       .then(res => {
         if (res.error) toast.error(res.error)
-        else setCardInfo(res)})
-  },[accessToken])
+        else setCardInfo(res)
+      })
+  }, [accessToken])
 
   // const cardInfo = {
   //   img: '1234 1234 2134 1234',
@@ -38,31 +40,31 @@ const Card = () => {
       <div className="div-2">
         <div className="body">
           <div className="card-section">
-                          <Toaster
-                toastOptions={{
-                  className: '',
-                  style: {
-                    marginTop:'86px',
-                    padding: '16px'
-                  },
-                }}
-              />
+            <Toaster
+              toastOptions={{
+                className: '',
+                style: {
+                  marginTop: '86px',
+                  padding: '16px'
+                },
+              }}
+            />
             {cardInfo ? <div className="card-div">
               <div className="frame-2">
                 <div className='card-header-div'>
-              <img
-              className="microsoft-fluentui"
-              alt="Microsoft fluentui"
-              src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64f4e6be3ac93d9f81e22863/img/microsoft-fluentui-emoji-3d-party-popper-3d-1.svg"
-            />
-                <div className="card-text-wrapper">Your Virtual Card</div>
-                <img
-              className="microsoft-fluentui"
-              alt="Microsoft fluentui"
-              src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64f4e6be3ac93d9f81e22863/img/microsoft-fluentui-emoji-3d-party-popper-3d-1.svg"
-            />
-            </div>
-                <p className="p" style={{margin:'16px'}} >
+                  <img
+                    className="microsoft-fluentui"
+                    alt="Microsoft fluentui"
+                    src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64f4e6be3ac93d9f81e22863/img/microsoft-fluentui-emoji-3d-party-popper-3d-1.svg"
+                  />
+                  <div className="card-text-wrapper">Your Virtual Card</div>
+                  <img
+                    className="microsoft-fluentui"
+                    alt="Microsoft fluentui"
+                    src="https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64f4e6be3ac93d9f81e22863/img/microsoft-fluentui-emoji-3d-party-popper-3d-1.svg"
+                  />
+                </div>
+                <p className="p" style={{ margin: '16px' }} >
                   That's it! Take this card to buy your annual subscription and Jybe will bill you back monthly
                 </p>
               </div>
@@ -92,11 +94,11 @@ const Card = () => {
               </div>
             </div>
               :
-              <div className='card-loading-div'  style={{marginTop:'17vh'}} >
-                <div style={{textAlign:'center', marginBottom:'20px'}} >
+              <div className='card-loading-div' style={{ marginTop: '17vh' }} >
+                <div style={{ textAlign: 'center', marginBottom: '20px' }} >
                   Your card is being created! Please hold
                 </div>
-                <img style={{height:'73vh'}} src="/loading.gif" />
+                <img style={{ height: '73vh' }} src="/loading.gif" />
               </div>
             }
           </div>
