@@ -1,15 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField } from '@mui/material';
-import Select from 'react-select';
-import FlinksConnect from "../private/FlinksConnect";
 import { AccountContext } from '../../ProtectedRoute';
 import { Footer } from "../elements/Footer.js"
 import { Navbar } from "../elements/Navbar.js";
 import { Steps } from "../elements/Steps.js";
 import { InputsText } from "../elements/InputsText.js";
-import { SelectField } from "../elements/SelectField.js";
 import { CountryDropdown } from 'react-country-region-selector';
 import { Button } from "../elements/Button";
+import toast, { Toaster } from 'react-hot-toast';
 import "./userinfo.css"
 import "../../css/style.css";
 
@@ -57,7 +55,7 @@ const UserInfo = () => {
     //         .then(res => {
     //             if (res[0]) {
     //                 setAccountContext({ user: res[0] })
-    //                 window.alert('You appear to already have an account, you will now be redirected to the MyAccount page.')
+    //                 toast.error('You appear to already have an account, you will now be redirected to the MyAccount page.')
     //                 //navigate("/approved")
     //             }
     //         })
@@ -81,7 +79,7 @@ const UserInfo = () => {
             "city"
         ];
         if (formData.country != "Canada") {
-            window.alert("We can only provide services to those with Canadian addresses at this time")
+            toast.error("We can only provide services to those with Canadian addresses at this time")
             return
         }
         e.preventDefault();
@@ -97,11 +95,11 @@ const UserInfo = () => {
         ) {
             const missingFields = requiredFields.filter((field) => !formData[field]);
             setEmptyFields(missingFields);
-            window.alert("Please fill out all required fields.");
+            toast.error("Please fill out all required fields.");
             return; // Stop further execution
         }
         if (!consent) {
-            window.alert("Please consent to the transunion soft credit check")
+            toast.error("Please consent to the transunion soft credit check")
             return;
         }
         setFormData({ ...formData })
@@ -113,26 +111,31 @@ const UserInfo = () => {
         const cost = urlParams.get('cost');
         const merchantName = urlParams.get('merchantName');
         const ogMonthlyCost = urlParams.get('ogMonthlyCost');
-        fetch(`${API_URL}/orders/create`, {    
+        fetch(`${API_URL}/orders/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify({ ...formData, email: user.email, province: selectedProvince.value, cost: cost, merchant_name : merchantName, og_monthly_cost: ogMonthlyCost
-            //body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value, order_id : accountContext.order_id 
-        })
+            body: JSON.stringify({
+                ...formData, email: user.email, province: selectedProvince.value, cost: cost, merchant_name: merchantName, og_monthly_cost: ogMonthlyCost
+                //body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value, order_id : accountContext.order_id 
+            })
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
+                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(res => {
                 if (res.error) {
-                    window.alert(res.error)
+                    toast.error(res.error)
                 }
                 else {
-                    setAccountContext((prevContext) => ({ ...prevContext, user_id: res.user_id, order_id: res.order_id , merchant_id: res.merchant_id , formData, province: selectedProvince.value }))
+                    setAccountContext((prevContext) => ({
+                        ...prevContext, user_id: res.user_id, order_id: res.order_id, merchant_id: res.merchant_id,
+                        formData, province: selectedProvince.value, cost, merchantName, ogMonthlyCost
+                    }))
                     // res.user_id ? navigate("/select_subscription") : navigate("/error")
                     res.approved ? navigate("/approved") : navigate("/denied")
                 }
@@ -147,6 +150,15 @@ const UserInfo = () => {
                     <div className="user-info-section">
                         <div className="div-3">
                             <Steps selected={2} />
+                            <Toaster
+                                toastOptions={{
+                                    className: '',
+                                    style: {
+                                        marginTop: '86px',
+                                        padding: '16px'
+                                    },
+                                }}
+                            />
                             <div className="form">
                                 <div className="text-wrapper-6">Account Details</div>
                                 <p className="p">
@@ -254,10 +266,10 @@ const UserInfo = () => {
                                         </div>
                                     </div>
                                 </div>
-                                <div className="button-wrapper"  style={{justifyContent:"space-between", flexDirection:"row", alignItems:"center"}} >
+                                <div className="button-wrapper" style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center" }} >
                                     <div className='conscon' >
-                                        <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)}  className="checkbox-input" />
-                                        <p style={{marginLeft:'5px'}} >I consent</p>
+                                        <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)} className="checkbox-input" />
+                                        <p style={{ marginLeft: '5px' }} >I consent</p>
                                     </div>
                                     {/* <div className="consent-container">
                                         <label htmlFor="check" className="checkbox-label">I consent</label>

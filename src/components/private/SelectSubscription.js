@@ -7,6 +7,7 @@ import { Button } from "../elements/Button";
 import subs from "../public/subscriptions.json"
 import { ConcreteComponentNode } from "../elements/ConcreteComponentNode";
 import { useAuth0 } from '@auth0/auth0-react';
+import toast, { Toaster } from 'react-hot-toast';
 import "./userinfo.css"
 import "../../css/style.css";
 import "./selectsubscription.css"
@@ -71,16 +72,16 @@ const SelectSubscription = () => {
             "merchantName"
         ];
         if (merchantName == "Error") {
-            window.alert("We don't like this merchant")
+            toast.error("We don't like this merchant")
             return
         }
         e.preventDefault();
         if ((!merchantName && !selectedItem)) {
-            window.alert("Please select a merchant from the list, or put your subscription in the custom subscription field.");
+            toast.error("Please select a merchant from the list, or put your subscription in the custom subscription field.");
             return;
         }
         else if (!cost) {
-            window.alert("Please fill in the annual cost field.");
+            toast.error("Please fill in the annual cost field.");
             return;
         }
         else {
@@ -111,7 +112,7 @@ const SelectSubscription = () => {
     //                     'Authorization': `Bearer ${accessToken}`
     //                 }
     //             }))
-    //         .then(we2 => window.alert("reset complete"))
+    //         .then(we2 => toast.error("reset complete"))
     // }
 
     const handleMerchantChange = (e) => {
@@ -127,6 +128,15 @@ const SelectSubscription = () => {
                     <div className="select-subscription-section">
                         <div className="select-subscription-div-3" ref={selectSubscriptionDivRef} >
                             <Steps selected={1} />
+                            <Toaster
+                                toastOptions={{
+                                    className: '',
+                                    style: {
+                                        marginTop: '86px',
+                                        padding: '16px'
+                                    },
+                                }}
+                            />
                             <div className="select-subscription-form">
                                 <div className="select-subscription-text-wrapper-3">Select Your Subscription</div>
                                 <p className="select-subscription-almost-there-select">

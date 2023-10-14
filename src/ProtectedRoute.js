@@ -23,8 +23,8 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     .then(response => response.json())
     .then(res => {
         if (res[0]) {
-            setAccountContext({user:res[0]})
-            window.alert('You appear to already have an account, please click the testing reset button.')
+            setAccountContext((prevContext) => ({...res[0]}))
+            // toast.error('You appear to already have an account, please click the testing reset button.')
             //navigate("/approved")
         }
     })

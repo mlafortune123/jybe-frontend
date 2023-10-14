@@ -109,8 +109,88 @@
     .user-info .div-relative-2{
         padding: 0!important;
     }
-
     .user-info .div-relative{
         padding: 24px 0px!important;
+    }
+    .approved-section{
+        flex-direction: column;
+    }
+    .approved-div-3{
+        width: 100%!important;
+        padding: 140px 14px 0px!important;
+    }
+    .approved-text-wrapper-3{
+        font-size: 28px;
+    }
+    .approved-form{
+        padding: 14px!important;
+        gap: 8px!important;
+    }
+    .approved-frame-5{
+        padding: 14px!important;
+    }
+    .approved-text-wrapper-5{
+        font-size: 12px!important;
+        width: 120px!important;
+    }
+    .approved-text-wrapper-7{
+        font-size: 28px!important;
+    }
+    .approved-frame-9{
+        padding: 8px!important;
+    }
+    .approved-frame-10{
+        padding: 8px!important;
+    }
+    .approved-frame-11{
+        padding: 8px!important;
+    }
+    .approved-img-2{
+        width: auto!important;
+    }
+    .index .jybe-virtual-card-wrapper{
+        flex-direction: column;
+        gap: 14px!important;
+        width: 320px!important;
+    }
+    .card-div{
+        margin-top: 12vh!important;
+    }
+    .index .jybe-virtual-card{
+        height: 200px!important;
+        width: 300px!important;
+    }
+    .card-text-wrapper{
+        font-size: 20px!important;
+    }
+    .card-img{
+        top: 24%!important;
+        font-size: 24px!important;
+    }
+    .expiry{
+        top: 41%!important;
+    left: 47%!important;
+    }
+    .name{
+        top: 41%!important;
+    left: 10%!important;
+    }
+    .cvv{
+        top: 72.5%!important;
+        left: 84%!important;
+        font-size: 12px!important;
+        width: 25px!important;
+        height: 15px!important;
+    }
+    .div-grid{
+        justify-content: space-between!important;
+        flex-direction: column;
+        gap: 20px;
+        align-items: start!important;
+    }
+    .div-7{
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 2.5vh;
     }
 }

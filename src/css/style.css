@@ -2663,3 +2663,8 @@ font-size: 0.75rem;
   font-weight: 600;
   line-height: normal;
 }
+
+  
+.pointer {
+  cursor: pointer;
+}

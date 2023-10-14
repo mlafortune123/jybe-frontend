@@ -1,6 +1,7 @@
 import React, {useState} from "react";
 import { Navbar } from "../elements/Navbar.js";
 import {Footer} from "../elements/Footer.js"
+import toast, { Toaster } from 'react-hot-toast';
 import "../../css/style.css";
 import "./Signup.css"
 const API_URL = process.env.REACT_APP_API_URL
@@ -25,15 +26,15 @@ const SignUp = () => {
         .then(res => res.json())
         .then(res => {
             if (res.error) {
-                window.alert(res.error)
+                toast.error(res.error)
             }
             else {
-                window.alert("Thanks for signing up to our email list! You will be notified when we launch. Have a great day.")
+                toast.success("Thanks for signing up to our email list! You will be notified when we launch. Have a great day.")
             }
             
         })
         :
-        window.alert("Please enter a valid email address")
+        toast.error("Please enter a valid email address")
     }
 return (
     <div className="signup">
@@ -42,6 +43,15 @@ return (
         <div className="signup-section">
           <div className="signup-div-3">
             <div className="signup-heading">
+              <Toaster
+                toastOptions={{
+                  className: '',
+                  style: {
+                    marginTop:'86px',
+                    padding: '16px'
+                  },
+                }}
+              />
               <p className="signup-text-wrapper">Sign Up For Our Waitlist To Save On Your Subscriptions</p>
               <p className="signup-p">
                 Jybe is on a mission to help you access your favorite digital subscriptions for cheaper.

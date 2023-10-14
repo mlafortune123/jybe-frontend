@@ -47,7 +47,11 @@ const Approved = () => {
                 order_id:accountContext.order_id, origin: window.location.origin 
             })
         })
-            .then(response => response.json())
+            .then(response => {
+                if (response.status == 401) window.location.reload()
+                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                return response.json()
+            })
             .then(res => setCheckoutUrl(res.url))
     }, [accessToken])
 
@@ -80,9 +84,9 @@ const Approved = () => {
                                             <div className="approved-text-wrapper-6">For 12 months</div>
                                         </div> */}
                                     </div>
-                                    {accountContext.og_monthly_cost && <div className="approved-frame-7">
+                                    {accountContext.ogMonthlyCost && <div className="approved-frame-7">
                                         <div className="approved-text-wrapper-7">You Save</div>
-                                        {accountContext.og_monthly_cost && <div className="approved-text-wrapper-7">${(parseFloat(accountContext.og_monthly_cost) - ((accountContext.cost/12) * 1.15)).toFixed(2)}</div>}
+                                        {accountContext.ogMonthlyCost && <div className="approved-text-wrapper-7">${(parseFloat(accountContext.ogMonthlyCost) - ((accountContext.cost/12) * 1.15)).toFixed(2)}</div>}
                                         <div className="approved-text-wrapper-5">/ month</div>
                                     </div>}
                                     <div className="approved-frame-8">
