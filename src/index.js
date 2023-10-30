@@ -19,7 +19,7 @@ root.render(
       clientId={clientId}
       authorizationParams={{
         audience:'https://api.jybe.ca',
-        redirect_uri: window.location.href,
+        redirect_uri: window.location.origin + window.location.pathname + window.location.search,
       }}
     >
       <Router>

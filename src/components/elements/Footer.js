@@ -14,7 +14,7 @@ export const Footer = () => {
           <div className="div-6">
             <div className="text-wrapper-22">Save On Subscriptions</div>
             <p className="text-wrapper-3">
-              Jybe is a BNPL service that helps consumer access their digital subscriptions for the cheapest
+              Jybe is a BNPL service that helps consumers access their digital subscriptions for the cheapest
               possible monthly price!
             </p>
           </div>

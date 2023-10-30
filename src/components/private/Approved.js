@@ -24,8 +24,9 @@ const Approved = () => {
     useEffect(() => {
         // Iterate through the subs array
         for (const sub of subs) {
-            if (accountContext.merchantName === sub.name) {
+            if (accountContext.merchantName === sub.name || accountContext.user?.merchant_name == sub.name) {
                 // If there's a match, set the selected sub to the image
+                console.log(accountContext.user?.merchant_name)
                 setSelectedSub(sub.image);
                 return; // Exit the loop if a match is found
             }
@@ -33,19 +34,24 @@ const Approved = () => {
 
         // If no match is found, set the selected sub to the default image
         setSelectedSub("/genericsub.png");
-    }, [accountContext.merchantName, setSelectedSub]);
+    }, [accountContext.merchantName]);
 
     useEffect(() => {
-        accountContext.merchantName && accessToken && fetch(`${API_URL}/stripe/create`, {
+
+        (accountContext.merchantName || accountContext.user?.merchant_name) && accessToken && fetch(`${API_URL}/stripe/create`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                merchant_name: accountContext.merchantName, merchant_id: accountContext.merchant_id,
-                amount: accountContext.cost, email: user.email, user_id: accountContext.user_id,
-                order_id: accountContext.order_id, origin: window.location.origin
+                merchant_name: accountContext.merchantName || accountContext.user?.merchant_name,
+                merchant_id: accountContext.merchant_id || accountContext.user?.merchant_id,
+                amount: accountContext.cost || accountContext.user?.amount ,
+                email: user.email,
+                user_id: accountContext.user_id || accountContext.user?.user_id,
+                order_id: accountContext.order_id || accountContext.user?.order_id,
+                origin: window.location.origin
             })
         })
             .then(response => {
@@ -54,7 +60,8 @@ const Approved = () => {
                 return response.json()
             })
             .then(res => setCheckoutUrl(res.url))
-    }, [accessToken])
+            console.log(accountContext.user)
+    }, [accountContext, accountContext.user])
 
     return (
         <div className="approved-index">
@@ -80,50 +87,75 @@ const Approved = () => {
                                 />
                                 <div className="approved-text-wrapper-3">You’re approved!</div>
                                 <p className="approved-p">Please see the details of your card payments for your subscription below.</p>
-                                {accountContext ? <div className="approved-frame-5">
-                                    <img
-                                        className="approved-fill"
-                                        alt="Fill"
-                                        src={selectedSub}
-                                    />
-                                    <div className="approved-frame-6">
-                                        <div>12 monthly payments of</div>
-                                        <div className="approved-text-wrapper-4">${((accountContext.cost / 12) * 1.15).toFixed(2)} </div>
-                                        <div className="approved-text-wrapper-5">/ month</div>
-                                        {/* <div className="approved-div-wrapper">
+                                {(accountContext.merchantName || accountContext.user?.merchant_name) ?
+                                    <div className="approved-frame-5">
+                                        <img
+                                            className="approved-fill"
+                                            alt="Fill"
+                                            src={selectedSub}
+                                        />
+                                        <div className="approved-frame-6">
+                                            <div>12 monthly payments of</div>
+                                            <div className="approved-text-wrapper-4">$
+                                                {
+                                                    (accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ? 
+                                                    ((accountContext.cost / 12 * 1.15).toFixed(2)) : 
+                                                    ((accountContext.user.amount / 12 * 1.15).toFixed(2))  
+                                                }
+                                            </div>
+                                            <div className="approved-text-wrapper-5">/ month</div>
+                                            {/* <div className="approved-div-wrapper">
                                             <div className="approved-text-wrapper-6">For 12 months</div>
                                         </div> */}
-                                    </div>
-                                    {accountContext.ogMonthlyCost && <div className="approved-frame-7">
-                                        <div className="approved-text-wrapper-7">You Save</div>
-                                        {accountContext.ogMonthlyCost && <div className="approved-text-wrapper-7">${(parseFloat(accountContext.ogMonthlyCost) - ((accountContext.cost / 12) * 1.15)).toFixed(2)}</div>}
-                                        <div className="approved-text-wrapper-5">/ month</div>
-                                    </div>}
-                                    <div className="approved-frame-8">
-                                        <div className="approved-frame-9">
-                                            <div className="approved-text-wrapper-8">APR</div>
-                                            <div className="approved-text-wrapper-9">15%</div>
                                         </div>
-                                        <div className="approved-frame-10">
-                                            <div className="approved-text-wrapper-8">INTEREST</div>
-                                            <div className="approved-text-wrapper-9">${(accountContext.cost * 0.15).toFixed(2)}  </div>
+                                        {(accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) && (
+                                                <div className="approved-frame-7">
+                                                    <div className="approved-text-wrapper-7">You Save</div>
+                                                    <div className="approved-text-wrapper-7">
+                                                        {
+                                                            (accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                            (parseFloat(accountContext.ogMonthlyCost) - (accountContext.cost / 12 * 1.15)).toFixed(2) :
+                                                            (parseFloat(accountContext.user.og_monthly_cost) - (accountContext.user.amount / 12 * 1.15)).toFixed(2)
+                                                        }
+                                                    </div>
+                                                    <div className="approved-text-wrapper-5">/ month</div>
+                                                </div>
+                                            )}
+                                        <div className="approved-frame-8">
+                                            <div className="approved-frame-9">
+                                                <div className="approved-text-wrapper-8">APR</div>
+                                                <div className="approved-text-wrapper-9">15%</div>
+                                            </div>
+                                            <div className="approved-frame-10">
+                                                <div className="approved-text-wrapper-8">INTEREST</div>
+                                                <div className="approved-text-wrapper-9">
+                                                    ${((accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                        ((accountContext.cost) * 0.15).toFixed(2) : 
+                                                        (accountContext.user.amount * 0.15).toFixed(2)
+                                                    )}
+                                                </div>
+                                            </div>
+                                            <div className="approved-frame-11">
+                                                <div className="approved-text-wrapper-8">TOTAL</div>
+                                                <div className="approved-text-wrapper-9">
+                                                    ${((accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                        ((accountContext.cost) * 1.15).toFixed(2) : 
+                                                        (accountContext.user.amount * 1.15).toFixed(2)
+                                                    )}
+                                                </div>
+                                            </div>
                                         </div>
-                                        <div className="approved-frame-11">
-                                            <div className="approved-text-wrapper-8">TOTAL</div>
-                                            <div className="approved-text-wrapper-9">${(accountContext.cost * 1.15).toFixed(2)}</div>
-                                        </div>
-                                    </div>
-                                </div> : <div>context error </div>}
+                                    </div> : <div>context error </div>}
                                 <div className="approved-div-5">
                                     {/* <img src="/back.png" /> */}
                                     <Button
-                                        className="approved-button-instance thirty"
+                                        className={`approved-button-instance thirty ${!checkoutUrl && 'disabled'} `}
                                         icon="right"
                                         size="lg"
                                         state="default"
                                         text="Continue"
                                         type="primary"
-                                        onClick={() => window.location.replace(checkoutUrl)}
+                                        onClick={() => checkoutUrl && window.location.replace(checkoutUrl)}
                                     />
                                 </div>
                             </div>

@@ -44,6 +44,28 @@ const UserInfo = () => {
         city: 'Kitchener'
     });
 
+    const setGoodCredit = () => setFormData({
+        firstName: 'Taylor',
+        lastName: 'Nyon',
+        address: '1066 Heenan Terr',
+        zip: 'N2A4C9',
+        phone: 18002672001,
+        dob: '1976-03-13',
+        country: 'Canada',
+        city: 'Kitchener'
+    })
+
+    const setBadCredit = () => setFormData({
+        firstName: 'Abe',
+        lastName: 'Kasper',
+        address: '382 Craftsman BLVD',
+        zip: 'K7K7B4',
+        phone: 6135464382,
+        dob: '1975-01-17',
+        country: 'Canada',
+        city: 'Kingston'
+    })
+
     // useEffect(() => {
     //     accessToken && fetch(`${API_URL}/users/get`, {
     //         method: "GET",
@@ -103,14 +125,10 @@ const UserInfo = () => {
             return;
         }
         setFormData({ ...formData })
-        //fetch(`${API_URL}/users/create`, {
-        const queryString = window.location.search;
-        const urlParams = new URLSearchParams(queryString);
 
-        // Access the data from the query parameters
-        const cost = urlParams.get('cost');
-        const merchantName = urlParams.get('merchantName');
-        const ogMonthlyCost = urlParams.get('ogMonthlyCost');
+        const cost = localStorage.getItem('cost');
+        const merchantName = localStorage.getItem('merchantName');
+        const ogMonthlyCost = localStorage.getItem('ogMonthlyCost');
         fetch(`${API_URL}/orders/create`, {
             method: 'POST',
             headers: {
@@ -118,7 +136,7 @@ const UserInfo = () => {
                 'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                ...formData, email: user.email, province: selectedProvince.value, cost: cost, merchant_name: merchantName, og_monthly_cost: ogMonthlyCost
+                ...formData, email: user.email, province: selectedProvince, cost: cost, merchant_name: merchantName, og_monthly_cost: ogMonthlyCost
                 //body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value, order_id : accountContext.order_id 
             })
         })
@@ -132,6 +150,7 @@ const UserInfo = () => {
                     toast.error(res.error)
                 }
                 else {
+                    console.log(res)
                     setAccountContext((prevContext) => ({
                         ...prevContext, user_id: res.user_id, order_id: res.order_id, merchant_id: res.merchant_id,
                         formData, province: selectedProvince.value, cost, merchantName, ogMonthlyCost
@@ -266,6 +285,32 @@ const UserInfo = () => {
                                         </div>
                                     </div>
                                 </div>
+                                {(API_URL == "http://localhost:3000" || API_URL == "https://testing-api.jybe.ca") &&
+                                    <div style={{
+                                        "width": "100%",
+                                        "display": "flex",
+                                        "justifyContent": "space-between"
+                                    }} >
+                                        <Button
+                                            className="user-info-button-instance thirty"
+                                            icon="right"
+                                            size="lg"
+                                            state="default"
+                                            text="Good credit"
+                                            type="primary"
+                                            onClick={setGoodCredit}
+                                        />
+                                        <Button
+                                            className="user-info-button-instance thirty"
+                                            icon="right"
+                                            size="lg"
+                                            state="default"
+                                            text="Bad credit"
+                                            type="primary"
+                                            onClick={setBadCredit}
+                                        />
+                                    </div>
+                                    }
                                 <div className="button-wrapper" style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center" }} >
                                     <div className='conscon' >
                                         <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)} className="checkbox-input" />

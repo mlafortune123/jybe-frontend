@@ -23,7 +23,26 @@ const Card = () => {
         return response.json()
       })
       .then(res => {
-        if (res.error) toast.error(res.error)
+        if (res.error) {
+          if (res.error == "Card may already exist") {
+            fetch(`${API_URL}/orders/getcard`, {
+              method: "GET",
+              headers: {
+                'Authorization': `Bearer ${accessToken}`
+              }
+            })
+              .then(response => {
+                if (response.status == 401) window.location.reload()
+                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                return response.json()
+              })
+              .then(res => {
+                if (res.error) toast.error(res.error)
+                else setCardInfo(res)
+              })
+          }
+          else toast.error(res.error)
+        }
         else setCardInfo(res)
       })
   }, [accessToken])

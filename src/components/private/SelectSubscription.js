@@ -85,35 +85,47 @@ const SelectSubscription = () => {
             return;
         }
         else {
-            const queryParams = new URLSearchParams();
-            queryParams.append('cost', cost);
-            queryParams.append('merchantName', selectedItem ? selectedItem : merchantName);
-            queryParams.append('ogMonthlyCost', ogMonthlyCost);
+            // const queryParams = new URLSearchParams();
+            // queryParams.append('cost', cost);
+            // queryParams.append('merchantName', selectedItem ? selectedItem : merchantName);
+            // queryParams.append('ogMonthlyCost', ogMonthlyCost);
 
-            const queryString = queryParams.toString();
+            // const queryString = queryParams.toString();
+            // const state = {
+            //     cost, merchantName: selectedItem ? selectedItem : merchantName, ogMonthlyCost
+            // }
+
             //setAccountContext({ cost, merchantName: selectedItem ? selectedItem : merchantName, ogMonthlyCost })
-            loginWithRedirect({ openUrl: () => window.location.replace(`/select_subscription?${queryString}`) })
+            localStorage.setItem('cost', cost);
+            localStorage.setItem('merchantName', selectedItem ? selectedItem : merchantName);
+            localStorage.setItem('ogMonthlyCost', ogMonthlyCost);
+            loginWithRedirect({ 
+                // authorizationParams: {
+                //     redirect_uri : `${window.location.origin}/select_subscription?${queryString}`
+                // }
+                openUrl: () => window.location.replace(`/select_subscription`) 
+            })
         }
     };
 
-    // const testingReset = () => {
-    //     fetch(`${API_URL}/orders/delete/asasd`, {
-    //         method: 'GET',
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //             'Authorization': `Bearer ${accessToken}`
-    //         }
-    //     })
-    //         .then(we =>
-    //             fetch(`${API_URL}/users/delete/asasd`, {
-    //                 method: 'GET',
-    //                 headers: {
-    //                     'Content-Type': 'application/json',
-    //                     'Authorization': `Bearer ${accessToken}`
-    //                 }
-    //             }))
-    //         .then(we2 => toast.error("reset complete"))
-    // }
+    const testingReset = () => {
+        fetch(`${API_URL}/orders/delete/asasd`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${accessToken}`
+            }
+        })
+            .then(we =>
+                fetch(`${API_URL}/users/delete/asasd`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        // 'Authorization': `Bearer ${accessToken}`
+                    }
+                }))
+            .then(we2 => toast.success("reset complete"))
+    }
 
     const handleMerchantChange = (e) => {
         setSelectedItem(e.target.value.toLowerCase())
@@ -176,7 +188,7 @@ const SelectSubscription = () => {
                                                     stateDefaultLargerClassName="select-subscription-toggle-checkmark-instance"
                                                     stateProp="default-larger"
                                                     onClick={() => {
-                                                        setMerchantName("")
+                                                        setMerchantName(sub.name)
                                                         setSelectedItem(sub.name)
                                                     }}
                                                     isChecked={selectedItem == sub.name}
@@ -199,7 +211,7 @@ const SelectSubscription = () => {
                                         className="select-subscription-text-wrapper-6"
                                         placeholder="Monthly Subscription Cost"
                                         value={ogMonthlyCost}
-                                        onChange={e => setOgMonthlyCost(e.target.value)}
+                                        onChange={e => {if (!isNaN(e.target.value)) setOgMonthlyCost(e.target.value)}}
                                         onClick={clearOgCostPlaceHolder}
                                         onBlur={restoreOgCostPlaceHolder}
                                     />
@@ -212,7 +224,7 @@ const SelectSubscription = () => {
                                         className="select-subscription-text-wrapper-6"
                                         placeholder="Annual Subscription Cost"
                                         value={cost}
-                                        onChange={e => setCost(e.target.value)}
+                                        onChange={e => {if (!isNaN(e.target.value)) setCost(e.target.value)}}
                                         onClick={clearCostPlaceHolder}
                                         onBlur={restoreCostPlaceHolder}
                                     />
@@ -220,12 +232,13 @@ const SelectSubscription = () => {
                                 <div className='prices-container' >
                                     <div className='red-container' >
                                         <div className='prices' >
-                                            Price: {cost && `$${((cost / 12) * 1.15).toFixed(2)}`}
+                                            Price: {cost && `$${((cost / 12) * 1.15).toFixed(2)}`} per month
                                         </div>
                                     </div>
                                     <div className='savings-container' >
                                         <div className='prices' >
-                                            You save: {cost && ogMonthlyCost && `$${(ogMonthlyCost - ((cost / 12) * 1.15)).toFixed(2)}`}
+                                            {(!isNaN(cost) && !isNaN(ogMonthlyCost) && ogMonthlyCost !== 'NaN') ?
+                                            `You save: $${(parseFloat(ogMonthlyCost) - (cost / 12 * 1.15)).toFixed(2)} per month` : 'Enter a monthly price to see monthly savings'} 
                                         </div>
                                     </div>
                                 </div>
@@ -239,7 +252,7 @@ const SelectSubscription = () => {
                                         text="Back"
                                         type="secondary"
                                     /> */}
-                                    {/* {(API_URL == "http://localhost:3000" || API_URL == "https://api.jybe.ca") && <Button
+                                    {(API_URL == "http://localhost:3000" || API_URL == "https://testing-api.jybe.ca") && <Button
                                         className="user-info-button-instance thirty"
                                         icon="right"
                                         size="lg"
@@ -247,7 +260,7 @@ const SelectSubscription = () => {
                                         text="testingReset"
                                         type="primary"
                                         onClick={testingReset}
-                                    />} */}
+                                    />}
                                     <Button
                                         className={`select-subscription-button-instance thirty ${!cost || isNaN(cost) || parseInt(cost) < 100 ? "disabled" : ""}`}
                                         icon="right"
