@@ -29,16 +29,48 @@
     width: 100vw;
   }
   
+@media screen and (min-width: 450px) {
+  .signup-div-3{
+    width: 50vw;
+  }
+  .signup-img{
+    display: block!important;
+  }
+  .signup-text-wrapper-6{
+    font-size: 24px!important;
+  }
+  .signup-text-wrapper-4{
+    font-size: 24px!important;
+  }
+  .signup-frame-wrapper{
+    gap: 24px!important;
+    padding: 20px!important;
+  }
+}
+
+@media screen and (max-width: 450px) {
+  .signup-frame-2{
+    flex-direction: column;
+    gap: 14px;
+  }
+  .signup-frame-3{
+    flex-direction: column;
+  }
+  .signup-input {
+    width: 100%!important;
+  }
+}
+
   .signup-div-3 {
     align-items: center;
     background-color: #ffffff;
     display: flex;
-    width: 50vw;
     flex-direction: column;
     gap: 3vh;
     padding: 16vh 2.5vw 0vw 2.5vw;
     position: relative;
     z-index: 1;
+    width: 100vw;
   }
   
   .signup-heading {
@@ -93,6 +125,7 @@
     flex: 0 0 auto;
     justify-content: space-between;
     position: relative;
+    width: 100%;
   }
   
   .signup-input {
@@ -103,11 +136,11 @@
     gap: 10px;
     padding: 16px 20px;
     position: relative;
-    width: 25vw;
+    width: 50%;
   }
   
   .signup-text-wrapper-3 {
-    color: #9c9ea0;
+    color: #757677;
     background-color: #FAFAFB;
     flex: 1;
     font-family: "Poppins", Helvetica;
@@ -130,7 +163,8 @@
     justify-content: center;
     padding: 16px 24px;
     position: relative;
-    width: 185px;
+    width: 45%;
+    cursor: pointer;
   }
   
   .signup-default-2 {
@@ -156,13 +190,14 @@
     justify-content: center;
     position: relative;
     width: 100%;
+    margin-bottom: 24px;
   }
   
   .signup-form {
     align-items: center;
     background-color: #ffffff;
     border: 1px solid;
-    border-color: #3a2ce080;
+    
     border-radius: 16px;
     display: flex;
     flex: 1;
@@ -184,18 +219,22 @@
     width: 100%;
   }
   
-  .signup-text-wrapper-4 {
-    color: #3a2ce0;
+  .signup-header-wrapper {
     font-family: "Poppins", Helvetica;
-    font-size: 24px;
+    font-size: 17px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: normal;
     margin-top: -1px;
     position: relative;
     width: fit-content;
+    text-align: center;
   }
   
+.blue-text{
+  color: #3a2ce0;
+}
+
   .signup-text-wrapper-5 {
     align-self: stretch;
     color: #00000099;
@@ -212,30 +251,28 @@
     align-items: center;
     background-color: #ffffff;
     border: 1px solid;
-    border-color: #17cea280;
     border-radius: 16px;
     display: flex;
     flex: 1;
     flex-direction: column;
     flex-grow: 1;
-    gap: 24px;
-    padding: 24px;
+    gap: 12px;
+    padding: 12px;
     position: relative;
   }
   
-  .signup-text-wrapper-6 {
-    color: #17cea2;
-    font-family: "Poppins", Helvetica;
-    font-size: 24px;
-    font-weight: 600;
-    letter-spacing: 0;
-    line-height: normal;
-    margin-top: -1px;
-    position: relative;
-    width: fit-content;
-  }
-  
+.green-border{
+  border-color: #17cea280;
+}
+.blue-border{
+  border-color: #3a2ce080;
+}
+
+.green-text{
+  color: #17cea2;
+}
   .signup-img {
+    display: none;
     align-self: stretch;
     position: relative;
     width: 50vw;

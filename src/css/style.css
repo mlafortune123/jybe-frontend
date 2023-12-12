@@ -30,7 +30,7 @@
     flex-direction: column;
     gap: 10px;
     justify-content: center;
-    padding: 21% 10% 0%;
+    padding: 12% 5% 0%;
     position: relative;
     width: 100vw;
   }
@@ -54,7 +54,6 @@
     flex-grow: 1;
     gap: 32px;
     position: relative;
-    width: 613px;
   }
   
   .index .frame-7 {
@@ -72,12 +71,19 @@
     align-self: stretch;
     color: #000000;
     font-family: "Poppins", Helvetica;
-    font-size: 4vw;
+    font-size: 28px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: normal;
     margin-top: -1px;
     position: relative;
+  }
+
+  .index .text-wrapper-69 {
+    font-size: 3.6vw;
+    font-weight: 600;
+    line-height: normal;
+    width: 30vw;
   }
   
   .index .p {
@@ -96,13 +102,10 @@
     flex: 0 0 auto !important;
   }
   
-  .index .img-3 {
-    top: -14vh;
-    height: 35vh; /* 612px relative to viewport height */
-    position: relative;
-    width: 35.26vw; /* 677px relative to viewport width */
+  .button-instance:hover{
+    cursor: pointer;
   }
-  
+
   .index .card {
     /* height: 15.625vh;  300px relative to viewport height */
     left: 19.635vw; /* 377px relative to viewport width */
@@ -149,6 +152,8 @@
   .index .group {
     position: absolute;
     z-index: 0;
+    width: 100vw;
+    margin-left: 100vw;
   }
   
   .index .overlap-group-2 {
@@ -195,7 +200,7 @@
     flex-direction: column;
     gap: 10px;
     justify-content: center;
-    padding: 4vw;
+    padding: 5vw;
     position: relative;
     width: 100vw;
   }
@@ -235,7 +240,7 @@
     align-self: stretch;
     color: #000000;
     font-family: "Poppins", Helvetica;
-    font-size: 3vw;
+    font-size: 28px;
     font-weight: 600;
     letter-spacing: 0;
     line-height: normal;
@@ -262,7 +267,6 @@
     gap: 16px;
     position: relative;
     width: 100%;
-    height: 60vh;
   }
   
   .index .brand-list {
@@ -277,7 +281,6 @@
     gap: 1vw;
     padding: 1vw;
     position: relative;
-    width: 20vw;
   }
   
   .index .text-wrapper-4 {
@@ -288,6 +291,7 @@
     line-height: normal;
     position: relative;
     display: contents;
+    font-weight: 600;
   }
   
   .index .frame-10 {
@@ -317,7 +321,6 @@
     justify-content: space-between;
     padding: 1vw;
     position: relative;
-    width: 15vw;
   }
   
   .index .fill {
@@ -349,6 +352,10 @@
     border-radius: 500px !important;
   }
   
+  .toggle-checkmark-2:hover{
+    cursor: pointer;
+  }
+
   .index .adobe-instance {
     height: 30px !important;
     left: unset !important;
@@ -434,16 +441,14 @@
     display: flex;
     flex: 0 0 auto;
     justify-content: space-between;
-    padding: 16px 0px;
     position: relative;
     width: 100%;
   }
   
   .index .frame-14 {
-    align-items: flex-start;
     display: inline-flex;
     flex: 0 0 auto;
-    gap: 10px;
+    gap: 6px;
     justify-content: center;
     position: relative;
   }
@@ -451,7 +456,6 @@
   .index .text-wrapper-5 {
     color: #000000;
     font-family: "Poppins", Helvetica;
-    font-size: 2vw;
     font-weight: 600;
     letter-spacing: 0;
     line-height: normal;
@@ -520,19 +524,6 @@
     margin-bottom: 7.5vh;
   }
   
-  .index .text-wrapper-7 {
-    color: #00000080;
-    font-family: "Poppins", Helvetica;
-    font-size: 16px;
-    font-weight: 400;
-    letter-spacing: 0;
-    line-height: normal;
-    margin-top: -1px;
-    position: relative;
-    text-align: center;
-    width: fit-content;
-  }
-  
   .index .spotify-instance {
     height: 32px !important;
     left: unset !important;
@@ -572,19 +563,15 @@
     justify-content: center;
     padding: 24px 16px;
     position: relative;
-    width: 20vw;
   }
   
   .index .text-wrapper-8 {
     color: #ffffff;
     font-family: "Poppins", Helvetica;
-    font-size: 1.5vw;
+    font-size: 12px;
     font-weight: 400;
-    letter-spacing: 0;
-    line-height: normal;
-    position: absolute;
-    top: 6vh;
-    width: fit-content;
+    width: 120%;
+    text-align: center;
   }
   
   .index .frame-21 {
@@ -615,7 +602,7 @@
   .index .span {
     color: #ffffff;
     font-family: "Poppins", Helvetica;
-    font-size: 2vw;
+    font-size: 20px;
     font-weight: 600;
     letter-spacing: 0;
   }
@@ -734,13 +721,23 @@
     display: inline-flex;
     flex: 0 0 auto;
     flex-direction: column;
-    padding: 4vw 0px;
+    padding: 5vw 0px;
     position: relative;
     width: 100vw;
   }
   
   .index .div-5 {
-    align-items: flex-start;
+    align-items: center;
+    align-self: stretch;
+    display: flex;
+    flex: 0 0 auto;
+    gap: 20px;
+    position: relative;
+    width: 92vw;
+  }
+
+  .index .div-50 {
+    align-items: center;
     align-self: stretch;
     display: flex;
     flex: 0 0 auto;
@@ -760,9 +757,21 @@
     /* left:20vw; */
     width: 30vw;
   }
+
+  .index .heading-70 {
+    align-items: flex-start;
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    flex-grow: 1;
+    gap: 16px;
+    position: relative;
+    left: 5vw;
+    width: 30vw;
+    padding-right: 5vw;
+  }
   
   .index .img-4 {
-    height: 31.875vw; /* Height based on 31.875% of viewport width */
     position: relative;
     width: 41.984vw; /* Width based on 41.984% of viewport width */
   }
@@ -1299,7 +1308,7 @@
     gap: 1.04vw; /* 20px / 1920px * 100vw */
     justify-content: center;
     position: relative;
-    width: calc(100vw - 30px);
+    width: 100%;
   }
   .index .div-8 {
     align-items: flex-start;
@@ -1317,7 +1326,7 @@
     align-items: center;
     align-self: stretch;
     background-color: #c2d2f480;
-    border-radius: 24px;
+    /* border-radius: 24px; */
     display: flex;
     flex: 0 0 auto;
     flex-direction: column;
@@ -1334,7 +1343,6 @@
     flex: 0 0 auto;
     flex-direction: column;
     gap: 16px;
-    padding: 0px 120px;
     position: relative;
     width: 100%;
   }
@@ -1349,6 +1357,7 @@
   
   .index .hiw {
     height: 40vh;
+    width: 65vw;
   }
 
   .index .frame-38 {
@@ -1555,13 +1564,14 @@
     justify-content: center;
     align-items: center;
     flex: 1 0 0;
-    padding: 1rem;
+    padding: 0.5rem;
     border-radius: 1rem;
     gap: 0.625rem;
     background: var(--neutrals-white, #FFF);
     box-shadow: 0px 20px 20px 0px rgba(26, 74, 177, 0.15);
     height: 25vh;
     cursor: pointer;
+    width: 100%;
   }
 
 .carousel-header{
@@ -1602,13 +1612,7 @@ font-size: 0.75rem;
   }
   
   .index .frame-40 {
-    align-items: flex-start;
-    align-self: stretch;
-    border-radius: 16px;
     display: flex;
-    flex: 0 0 auto;
-    overflow: hidden;
-    position: relative;
     width: 100%;
   }
   
@@ -1623,6 +1627,7 @@ font-size: 0.75rem;
     gap: 16px;
     padding: 48px 24px;
     position: relative;
+    border-top-left-radius: 16px;
   }
   
   .index .text-wrapper-20 {
@@ -1687,6 +1692,7 @@ font-size: 0.75rem;
     gap: 16px;
     padding: 48px 24px;
     position: relative;
+    border-bottom-right-radius: 16px;
   }
   
   .index .navbar-instance {
@@ -2617,4 +2623,71 @@ font-size: 0.75rem;
 }
 .twenty{
   width: 20%!important;
+}
+
+.nav-item {
+  text-decoration: none;
+  position: relative; /* Create a positioning context for the underline */
+  /* color: white; */
+  transition: color 0.3s; /* Add a color transition */
+}
+
+.nav-item::before {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 2px;
+  bottom: -16px;
+  left: 0;
+  background-color: blue;
+  opacity: 0; /* Start with 0 opacity */
+  transform: scaleX(0); /* Start with no width */
+  transition: opacity 0.3s, transform 0.3s; /* Add transitions */
+}
+
+.nav-item:hover {
+  color: blue; /* Change text color on hover */
+}
+
+.nav-item:hover::before {
+  opacity: 1; /* Show the underline on hover */
+  transform: scaleX(1); /* Expand the underline on hover */
+}
+
+.savings-woman{
+  max-width: 100%;
+}
+
+.sub-header{
+  font-size: 36px;
+  font-weight: 600;
+  line-height: normal;
+}
+
+  
+.pointer {
+  cursor: pointer;
+}
+
+.admin-table {
+  width: 100%; /* Make the table 100% wide */
+}
+
+.admin-table th, .admin-table td {
+  padding: 8px; /* Add padding for better spacing */
+}
+
+/* Set specific widths for the columns */
+.admin-table th:nth-child(1),
+.admin-table td:nth-child(1) {
+  width: 20%; /* Adjust the width for the first column (Order ID) */
+}
+
+.admin-table th:nth-child(2),
+.admin-table td:nth-child(2) {
+  width: 20%; /* Adjust the width for the second column (User ID) */
+}
+
+.td{
+  text-align: center;
 }

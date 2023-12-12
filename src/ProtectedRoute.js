@@ -10,6 +10,13 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
   const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently, user } = useAuth0();
   const [accessToken, setAccessToken] = useState()
   const navigate = useNavigate();
+
+  useEffect(() => {
+    if (window.location.search.includes('?error=access_denied&error_description=Please%20verify%20your%20email%20before%20continuing.')) {
+      navigate("/IntermediateScreen")
+    }
+  })
+
   useEffect(() => {
     const getToken = async () => {
       const token = await getAccessTokenSilently();
@@ -23,26 +30,29 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     .then(response => response.json())
     .then(res => {
         if (res[0]) {
-            setAccountContext({user:res[0]})
-            window.alert('You appear to already have an account, you will now be redirected to the MyAccount page.')
+          console.log('context res',res[0])
+          // if (res[0].customer_id == null) navigate("/approved")
+            setAccountContext((prevContext) => ({user: res[0], prevContext}))
+            // toast.error('You appear to already have an account, please click the testing reset button.')
             //navigate("/approved")
         }
     })
     }
     getToken()
-  },[getAccessTokenSilently])
+  },[])
 
-    if (isLoading) {
-        return <Loading />; // Render a loading indicator while authentication state is being determined
-      }
-      else {
-    if (isAuthenticated) {
-        return (
-          <AccountContext.Provider value={{ accountContext, setAccountContext, user, accessToken, navigate }}>
-            <Component/>
-          </AccountContext.Provider>
-        ); // User is authenticated, render the component
-      }
+    if (window.location.search.includes('?error=access_denied&error_description=Please%20verify%20your%20email%20before%20continuing.')) {
+      navigate("/IntermediateScreen?noerror")
+    }  
+    else if (isLoading) {
+          return <Loading />; // Render a loading indicator while authentication state is being determined
+        }
+    else if (isAuthenticated) {
+          return (
+            <AccountContext.Provider value={{ accountContext, setAccountContext, user, accessToken, navigate }}>
+              <Component/>
+            </AccountContext.Provider>
+          ); // User is authenticated, render the component
+        }
     else loginWithRedirect()
-    };
 }

@@ -11,17 +11,17 @@ export const Steps = ({ selected }) => {
       property1: selected >= 1 ? 'completed' : 'pending',
     },
     {
-      img: 'https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64ee7c544c339b0ef858e2ac/img/vector-303-1.svg',
       property1: selected >= 2 ? 'completed' : selected === 1 ? 'in-progress' : 'pending',
       text: 'STEP 2',
-      text1: 'Details',
+      text1: 'Select Subscription',
+      vector1: 'https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64ee7c544c339b0ef858e2ac/img/vector-303-2.svg',
     },
     {
       icon: selected >= 3 ? <BlueCheck className="icon-instance-node" /> : <EmptyCheck className="icon-instance-node" />,
+      img: 'https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64ee7c544c339b0ef858e2ac/img/vector-303-1.svg',
       property1: selected >= 3 ? 'completed' : selected === 2 ? 'in-progress' : 'pending',
       text: 'STEP 3',
-      text1: 'Select Subscription',
-      vector1: 'https://anima-uploads.s3.amazonaws.com/projects/64e3ab5e179fd75deb1ba6bd/releases/64ee7c544c339b0ef858e2ac/img/vector-303-2.svg',
+      text1: 'Details',
     },
     {
       icon: selected >= 4 ? <BlueCheck className="icon-instance-node" /> : <EmptyCheck className="icon-instance-node" />,

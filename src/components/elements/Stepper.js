@@ -24,7 +24,7 @@ export const Stepper = ({
         />
       </div>
       <div className="stepper-div">
-        <div className="stepper-step">{text}</div>
+        <div className={`step-${property1} stepper-step`}>{text}</div>
         <div className="stepper-google-account">{text1}</div>
         <div className={`stepper-completed-2 ${property1}`}>
           {property1 === "completed" && <>Completed</>}

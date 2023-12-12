@@ -1,16 +1,13 @@
-import React, { useState, useEffect, useContext } from 'react';
+import React, { useState, useContext } from 'react';
 import { TextField } from '@mui/material';
-import TopBar from "../TopBar";
-import Select from 'react-select';
-import FlinksConnect from "../private/FlinksConnect";
 import { AccountContext } from '../../ProtectedRoute';
 import { Footer } from "../elements/Footer.js"
 import { Navbar } from "../elements/Navbar.js";
 import { Steps } from "../elements/Steps.js";
 import { InputsText } from "../elements/InputsText.js";
-import { SelectField } from "../elements/SelectField.js";
 import { CountryDropdown } from 'react-country-region-selector';
 import { Button } from "../elements/Button";
+import toast, { Toaster } from 'react-hot-toast';
 import "./userinfo.css"
 import "../../css/style.css";
 
@@ -19,6 +16,7 @@ const UserInfo = () => {
     const context = useContext(AccountContext);
     const { accountContext, setAccountContext, user, accessToken, navigate } = context
     const [selectedProvince, setSelectedProvince] = useState('ON');
+    const [consent, setConsent] = useState(false)
     const [emptyFields, setEmptyFields] = useState([]);
     const provinceOptions = [
         { value: 'AB', label: 'Alberta' },
@@ -36,15 +34,37 @@ const UserInfo = () => {
         { value: 'YT', label: 'Yukon' }
     ];
     const [formData, setFormData] = useState({
+        // firstName: 'Taylor',
+        // lastName: 'Nyon',
+        // address: '1066 Heenan Terr',
+        // zip: 'N2A4C9',
+        // phone: 18002672001,
+        // dob: '1976-03-13',
+        // country: 'Canada',
+        // city: 'Kitchener'
+    });
+
+    const setGoodCredit = () => setFormData({
         firstName: 'Taylor',
         lastName: 'Nyon',
         address: '1066 Heenan Terr',
         zip: 'N2A4C9',
-        phone: '1231231234',
+        phone: 18002672001,
         dob: '1976-03-13',
         country: 'Canada',
         city: 'Kitchener'
-    });
+    })
+
+    const setBadCredit = () => setFormData({
+        firstName: 'Abe',
+        lastName: 'Kasper',
+        address: '382 Craftsman BLVD',
+        zip: 'K7K7B4',
+        phone: 6135464382,
+        dob: '1975-01-17',
+        country: 'Canada',
+        city: 'Kingston'
+    })
 
     // useEffect(() => {
     //     accessToken && fetch(`${API_URL}/users/get`, {
@@ -57,34 +77,17 @@ const UserInfo = () => {
     //         .then(res => {
     //             if (res[0]) {
     //                 setAccountContext({ user: res[0] })
-    //                 window.alert('You appear to already have an account, you will now be redirected to the MyAccount page.')
+    //                 toast.error('You appear to already have an account, you will now be redirected to the MyAccount page.')
     //                 //navigate("/approved")
     //             }
     //         })
     // }, [accessToken])
 
-    const handleChange = (name, newValue) => {
-        console.log(name, newValue)
-        setFormData((prevFormData) => ({ ...prevFormData, [name]: newValue }));
+    const handleChange = (name, newValue, type) => {
+        console.log(name, newValue, type)
+        console.log(typeof (newValue))
+        typeof (newValue) == type && setFormData((prevFormData) => ({ ...prevFormData, [name]: newValue }));
     };
-
-const testingReset = () => {
-    fetch(`${API_URL}/orders/delete/asasd`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        }
-    })
-    .then(we =>     
-        fetch(`${API_URL}/users/delete/asasd`, {
-        method: 'GET',
-        headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${accessToken}`
-        }
-    }))
-}
 
     const handleSubmit = (e) => {
         const requiredFields = [
@@ -96,9 +99,22 @@ const testingReset = () => {
             "dob",
             "country",
             "city"
-          ];
+        ];
         if (formData.country != "Canada") {
-            window.alert("We can only provide services to those with Canadian addresses at this time")
+            toast.error(      
+                <div>
+                    <div>
+                    We can only provide services to those with Canadian addresses at this time. Would you like to be notified when our service is available in your area?
+                    </div>
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}} >
+                        <button onClick={() => handleNotifyClick(formData.country)}>Notify Me</button>
+                    </div>
+                </div>,
+                {
+            autoClose: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            });
             return
         }
         e.preventDefault();
@@ -114,33 +130,93 @@ const testingReset = () => {
         ) {
             const missingFields = requiredFields.filter((field) => !formData[field]);
             setEmptyFields(missingFields);
-            window.alert("Please fill out all required fields.");
+            toast.error("Please fill out all required fields.");
             return; // Stop further execution
         }
+        if (!consent) {
+            toast.error("Please consent to the transunion soft credit check")
+            return;
+        }
         setFormData({ ...formData })
-        fetch(`${API_URL}/users/create`, {
+
+        const cost = localStorage.getItem('cost');
+        const merchant_name = localStorage.getItem('merchant_name');
+        const og_monthly_cost = localStorage.getItem('og_monthly_cost');
+        const body = {...formData, email: user.email, province: selectedProvince, cost, merchant_name }
+        if (og_monthly_cost !== "undefined" && og_monthly_cost !== undefined && og_monthly_cost !== null && og_monthly_cost !== "null" ) {
+            // If true, set body.og_monthly_cost to og_monthly_cost
+            body.og_monthly_cost = og_monthly_cost;
+          }
+        fetch(`${API_URL}/orders/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value })
+            body: JSON.stringify(body)
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
+                //if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(res => {
                 if (res.error) {
-                    window.alert(res.error)
+                    if (res.error == "Unavailable") {
+                        toast.error(      
+                            <div>
+                                <div>
+                                Our services are currently unavailable at this time. Would you like to be notified when our service is available in your area?
+                                </div>
+                                <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}} >
+                                    <button onClick={() => handleNotifyClick("Unavailable")}>Notify Me</button>
+                                </div>
+                            </div>,
+                            {
+                        autoClose: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        })
+                    }
+                    else toast.error(res.error)
                 }
                 else {
-                    setAccountContext((prevContext) => ({ ...prevContext, user_id: res.user_id, formData, province: selectedProvince.value }))
-                    res.user_id ? navigate("/select_subscription") : navigate("/error")
+                    // console.log(res)
+                    setAccountContext((prevContext) => ({
+                        ...prevContext, user_id: res.user_id, order_id: res.order_id, merchant_id: res.merchant_id,
+                        formData, province: selectedProvince.value, cost, merchant_name, og_monthly_cost
+                    }))
+                    // res.user_id ? navigate("/select_subscription") : navigate("/error")
+                    res.approved ? navigate("/approved") : navigate("/denied")
                 }
             })
     };
 
+    const handleNotifyClick = async (country) => {
+        // Assume this is your API endpoint for handling notifications
+        try {
+          const response = await fetch(`${API_URL}/subscribe`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body:JSON.stringify({
+                email:user.email, country:country
+            })
+            // Additional options like headers, body, etc. can be added here
+          });
+    
+          if (response.ok) {
+            toast.success("You will be notified when our service is available.");
+          } else {
+            toast.error("Failed to subscribe for notifications. Please try again later.");
+          }
+        } catch (error) {
+          console.error("An error occurred while processing the API request:", error);
+          toast.error("An error occurred. Please try again later.");
+        }
+      };
 
     return (
         <div className="user-info">
@@ -148,7 +224,16 @@ const testingReset = () => {
                 <div className="userinfo-body">
                     <div className="user-info-section">
                         <div className="div-3">
-                            <Steps selected={1} />
+                            <Steps selected={2} />
+                            <Toaster
+                                toastOptions={{
+                                    className: '',
+                                    style: {
+                                        marginTop: '86px',
+                                        padding: '16px'
+                                    },
+                                }}
+                            />
                             <div className="form">
                                 <div className="text-wrapper-6">Account Details</div>
                                 <p className="p">
@@ -162,6 +247,7 @@ const testingReset = () => {
                                         value={formData.firstName}
                                         onChange={handleChange}
                                         className={emptyFields.includes("firstName") && "red-outline"}
+                                        type="string"
                                     />
                                     <InputsText
                                         name="lastName"
@@ -169,6 +255,7 @@ const testingReset = () => {
                                         value={formData.lastName}
                                         onChange={handleChange}
                                         className={emptyFields.includes("lastName") && "red-outline"}
+                                        type="string"
                                     />
                                     <TextField
                                         className={emptyFields.includes("dob") ? "design-component-instance-node-2 red-outline" : "design-component-instance-node-2"}
@@ -177,24 +264,38 @@ const testingReset = () => {
                                         type="date"
                                         name="dob"
                                         value={formData.dob}
-                                        onChange={(e) => handleChange("dob", e.target.value)}
+                                        onChange={(e) => handleChange("dob", e.target.value, 'string')}
                                         InputLabelProps={{
                                             shrink: true,
                                         }}
                                     />
-                                    <InputsText
+                                    {/* <InputsText
                                         className={emptyFields.includes("phone") && "red-outline"}
                                         name="phone"
-                                        label="Phone Number"
+                                        label={18002672001}
                                         value={formData.phone}
                                         onChange={handleChange}
-                                    />
+                                        type="number"
+                                    /> */}
+                                    <div className={`inputs-text design-component-instance-node-2`}>
+                                        <div className={`frame-2 default ${emptyFields.includes("phone") && "red-outline"}`}>
+                                            <div className="password-2">
+                                                <input
+                                                    value={formData.phone}
+                                                    onChange={(e) => handleChange("phone", parseInt(e.target.value), "number")}
+                                                    placeholder={18002672001}
+                                                    type="number"
+                                                />
+                                            </div>
+                                        </div>
+                                    </div>
                                     <InputsText
                                         className={emptyFields.includes("address") && "red-outline"}
                                         name="address"
                                         label="Address"
                                         value={formData.address}
                                         onChange={handleChange}
+                                        type="string"
                                     />
                                     <InputsText
                                         className={emptyFields.includes("city") && "red-outline"}
@@ -202,6 +303,7 @@ const testingReset = () => {
                                         label="City"
                                         value={formData.city}
                                         onChange={handleChange}
+                                        type="string"
                                     />
                                     <InputsText
                                         className={emptyFields.includes("zip") && "red-outline"}
@@ -209,6 +311,7 @@ const testingReset = () => {
                                         label="Zip Code"
                                         value={formData.zip}
                                         onChange={handleChange}
+                                        type="string"
                                     />
                                     <div className={`${emptyFields.includes("province") && "red-outline"} select-field design-component-instance-node-2`}>
                                         <div className={`field property-1-default`}>
@@ -233,21 +336,46 @@ const testingReset = () => {
                                                 value={formData.country}
                                                 style={{ border: "None" }}
                                                 className={emptyFields.includes("country") ? "design-component-instance-node-2 red-outline" : "design-component-instance-node-2"}
-                                                onChange={(e) => handleChange("country", e)}
+                                                onChange={(e) => handleChange("country", e, "string")}
                                             />
                                         </div>
                                     </div>
                                 </div>
-                                <div className="button-wrapper">
-                                    {(API_URL == "http://localhost:3000" || API_URL == "https://api.jybe.ca") && <Button
-                                        className="user-info-button-instance thirty"
-                                        icon="right"
-                                        size="lg"
-                                        state="default"
-                                        text="testingReset"
-                                        type="primary"
-                                        onClick={testingReset}
-                                    />}
+                                {(API_URL == "http://localhost:3000" || API_URL == "https://testing-api.jybe.ca") &&
+                                    <div style={{
+                                        "width": "100%",
+                                        "display": "flex",
+                                        "justifyContent": "space-between"
+                                    }} >
+                                        <Button
+                                            className="user-info-button-instance thirty"
+                                            icon="right"
+                                            size="lg"
+                                            state="default"
+                                            text="Good credit"
+                                            type="primary"
+                                            onClick={setGoodCredit}
+                                        />
+                                        <Button
+                                            className="user-info-button-instance thirty"
+                                            icon="right"
+                                            size="lg"
+                                            state="default"
+                                            text="Bad credit"
+                                            type="primary"
+                                            onClick={setBadCredit}
+                                        />
+                                    </div>
+                                    }
+                                <div className="button-wrapper" style={{ justifyContent: "space-between", flexDirection: "row", alignItems: "center" }} >
+                                    <div className='conscon' >
+                                        <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)} className="checkbox-input" />
+                                        <p style={{ marginLeft: '5px' }} >I consent</p>
+                                    </div>
+                                    {/* <div className="consent-container">
+                                        <label htmlFor="check" className="checkbox-label">I consent</label>
+                                        <input id="check" type="checkbox" checked={consent} onChange={() => setConsent((consent) => !consent)}  className="checkbox-input" />
+                                    </div> */}
                                     <Button
                                         className="user-info-button-instance thirty"
                                         icon="right"
@@ -258,6 +386,7 @@ const testingReset = () => {
                                         onClick={handleSubmit}
                                     />
                                 </div>
+                                <p class="consent-text">I consent to Jybe sharing my data with and obtaining my credit history and credit score from TransUnion of Canada Inc. in order for Jybe to assess if credit will be granted. This will not affect my credit score. My consent is valid starting today and for as long as I use Jybes services.</p>
                             </div>
                         </div>
                         <img

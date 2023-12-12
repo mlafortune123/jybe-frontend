@@ -132,4 +132,5 @@ select{
 }
 .thirty{
   width: 30%!important;
+  min-width: 120px;
 }
