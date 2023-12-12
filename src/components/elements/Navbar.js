@@ -1,12 +1,12 @@
 import PropTypes from "prop-types";
 import React from "react";
 import { Button } from "./Button";
-import { TextTabItem } from "./TextTabItem";
+// import { TextTabItem } from "./TextTabItem";
 import { useAuth0 } from '@auth0/auth0-react';
 import "./style.css";
 
 export const Navbar = () => {
-  const { loginWithRedirect } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
   return (
     <div className={`navbar navbar-instance`}>
       <div className="frame">
@@ -39,9 +39,13 @@ export const Navbar = () => {
           icon="false"
           size="lg"
           state="default"
-          text="Contact Us"
+          text={isAuthenticated ? "Log Out" : "Log In"}
           type="primary"
-          onClick={() => window.open("mailto:michaeltiller@jybe.ca")}
+          onClick={isAuthenticated ? () => logout({
+            logoutParams: {
+              returnTo: window.location.origin
+            }
+          }) : loginWithRedirect}
         />
       </div>
     </div>

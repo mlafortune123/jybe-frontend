@@ -1,31 +1,24 @@
-import React, { useState, useContext, useRef, useEffect } from 'react';
-//import { AccountContext } from '../../ProtectedRoute';
+import React, { useState, useRef, useEffect } from 'react';
 import { Footer } from "../elements/Footer.js"
 import { Navbar } from "../elements/Navbar.js";
 import { Steps } from "../elements/Steps.js";
-import { Button } from "../elements/Button";
-import subs from "../public/subscriptions.json"
-import { ConcreteComponentNode } from "../elements/ConcreteComponentNode";
+import { Button } from "../elements/Button.js";
+import subs from "./subscriptions.json"
+import { ConcreteComponentNode } from "../elements/ConcreteComponentNode.js";
 import { useAuth0 } from '@auth0/auth0-react';
 import toast, { Toaster } from 'react-hot-toast';
-import "./userinfo.css"
+// import "./userinfo.css"
 import "../../css/style.css";
 import "./selectsubscription.css"
 import "../../css/phonecss.css"
 
 const API_URL = process.env.REACT_APP_API_URL
 const SelectSubscription = () => {
-    //const context = useContext(AccountContext);
     const { loginWithRedirect } = useAuth0();
-    // const { 
-    //     //accountContext, 
-    //     setAccountContext
-    // //    , user, accessToken, navigate 
-    // } = context
     const [selectedItem, setSelectedItem] = useState();
-    const [merchantName, setMerchantName] = useState()
+    const [merchant_name, setmerchant_name] = useState()
     const [cost, setCost] = useState()
-    const [ogMonthlyCost, setOgMonthlyCost] = useState()
+    const [og_monthly_cost, setog_monthly_cost] = useState()
     // Create a ref for the div with class "select-subscription-div-3"
     const selectSubscriptionDivRef = useRef(null);
 
@@ -43,40 +36,36 @@ const SelectSubscription = () => {
 
 
     const clearCostPlaceHolder = () => {
-        cost == "Annual Subscription Cost" && setCost("")
+        cost == "Annual Subscription Cost" && setCost(null)
     }
 
     const restoreCostPlaceHolder = () => {
-        cost == "" && setCost("Annual Subscription Cost")
+        cost == null && setCost("Annual Subscription Cost")
     }
 
     const clearOgCostPlaceHolder = () => {
-        ogMonthlyCost == "Monthly Subscription Cost" && setOgMonthlyCost("")
+        og_monthly_cost == "Monthly Subscription Cost" && setog_monthly_cost(null)
     }
 
     const restoreOgCostPlaceHolder = () => {
-        ogMonthlyCost == "" && setOgMonthlyCost("Monthly Subscription Cost")
+        og_monthly_cost == null && setog_monthly_cost("Monthly Subscription Cost")
     }
 
     const clearNamePlaceHolder = () => {
-        merchantName == "Subscription Name" && setMerchantName("")
+        merchant_name == "Subscription Name" && setmerchant_name("")
     }
 
     const restoreNamePlaceHolder = () => {
-        merchantName == "" && setMerchantName("Subscription Name")
+        merchant_name == "" && setmerchant_name("Subscription Name")
     }
 
     const handleSubmit = (e) => {
-        const requiredFields = [
-            "cost",
-            "merchantName"
-        ];
-        if (merchantName == "Error") {
+        if (merchant_name == "Error") {
             toast.error("We don't like this merchant")
             return
         }
         e.preventDefault();
-        if ((!merchantName && !selectedItem)) {
+        if ((!merchant_name && !selectedItem)) {
             toast.error("Please select a merchant from the list, or put your subscription in the custom subscription field.");
             return;
         }
@@ -85,20 +74,9 @@ const SelectSubscription = () => {
             return;
         }
         else {
-            // const queryParams = new URLSearchParams();
-            // queryParams.append('cost', cost);
-            // queryParams.append('merchantName', selectedItem ? selectedItem : merchantName);
-            // queryParams.append('ogMonthlyCost', ogMonthlyCost);
-
-            // const queryString = queryParams.toString();
-            // const state = {
-            //     cost, merchantName: selectedItem ? selectedItem : merchantName, ogMonthlyCost
-            // }
-
-            //setAccountContext({ cost, merchantName: selectedItem ? selectedItem : merchantName, ogMonthlyCost })
             localStorage.setItem('cost', cost);
-            localStorage.setItem('merchantName', selectedItem ? selectedItem : merchantName);
-            localStorage.setItem('ogMonthlyCost', ogMonthlyCost);
+            localStorage.setItem('merchant_name', selectedItem ? selectedItem : merchant_name);
+            og_monthly_cost!= undefined && localStorage.setItem('og_monthly_cost', og_monthly_cost);
             loginWithRedirect({ 
                 // authorizationParams: {
                 //     redirect_uri : `${window.location.origin}/select_subscription?${queryString}`
@@ -109,6 +87,14 @@ const SelectSubscription = () => {
     };
 
     const testingReset = () => {
+        fetch(`${API_URL}/payments/delete/asasd`, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                // 'Authorization': `Bearer ${accessToken}`
+            }
+        })
+        .then(w => {
         fetch(`${API_URL}/orders/delete/asasd`, {
             method: 'GET',
             headers: {
@@ -124,12 +110,13 @@ const SelectSubscription = () => {
                         // 'Authorization': `Bearer ${accessToken}`
                     }
                 }))
-            .then(we2 => toast.success("reset complete"))
+            .then(we2 => we2.status == 200 ? toast.success("reset complete") : toast.error("reset broke"))
+        })
     }
 
     const handleMerchantChange = (e) => {
         setSelectedItem(e.target.value.toLowerCase())
-        setMerchantName(e.target.value)
+        setmerchant_name(e.target.value)
 
     }
 
@@ -153,31 +140,16 @@ const SelectSubscription = () => {
                                 <div className="select-subscription-text-wrapper-3">Select Your Subscription</div>
                                 <p className="select-subscription-almost-there-select">
                                     <span className="select-subscription-span">
-                                        Almost there. Select all the subscriptions you need
-                                        <br /> and find out how much you SAVE!{" "}
+                                        Almost there. First choose your subscription
+                                        {/* Almost there. Select the subscription you need
+                                        <br /> and find out how much you SAVE!{" "} */}
                                     </span>
-                                    <span className="select-subscription-text-wrapper-4">🎉</span>
+                                    {/* <span className="select-subscription-text-wrapper-4">🎉</span> */}
                                 </p>
+                                <div className='select-subscription-inner-box'>
                                 <p className="select-subscription-just-add-your">
-                                    <span className="select-subscription-text-wrapper-5">Just </span>
-                                    <span className="select-subscription-text-wrapper-4">add</span>
-                                    <span className="select-subscription-text-wrapper-5"> Your Subscription here in case it is not in the list:</span>
+                                    <span className="select-subscription-text-wrapper-5">You can select from this list of subscriptions</span>
                                 </p>
-                                <div className="select-subscription-frame-5">
-                                    <div className="select-subscription-field">
-                                        <input
-                                            type="text"
-                                            id="cost"
-                                            name="cost"
-                                            className="select-subscription-text-wrapper-6"
-                                            placeholder='Subscription Name'
-                                            value={merchantName}
-                                            onChange={handleMerchantChange}
-                                            onClick={clearNamePlaceHolder}
-                                            onBlur={restoreNamePlaceHolder}
-                                        />
-                                    </div>
-                                </div>
                                 <div className="select-subscription-frame-6">
                                     <div className="select-subscription-frame-7">
                                         {subs.map((sub) =>
@@ -188,7 +160,7 @@ const SelectSubscription = () => {
                                                     stateDefaultLargerClassName="select-subscription-toggle-checkmark-instance"
                                                     stateProp="default-larger"
                                                     onClick={() => {
-                                                        setMerchantName(sub.name)
+                                                        setmerchant_name(sub.name)
                                                         setSelectedItem(sub.name)
                                                     }}
                                                     isChecked={selectedItem == sub.name}
@@ -196,49 +168,69 @@ const SelectSubscription = () => {
                                             </div>
                                         )}
                                     </div>
-                                    {/* <div className="select-subscription-rectangle-wrapper">
-                                        <div className="select-subscription-rectangle-2" />
-                                    </div> */}
                                 </div>
-                                {/* <div className="select-subscription-field">
-                                    <div className="select-subscription-text-wrapper-6">Annual Subscription Cost</div>
-                                </div> */}
-                                <div className="select-subscription-field" style={{ width: "100%" }} >
-                                    <input
-                                        type="text"
-                                        id="cost"
-                                        name="cost"
-                                        className="select-subscription-text-wrapper-6"
-                                        placeholder="Monthly Subscription Cost"
-                                        value={ogMonthlyCost}
-                                        onChange={e => {if (!isNaN(e.target.value)) setOgMonthlyCost(e.target.value)}}
-                                        onClick={clearOgCostPlaceHolder}
-                                        onBlur={restoreOgCostPlaceHolder}
-                                    />
-                                </div>
-                                <div className="select-subscription-field" style={{ width: "100%" }}>
-                                    <input
-                                        type="text"
-                                        id="cost"
-                                        name="cost"
-                                        className="select-subscription-text-wrapper-6"
-                                        placeholder="Annual Subscription Cost"
-                                        value={cost}
-                                        onChange={e => {if (!isNaN(e.target.value)) setCost(e.target.value)}}
-                                        onClick={clearCostPlaceHolder}
-                                        onBlur={restoreCostPlaceHolder}
-                                    />
-                                </div>
-                                <div className='prices-container' >
-                                    <div className='red-container' >
-                                        <div className='prices' >
-                                            Price: {cost && `$${((cost / 12) * 1.15).toFixed(2)}`} per month
-                                        </div>
+                                <p className="select-subscription-just-add-your">
+                                    <span className="select-subscription-text-wrapper-5">Or just </span>
+                                    <span className="select-subscription-text-wrapper-4">add</span>
+                                    <span className="select-subscription-text-wrapper-5"> your Subscription here in case it is not in the list:</span>
+                                </p>
+                                <div className="select-subscription-frame-5">
+                                    <div className="select-subscription-field">
+                                        <input
+                                            type="text"
+                                            id="cost"
+                                            name="cost"
+                                            className="select-subscription-text-wrapper-6"
+                                            placeholder='Subscription Name'
+                                            value={merchant_name}
+                                            onChange={handleMerchantChange}
+                                            onClick={clearNamePlaceHolder}
+                                            onBlur={restoreNamePlaceHolder}
+                                        />
                                     </div>
-                                    <div className='savings-container' >
-                                        <div className='prices' >
-                                            {(!isNaN(cost) && !isNaN(ogMonthlyCost) && ogMonthlyCost !== 'NaN') ?
-                                            `You save: $${(parseFloat(ogMonthlyCost) - (cost / 12 * 1.15)).toFixed(2)} per month` : 'Enter a monthly price to see monthly savings'} 
+                                </div>
+                                </div>
+                                <p className="select-subscription-just-add-your">
+                                    <span className="select-subscription-text-wrapper-5">Now enter the monthly and / or annual price of your subscription (including taxes!)</span>
+                                </p>
+                                <div className='select-subscription-inner-box' >
+                                    <div className="select-subscription-field" style={{ width: "100%" }} >
+                                        <input
+                                            type="text"
+                                            id="cost"
+                                            name="cost"
+                                            className="select-subscription-text-wrapper-6"
+                                            placeholder="Monthly Subscription Cost"
+                                            value={og_monthly_cost}
+                                            onChange={e => {if (!isNaN(e.target.value)) setog_monthly_cost(e.target.value)}}
+                                            // onClick={clearOgCostPlaceHolder}
+                                            // onBlur={restoreOgCostPlaceHolder}
+                                        />
+                                    </div>
+                                    <div className="select-subscription-field" style={{ width: "100%" }}>
+                                        <input
+                                            type="text"
+                                            id="cost"
+                                            name="cost"
+                                            className="select-subscription-text-wrapper-6"
+                                            placeholder="Annual Subscription Cost"
+                                            value={cost}
+                                            onChange={e => {if (!isNaN(e.target.value)) setCost(e.target.value)}}
+                                            // onClick={clearCostPlaceHolder}
+                                            // onBlur={restoreCostPlaceHolder}
+                                        />
+                                    </div>
+                                    <div className='prices-container' >
+                                        <div className='red-container' >
+                                            <div className='prices' >
+                                            {cost ? `Price: $${((cost / 12) * 1.15).toFixed(2)} per month` : 'Enter a annual price to see your monthly cost'}
+                                            </div>
+                                        </div>
+                                        <div className='savings-container' >
+                                            <div className='prices' >
+                                                {(!isNaN(cost) && og_monthly_cost !== "" && og_monthly_cost !== null && !isNaN(og_monthly_cost) && og_monthly_cost !== 'NaN') ?
+                                                `You save: $${(parseFloat(og_monthly_cost) - (cost / 12 * 1.15)).toFixed(2)} per month` : 'Enter a monthly price to see monthly savings'} 
+                                            </div>
                                         </div>
                                     </div>
                                 </div>

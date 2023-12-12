@@ -2,31 +2,31 @@
     "image" : "/netflix.svg",
     "price" : 16.49,
     "clicked" : false,
-    "name" : "netflix"
+    "name" : "Netflix"
 }, {
     "image" : "/adobe.svg",
     "price" : 19.99,
     "clicked" : false,
-    "name" : "adobe"
+    "name" : "Adobe"
 }, {
     "image" : "/amazon.svg",
     "price" : 14.99,
     "clicked" : false,
-    "name" : "amazon"
+    "name" : "Amazon"
 }, {
     "image" : "/disney.svg",
     "price" : 7.99,
     "clicked" : false,
-    "name" : "disney"
+    "name" : "Disney"
 }, {
     "image" : "/youtube.svg",
     "price" : 9.99,
     "clicked" : false,
-    "name" : "youtube"
+    "name" : "Youtube"
 }, {
     "image" : "/zoom.svg",
     "price" : 21.49,
     "clicked" : false,
-    "name" : "zoom"
+    "name" : "Zoom"
 }
 ]

@@ -54,6 +54,11 @@ const Card = () => {
   //   name: "Michael Lafortune"
   // }
 
+  const copyToClipboard = (text) => {
+    navigator.clipboard.writeText(text)
+    toast.success(`${text} copied`)
+  };
+
   return (
     <div className="index">
       <div className="div-2">
@@ -84,7 +89,10 @@ const Card = () => {
                   />
                 </div>
                 <p className="p" style={{ margin: '16px' }} >
-                  That's it! Take this card to buy your annual subscription and Jybe will bill you back monthly
+                  That's it! Take this card to buy your annual subscription and Jybe will bill you back monthly. Click on any information on the card to copy it
+                  {/* Number: {cardInfo.img}
+                  Expiry: {cardInfo.expiry}
+                  CVV: {cardInfo.cvv} */}
                 </p>
               </div>
               <div className="jybe-virtual-card-wrapper">
@@ -93,16 +101,16 @@ const Card = () => {
                   alt="Jybe virtual card"
                   src="/card.png"
                 />
-                <div className='overlay card-img' >
+                <div className='overlay card-img'onClick={() => copyToClipboard(cardInfo.img)} >
                   {cardInfo.img}
                 </div>
-                <div className='overlay expiry' >
+                <div className='overlay expiry'onClick={() => copyToClipboard(cardInfo.expiry)} >
                   {cardInfo.expiry}
                 </div>
-                <div className='overlay name' >
+                <div className='overlay name' onClick={() => copyToClipboard(cardInfo.name)}>
                   {cardInfo.name}
                 </div>
-                <div className='cvv' >
+                <div className='cvv' onClick={() => copyToClipboard(cardInfo.cvv)}>
                   {cardInfo.cvv}
                 </div>
                 <img

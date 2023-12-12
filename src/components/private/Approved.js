@@ -1,8 +1,7 @@
 import React, { useState, useEffect, useContext } from 'react';
-import FlinksConnect from "../private/FlinksConnect";
 import { AccountContext } from '../../ProtectedRoute';
-import { Elements } from '@stripe/react-stripe-js';
-import { loadStripe } from '@stripe/stripe-js';
+// import { Elements } from '@stripe/react-stripe-js';
+// import { loadStripe } from '@stripe/stripe-js';
 import { Footer } from "../elements/Footer.js"
 import { Navbar } from "../elements/Navbar.js";
 import { Steps } from "../elements/Steps.js";
@@ -10,48 +9,62 @@ import { Button } from "../elements/Button";
 import "./approved.css"
 import subs from "../public/subscriptions.json"
 import toast, { Toaster } from 'react-hot-toast';
-const STRIPE_KEY = process.env.REACT_APP_STRIPE_KEY
+// const STRIPE_KEY = process.env.REACT_APP_STRIPE_KEY
 const API_URL = process.env.REACT_APP_API_URL
-const stripePromise = loadStripe(STRIPE_KEY)
+// const stripePromise = loadStripe(STRIPE_KEY)
 
 const Approved = () => {
     const [checkoutUrl, setCheckoutUrl] = useState()
     const context = useContext(AccountContext);
-    const { accountContext, setAccountContext, user, accessToken, navigate } = context
+    const { accountContext, user, accessToken } = context
     const [selectedSub, setSelectedSub] = useState("")
+    const [monthlySavings, setMonthlySavings] = useState()
     // console.log(accountContext)
 
     useEffect(() => {
+        localStorage.clear();
         // Iterate through the subs array
         for (const sub of subs) {
-            if (accountContext.merchantName === sub.name || accountContext.user?.merchant_name == sub.name) {
+            if (accountContext.merchant_name === sub.name || accountContext.user?.merchant_name == sub.name) {
                 // If there's a match, set the selected sub to the image
                 console.log(accountContext.user?.merchant_name)
                 setSelectedSub(sub.image);
                 return; // Exit the loop if a match is found
             }
         }
-
         // If no match is found, set the selected sub to the default image
         setSelectedSub("/genericsub.png");
-    }, [accountContext.merchantName]);
+    }, [accountContext.merchant_name]);
 
     useEffect(() => {
+        let MonthlySavings
+        if (accountContext.og_monthly_cost || accountContext.user?.og_monthly_cost) MonthlySavings = (
+            (accountContext.merchant_name || accountContext.user?.merchant_name) &&
+            !isNaN(parseFloat(accountContext.cost))
+          ) ? (
+            (parseFloat(accountContext.og_monthly_cost) - (parseFloat(accountContext.cost) / 12 * 1.15)).toFixed(2)
+          ) : (
+            (parseFloat(accountContext.user.og_monthly_cost) - (parseFloat(accountContext.user.amount) / 12 * 1.15)).toFixed(2)
+          );
+            setMonthlySavings(MonthlySavings)
+    }, [accountContext.og_monthly_cost, accountContext.user?.og_monthly_cost])
 
-        (accountContext.merchantName || accountContext.user?.merchant_name) && accessToken && fetch(`${API_URL}/stripe/create`, {
+    useEffect(() => {
+        (accountContext.merchant_name || accountContext.user?.merchant_name) && accessToken && selectedSub && fetch(`${API_URL}/stripe/create`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                merchant_name: accountContext.merchantName || accountContext.user?.merchant_name,
+                merchant_name: accountContext.merchant_name || accountContext.user?.merchant_name,
                 merchant_id: accountContext.merchant_id || accountContext.user?.merchant_id,
                 amount: accountContext.cost || accountContext.user?.amount ,
                 email: user.email,
                 user_id: accountContext.user_id || accountContext.user?.user_id,
                 order_id: accountContext.order_id || accountContext.user?.order_id,
-                origin: window.location.origin
+                origin: window.location.origin,
+                image: `${window.location.origin}${selectedSub}`
             })
         })
             .then(response => {
@@ -59,9 +72,10 @@ const Approved = () => {
                 if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
-            .then(res => setCheckoutUrl(res.url))
-            console.log(accountContext.user)
-    }, [accountContext, accountContext.user])
+            .then(res => {
+                setCheckoutUrl(res.url)
+            })
+    }, [accountContext, accountContext.user, selectedSub])
 
     return (
         <div className="approved-index">
@@ -87,7 +101,7 @@ const Approved = () => {
                                 />
                                 <div className="approved-text-wrapper-3">You’re approved!</div>
                                 <p className="approved-p">Please see the details of your card payments for your subscription below.</p>
-                                {(accountContext.merchantName || accountContext.user?.merchant_name) ?
+                                {(accountContext.merchant_name || accountContext.user?.merchant_name) ?
                                     <div className="approved-frame-5">
                                         <img
                                             className="approved-fill"
@@ -98,7 +112,7 @@ const Approved = () => {
                                             <div>12 monthly payments of</div>
                                             <div className="approved-text-wrapper-4">$
                                                 {
-                                                    (accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ? 
+                                                    (accountContext.merchant_name || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ? 
                                                     ((accountContext.cost / 12 * 1.15).toFixed(2)) : 
                                                     ((accountContext.user.amount / 12 * 1.15).toFixed(2))  
                                                 }
@@ -108,14 +122,12 @@ const Approved = () => {
                                             <div className="approved-text-wrapper-6">For 12 months</div>
                                         </div> */}
                                         </div>
-                                        {(accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) && (
+                                        {monthlySavings && (
                                                 <div className="approved-frame-7">
                                                     <div className="approved-text-wrapper-7">You Save</div>
                                                     <div className="approved-text-wrapper-7">
-                                                        {
-                                                            (accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
-                                                            (parseFloat(accountContext.ogMonthlyCost) - (accountContext.cost / 12 * 1.15)).toFixed(2) :
-                                                            (parseFloat(accountContext.user.og_monthly_cost) - (accountContext.user.amount / 12 * 1.15)).toFixed(2)
+                                                        ${
+                                                            monthlySavings
                                                         }
                                                     </div>
                                                     <div className="approved-text-wrapper-5">/ month</div>
@@ -129,7 +141,7 @@ const Approved = () => {
                                             <div className="approved-frame-10">
                                                 <div className="approved-text-wrapper-8">INTEREST</div>
                                                 <div className="approved-text-wrapper-9">
-                                                    ${((accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                    ${((accountContext.merchant_name || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
                                                         ((accountContext.cost) * 0.15).toFixed(2) : 
                                                         (accountContext.user.amount * 0.15).toFixed(2)
                                                     )}
@@ -138,7 +150,7 @@ const Approved = () => {
                                             <div className="approved-frame-11">
                                                 <div className="approved-text-wrapper-8">TOTAL</div>
                                                 <div className="approved-text-wrapper-9">
-                                                    ${((accountContext.merchantName || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                    ${((accountContext.merchant_name || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
                                                         ((accountContext.cost) * 1.15).toFixed(2) : 
                                                         (accountContext.user.amount * 1.15).toFixed(2)
                                                     )}

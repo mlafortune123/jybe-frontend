@@ -2668,3 +2668,26 @@ font-size: 0.75rem;
 .pointer {
   cursor: pointer;
 }
+
+.admin-table {
+  width: 100%; /* Make the table 100% wide */
+}
+
+.admin-table th, .admin-table td {
+  padding: 8px; /* Add padding for better spacing */
+}
+
+/* Set specific widths for the columns */
+.admin-table th:nth-child(1),
+.admin-table td:nth-child(1) {
+  width: 20%; /* Adjust the width for the first column (Order ID) */
+}
+
+.admin-table th:nth-child(2),
+.admin-table td:nth-child(2) {
+  width: 20%; /* Adjust the width for the second column (User ID) */
+}
+
+.td{
+  text-align: center;
+}

@@ -34,14 +34,14 @@ const UserInfo = () => {
         { value: 'YT', label: 'Yukon' }
     ];
     const [formData, setFormData] = useState({
-        firstName: 'Taylor',
-        lastName: 'Nyon',
-        address: '1066 Heenan Terr',
-        zip: 'N2A4C9',
-        phone: 18002672001,
-        dob: '1976-03-13',
-        country: 'Canada',
-        city: 'Kitchener'
+        // firstName: 'Taylor',
+        // lastName: 'Nyon',
+        // address: '1066 Heenan Terr',
+        // zip: 'N2A4C9',
+        // phone: 18002672001,
+        // dob: '1976-03-13',
+        // country: 'Canada',
+        // city: 'Kitchener'
     });
 
     const setGoodCredit = () => setFormData({
@@ -101,7 +101,20 @@ const UserInfo = () => {
             "city"
         ];
         if (formData.country != "Canada") {
-            toast.error("We can only provide services to those with Canadian addresses at this time")
+            toast.error(      
+                <div>
+                    <div>
+                    We can only provide services to those with Canadian addresses at this time. Would you like to be notified when our service is available in your area?
+                    </div>
+                    <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}} >
+                        <button onClick={() => handleNotifyClick(formData.country)}>Notify Me</button>
+                    </div>
+                </div>,
+                {
+            autoClose: false,
+            closeOnClick: true,
+            pauseOnHover: true,
+            });
             return
         }
         e.preventDefault();
@@ -127,33 +140,51 @@ const UserInfo = () => {
         setFormData({ ...formData })
 
         const cost = localStorage.getItem('cost');
-        const merchantName = localStorage.getItem('merchantName');
-        const ogMonthlyCost = localStorage.getItem('ogMonthlyCost');
+        const merchant_name = localStorage.getItem('merchant_name');
+        const og_monthly_cost = localStorage.getItem('og_monthly_cost');
+        const body = {...formData, email: user.email, province: selectedProvince, cost, merchant_name }
+        if (og_monthly_cost !== "undefined" && og_monthly_cost !== undefined && og_monthly_cost !== null && og_monthly_cost !== "null" ) {
+            // If true, set body.og_monthly_cost to og_monthly_cost
+            body.og_monthly_cost = og_monthly_cost;
+          }
         fetch(`${API_URL}/orders/create`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify({
-                ...formData, email: user.email, province: selectedProvince, cost: cost, merchant_name: merchantName, og_monthly_cost: ogMonthlyCost
-                //body: JSON.stringify({ ...formData, 'email': user.email, province: selectedProvince.value, order_id : accountContext.order_id 
-            })
+            body: JSON.stringify(body)
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
-                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                //if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(res => {
                 if (res.error) {
-                    toast.error(res.error)
+                    if (res.error == "Unavailable") {
+                        toast.error(      
+                            <div>
+                                <div>
+                                Our services are currently unavailable at this time. Would you like to be notified when our service is available in your area?
+                                </div>
+                                <div style={{display:'flex', justifyContent:'center', marginTop:'10px'}} >
+                                    <button onClick={() => handleNotifyClick("Unavailable")}>Notify Me</button>
+                                </div>
+                            </div>,
+                            {
+                        autoClose: false,
+                        closeOnClick: true,
+                        pauseOnHover: true,
+                        })
+                    }
+                    else toast.error(res.error)
                 }
                 else {
-                    console.log(res)
+                    // console.log(res)
                     setAccountContext((prevContext) => ({
                         ...prevContext, user_id: res.user_id, order_id: res.order_id, merchant_id: res.merchant_id,
-                        formData, province: selectedProvince.value, cost, merchantName, ogMonthlyCost
+                        formData, province: selectedProvince.value, cost, merchant_name, og_monthly_cost
                     }))
                     // res.user_id ? navigate("/select_subscription") : navigate("/error")
                     res.approved ? navigate("/approved") : navigate("/denied")
@@ -161,6 +192,31 @@ const UserInfo = () => {
             })
     };
 
+    const handleNotifyClick = async (country) => {
+        // Assume this is your API endpoint for handling notifications
+        try {
+          const response = await fetch(`${API_URL}/subscribe`, {
+            method: 'POST',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${accessToken}`
+            },
+            body:JSON.stringify({
+                email:user.email, country:country
+            })
+            // Additional options like headers, body, etc. can be added here
+          });
+    
+          if (response.ok) {
+            toast.success("You will be notified when our service is available.");
+          } else {
+            toast.error("Failed to subscribe for notifications. Please try again later.");
+          }
+        } catch (error) {
+          console.error("An error occurred while processing the API request:", error);
+          toast.error("An error occurred. Please try again later.");
+        }
+      };
 
     return (
         <div className="user-info">
@@ -280,7 +336,7 @@ const UserInfo = () => {
                                                 value={formData.country}
                                                 style={{ border: "None" }}
                                                 className={emptyFields.includes("country") ? "design-component-instance-node-2 red-outline" : "design-component-instance-node-2"}
-                                                onChange={(e) => handleChange("country", e)}
+                                                onChange={(e) => handleChange("country", e, "string")}
                                             />
                                         </div>
                                     </div>

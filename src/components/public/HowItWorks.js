@@ -8,7 +8,7 @@ import { PaymentCalculator } from "./PaymentCalculator";
 const HowItWorks = () => {
     const [selectedCarousel, setSelectedCarousel] = useState(1)
     return (
-        <div className="index" style={{flexDirection:"column", marginTop:'14vh'}} >
+        <div className="index card-div" style={{flexDirection:"column", marginTop:'5vh'}} >
             {/* <div style={{marginLeft:'3vw'}} >
             <Carousel props={selectedCarousel} />
             </div>
