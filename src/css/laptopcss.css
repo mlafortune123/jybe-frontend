@@ -55,4 +55,10 @@
     .select-subscription-section{
         height: 100vh;
     }
+    .select-subscription-text-wrapper-6{
+        font-size: 16px;
+    }
+    .select-subscription-frame-6::-webkit-scrollbar {
+        width: 11px!important; /* Set the width of the scrollbar */
+      }
 }

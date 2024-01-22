@@ -1,11 +1,7 @@
 import React, { useState, useContext, useEffect } from 'react';
 import { TextField } from '@mui/material';
 import { AccountContext } from '../../ProtectedRoute';
-import { Footer } from "../elements/Footer.js"
 import { Navbar } from "../elements/Navbar.js";
-import { Steps } from "../elements/Steps.js";
-import { InputsText } from "../elements/InputsText.js";
-import { CountryDropdown } from 'react-country-region-selector';
 import { Button } from "../elements/Button";
 import toast, { Toaster } from 'react-hot-toast';
 import "./userinfo.css"
@@ -34,7 +30,7 @@ const Admin = () => {
             .then(response => {
                 if (response.status == 401) window.location.reload()
                 if (response.status == 403) navigate("/")
-                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                if (response.status === 500 || response.status === 502) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(async res => {
@@ -58,7 +54,7 @@ const Admin = () => {
             .then(response => {
                 if (response.status == 401) window.location.reload()
                 if (response.status == 403) navigate("/")
-                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                if (response.status === 500 || response.status === 502) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(res => {
@@ -95,7 +91,7 @@ const Admin = () => {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
-            body: JSON.stringify({ amount : num })
+            body: JSON.stringify({ amount : num - 63 })
         })
             .then(res => res.json())
             .then(res => {

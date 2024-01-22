@@ -1,13 +1,11 @@
 import { Button } from "./Button.js"
 import "./Footer.css"
-import { useNavigate } from "react-router-dom";
 
 export const Footer = () => {
-  const navigate = useNavigate();
   return (
     <footer className="footer">
       <div className="group-5">
-        <img src="/footer.png" />
+        <img src="/footer.png" alt="footer"/>
       </div>
       <div className="div-relative">
         <div className="div-relative-2">

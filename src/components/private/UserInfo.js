@@ -1,4 +1,4 @@
-import React, { useState, useContext } from 'react';
+import React, { useState, useContext, useEffect } from 'react';
 import { TextField } from '@mui/material';
 import { AccountContext } from '../../ProtectedRoute';
 import { Footer } from "../elements/Footer.js"
@@ -10,6 +10,10 @@ import { Button } from "../elements/Button";
 import toast, { Toaster } from 'react-hot-toast';
 import "./userinfo.css"
 import "../../css/style.css";
+import ReactGA from 'react-ga4';
+
+// Initialize react-ga with your tracking ID
+
 
 const API_URL = process.env.REACT_APP_API_URL
 const UserInfo = () => {
@@ -33,16 +37,16 @@ const UserInfo = () => {
         { value: 'SK', label: 'Saskatchewan' },
         { value: 'YT', label: 'Yukon' }
     ];
-    const [formData, setFormData] = useState({
-        // firstName: 'Taylor',
-        // lastName: 'Nyon',
-        // address: '1066 Heenan Terr',
-        // zip: 'N2A4C9',
-        // phone: 18002672001,
-        // dob: '1976-03-13',
-        // country: 'Canada',
-        // city: 'Kitchener'
-    });
+    const [formData, setFormData] = useState({});
+
+    useEffect(() => {
+            if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
+  ReactGA.event('page_view', {
+    page_title: window.location.pathname + window.location.search,
+    page_location: window.location.pathname + window.location.search,
+  });
+    }
+      },[])
 
     const setGoodCredit = () => setFormData({
         firstName: 'Taylor',
@@ -84,8 +88,6 @@ const UserInfo = () => {
     // }, [accessToken])
 
     const handleChange = (name, newValue, type) => {
-        console.log(name, newValue, type)
-        console.log(typeof (newValue))
         typeof (newValue) == type && setFormData((prevFormData) => ({ ...prevFormData, [name]: newValue }));
     };
 
@@ -157,7 +159,7 @@ const UserInfo = () => {
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
-                //if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                //if (response.status === 500 || response.status === 502) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(res => {
@@ -181,7 +183,6 @@ const UserInfo = () => {
                     else toast.error(res.error)
                 }
                 else {
-                    // console.log(res)
                     setAccountContext((prevContext) => ({
                         ...prevContext, user_id: res.user_id, order_id: res.order_id, merchant_id: res.merchant_id,
                         formData, province: selectedProvince.value, cost, merchant_name, og_monthly_cost

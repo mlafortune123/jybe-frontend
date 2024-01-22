@@ -9,6 +9,10 @@ import { Button } from "../elements/Button";
 import "./approved.css"
 import subs from "../public/subscriptions.json"
 import toast, { Toaster } from 'react-hot-toast';
+import ReactGA from 'react-ga4';
+
+// Initialize react-ga with your tracking ID
+
 // const STRIPE_KEY = process.env.REACT_APP_STRIPE_KEY
 const API_URL = process.env.REACT_APP_API_URL
 // const stripePromise = loadStripe(STRIPE_KEY)
@@ -19,62 +23,75 @@ const Approved = () => {
     const { accountContext, user, accessToken } = context
     const [selectedSub, setSelectedSub] = useState("")
     const [monthlySavings, setMonthlySavings] = useState()
-    // console.log(accountContext)
+    console.log(accountContext)
+
+    useEffect(() => {
+        if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
+  ReactGA.event('page_view', {
+    page_title: window.location.pathname + window.location.search,
+    page_location: window.location.pathname + window.location.search,
+  });
+    }
+      },[])
 
     useEffect(() => {
         localStorage.clear();
         // Iterate through the subs array
         for (const sub of subs) {
-            if (accountContext.merchant_name === sub.name || accountContext.user?.merchant_name == sub.name) {
+            if (accountContext.merchant_name === sub.name || accountContext.inactiveOrder?.merchant_name == sub.name || accountContext.abandonedOrder?.merchant_name == sub.name) {
                 // If there's a match, set the selected sub to the image
-                console.log(accountContext.user?.merchant_name)
+
                 setSelectedSub(sub.image);
                 return; // Exit the loop if a match is found
             }
         }
         // If no match is found, set the selected sub to the default image
         setSelectedSub("/genericsub.png");
-    }, [accountContext.merchant_name]);
+    }, [accountContext.merchant_name, accountContext.inactiveOrder, accountContext.abandonedOrder]);
 
     useEffect(() => {
         let MonthlySavings
-        if (accountContext.og_monthly_cost || accountContext.user?.og_monthly_cost) MonthlySavings = (
-            (accountContext.merchant_name || accountContext.user?.merchant_name) &&
-            !isNaN(parseFloat(accountContext.cost))
-          ) ? (
-            (parseFloat(accountContext.og_monthly_cost) - (parseFloat(accountContext.cost) / 12 * 1.15)).toFixed(2)
-          ) : (
-            (parseFloat(accountContext.user.og_monthly_cost) - (parseFloat(accountContext.user.amount) / 12 * 1.15)).toFixed(2)
-          );
-            setMonthlySavings(MonthlySavings)
-    }, [accountContext.og_monthly_cost, accountContext.user?.og_monthly_cost])
+        if (accountContext.og_monthly_cost || accountContext.inactiveOrder?.og_monthly_cost) 
+            MonthlySavings = (
+                (accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name) && !isNaN(parseFloat(accountContext.cost))
+            ) ? (
+                (parseFloat(accountContext.og_monthly_cost) - (parseFloat(accountContext.cost) / 12 * 1.15)).toFixed(2)
+            ) : (
+                (parseFloat(accountContext.inactiveOrder.og_monthly_cost) - (parseFloat(accountContext.inactiveOrder.amount) / 12 * 1.15)).toFixed(2)
+            );
+                setMonthlySavings(MonthlySavings)
+    }, [accountContext.og_monthly_cost, accountContext.inactiveOrder?.og_monthly_cost])
 
     useEffect(() => {
-        (accountContext.merchant_name || accountContext.user?.merchant_name) && accessToken && selectedSub && fetch(`${API_URL}/stripe/create`, {
+        //need to filer for inactive / abandoned orders
+        if (!checkoutUrl && (accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name) && accessToken && selectedSub) {
+            setCheckoutUrl("...")
+            fetch(`${API_URL}/stripe/create`, {
             method: "POST",
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${accessToken}`
             },
             body: JSON.stringify({
-                merchant_name: accountContext.merchant_name || accountContext.user?.merchant_name,
-                merchant_id: accountContext.merchant_id || accountContext.user?.merchant_id,
-                amount: accountContext.cost || accountContext.user?.amount ,
+                merchant_name: accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name,
+                merchant_id: accountContext.merchant_id || accountContext.inactiveOrder?.merchant_id,
+                amount: accountContext.cost || accountContext.inactiveOrder?.amount ,
                 email: user.email,
-                user_id: accountContext.user_id || accountContext.user?.user_id,
-                order_id: accountContext.order_id || accountContext.user?.order_id,
+                user_id: accountContext.user_id || accountContext.inactiveOrder?.user_id,
+                order_id: accountContext.order_id || accountContext.inactiveOrder?.order_id,
                 origin: window.location.origin,
                 image: `${window.location.origin}${selectedSub}`
             })
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
-                if (response.status === 500) toast.error("The requested service is currently unavailable at the moment.")
+                if (response.status === 500 || response.status === 502) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })
             .then(res => {
                 setCheckoutUrl(res.url)
             })
+        }
     }, [accountContext, accountContext.user, selectedSub])
 
     return (
@@ -101,7 +118,7 @@ const Approved = () => {
                                 />
                                 <div className="approved-text-wrapper-3">You’re approved!</div>
                                 <p className="approved-p">Please see the details of your card payments for your subscription below.</p>
-                                {(accountContext.merchant_name || accountContext.user?.merchant_name) ?
+                                {(accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name) ?
                                     <div className="approved-frame-5">
                                         <img
                                             className="approved-fill"
@@ -112,9 +129,9 @@ const Approved = () => {
                                             <div>12 monthly payments of</div>
                                             <div className="approved-text-wrapper-4">$
                                                 {
-                                                    (accountContext.merchant_name || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ? 
+                                                    (accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name) && (!isNaN(accountContext.cost)) ? 
                                                     ((accountContext.cost / 12 * 1.15).toFixed(2)) : 
-                                                    ((accountContext.user.amount / 12 * 1.15).toFixed(2))  
+                                                    ((accountContext.inactiveOrder.amount / 12 * 1.15).toFixed(2))  
                                                 }
                                             </div>
                                             <div className="approved-text-wrapper-5">/ month</div>
@@ -141,18 +158,18 @@ const Approved = () => {
                                             <div className="approved-frame-10">
                                                 <div className="approved-text-wrapper-8">INTEREST</div>
                                                 <div className="approved-text-wrapper-9">
-                                                    ${((accountContext.merchant_name || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                    ${((accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name) && (!isNaN(accountContext.cost)) ?
                                                         ((accountContext.cost) * 0.15).toFixed(2) : 
-                                                        (accountContext.user.amount * 0.15).toFixed(2)
+                                                        (accountContext.inactiveOrder.amount * 0.15).toFixed(2)
                                                     )}
                                                 </div>
                                             </div>
                                             <div className="approved-frame-11">
                                                 <div className="approved-text-wrapper-8">TOTAL</div>
                                                 <div className="approved-text-wrapper-9">
-                                                    ${((accountContext.merchant_name || accountContext.user?.merchant_name) && (!isNaN(accountContext.cost)) ?
+                                                    ${((accountContext.merchant_name || accountContext.inactiveOrder?.merchant_name) && (!isNaN(accountContext.cost)) ?
                                                         ((accountContext.cost) * 1.15).toFixed(2) : 
-                                                        (accountContext.user.amount * 1.15).toFixed(2)
+                                                        (accountContext.inactiveOrder.amount * 1.15).toFixed(2)
                                                     )}
                                                 </div>
                                             </div>
@@ -161,7 +178,7 @@ const Approved = () => {
                                 <div className="approved-div-5">
                                     {/* <img src="/back.png" /> */}
                                     <Button
-                                        className={`approved-button-instance thirty ${!checkoutUrl && 'disabled'} `}
+                                        className={`approved-button-instance thirty ${(!checkoutUrl || checkoutUrl == '...') && 'disabled'} `}
                                         icon="right"
                                         size="lg"
                                         state="default"

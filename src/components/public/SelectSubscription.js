@@ -11,6 +11,9 @@ import toast, { Toaster } from 'react-hot-toast';
 import "../../css/style.css";
 import "./selectsubscription.css"
 import "../../css/phonecss.css"
+import ReactGA from 'react-ga4';
+
+// Initialize react-ga with your tracking ID
 
 const API_URL = process.env.REACT_APP_API_URL
 const SelectSubscription = () => {
@@ -21,9 +24,27 @@ const SelectSubscription = () => {
     const [og_monthly_cost, setog_monthly_cost] = useState()
     // Create a ref for the div with class "select-subscription-div-3"
     const selectSubscriptionDivRef = useRef(null);
+    const socialMediaPlatforms = ['LinkedIn', 'FB', 'Instagram', 'Twitter', 'Snapchat', 'TikTok'];
+    const userAgent = navigator.userAgent.toString()
 
     // State to store the height of the target div
     const [targetDivHeight, setTargetDivHeight] = useState(0);
+
+    useEffect(() => {
+        if (socialMediaPlatforms.some(platform => userAgent.includes(platform))) toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca")
+            if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
+// ReactGA.event({
+//     category: 'User Interaction',
+//     action: 'Clicked Button',
+//     label: 'Homepage',
+//   });
+
+  ReactGA.event('page_view', {
+    page_title: window.location.pathname + window.location.search,
+    page_location: window.location.pathname + window.location.search,
+  });
+    }
+      },[])
 
     useEffect(() => {
         if (selectSubscriptionDivRef.current) {
@@ -33,23 +54,6 @@ const SelectSubscription = () => {
             setTargetDivHeight(height);
         }
     }, []);
-
-
-    const clearCostPlaceHolder = () => {
-        cost == "Annual Subscription Cost" && setCost(null)
-    }
-
-    const restoreCostPlaceHolder = () => {
-        cost == null && setCost("Annual Subscription Cost")
-    }
-
-    const clearOgCostPlaceHolder = () => {
-        og_monthly_cost == "Monthly Subscription Cost" && setog_monthly_cost(null)
-    }
-
-    const restoreOgCostPlaceHolder = () => {
-        og_monthly_cost == null && setog_monthly_cost("Monthly Subscription Cost")
-    }
 
     const clearNamePlaceHolder = () => {
         merchant_name == "Subscription Name" && setmerchant_name("")
@@ -77,12 +81,14 @@ const SelectSubscription = () => {
             localStorage.setItem('cost', cost);
             localStorage.setItem('merchant_name', selectedItem ? selectedItem : merchant_name);
             og_monthly_cost!= undefined && localStorage.setItem('og_monthly_cost', og_monthly_cost);
-            loginWithRedirect({ 
-                // authorizationParams: {
-                //     redirect_uri : `${window.location.origin}/select_subscription?${queryString}`
-                // }
-                openUrl: () => window.location.replace(`/select_subscription`) 
-            })
+            socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
+                toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
+                loginWithRedirect({ 
+                    // authorizationParams: {
+                    //     redirect_uri : `${window.location.origin}/select_subscription?${queryString}`
+                    // }
+                    openUrl: () => window.location.replace(`/select_subscription`) 
+                })
         }
     };
 

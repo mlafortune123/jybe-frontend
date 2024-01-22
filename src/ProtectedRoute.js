@@ -6,7 +6,9 @@ const API_URL = process.env.REACT_APP_API_URL
 export const AccountContext = createContext();
 
 export const ProtectedRoute = ({ component: Component, ...props }) => {
-  const [accountContext, setAccountContext] = useState({});
+  const [accountContext, setAccountContext] = useState();
+  // const [activeOrders, setActiveOrders] = useState()
+  // const [inactiveOrders, setInactiveOrders] = useState()
   const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently, user } = useAuth0();
   const [accessToken, setAccessToken] = useState()
   const navigate = useNavigate();
@@ -30,16 +32,19 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     .then(response => response.json())
     .then(res => {
         if (res[0]) {
-          console.log('context res',res[0])
-          // if (res[0].customer_id == null) navigate("/approved")
-            setAccountContext((prevContext) => ({user: res[0], prevContext}))
+          //let inactiveOrder
+          let inactiveOrder = res.filter(item => (item.status == "inactive" || (item.status == "abandoned")))[0]
+          let activeOrders = res.filter(item => (item.status == "active"))
+          let expiredOrders = res.filter(item => (item.status == "expired"))
+          console.log(res)
+            setAccountContext((prevContext) => ({user: res[0], prevContext, inactiveOrder, activeOrders, expiredOrders}))
             // toast.error('You appear to already have an account, please click the testing reset button.')
-            //navigate("/approved")
+            if (inactiveOrder) navigate("/approved")
         }
     })
     }
     getToken()
-  },[])
+  },[getAccessTokenSilently])
 
     if (window.location.search.includes('?error=access_denied&error_description=Please%20verify%20your%20email%20before%20continuing.')) {
       navigate("/IntermediateScreen?noerror")

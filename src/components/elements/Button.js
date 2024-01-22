@@ -22,7 +22,7 @@ export const Button = ({ type, size, icon, state, className, text = "Button text
 
       {/* {size === "xs" && state === "default" && icon === "only" && <Add14 className="add" />} */}
       {["false", "left", "right"].includes(icon) && <div className="text">{text}</div>}
-        <img src="/rightarrow.png"  />
+        <img src="/rightarrow.png" alt="rightarrow" />
     </div>
   );
 };

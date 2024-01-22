@@ -8,7 +8,7 @@ const Denied = () => {
         <div className="container">
           <div className="section">
             <div className="form-wrapper">
-              <div className="form">
+              <div className="denied-form">
                 <img
                   className="no-internet"
                   alt="No internet"

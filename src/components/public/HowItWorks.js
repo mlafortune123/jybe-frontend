@@ -1,12 +1,25 @@
 import {Carousel} from "./Carousel.js"
 import "../../css/style.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Navbar } from "../elements/Navbar.js";
 import {Footer} from "../elements/Footer.js"
 import { PaymentCalculator } from "./PaymentCalculator";
+import ReactGA from 'react-ga4';
+
+// Initialize react-ga with your tracking ID
 
 const HowItWorks = () => {
     const [selectedCarousel, setSelectedCarousel] = useState(1)
+
+    useEffect(() => {
+          if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
+  ReactGA.event('page_view', {
+    page_title: window.location.pathname + window.location.search,
+    page_location: window.location.pathname + window.location.search,
+  });
+    }
+    },[])
+
     return (
         <div className="index card-div" style={{flexDirection:"column", marginTop:'5vh'}} >
             {/* <div style={{marginLeft:'3vw'}} >

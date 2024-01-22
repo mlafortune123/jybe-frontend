@@ -5,6 +5,9 @@ import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter as Router} from 'react-router-dom';
+import ReactGA from 'react-ga4';
+
+if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") ReactGA.initialize('G-8LD765N85S');
 const domain = process.env.REACT_APP_DOMAIN;
 const clientId = process.env.REACT_APP_CLIENT_ID;
 

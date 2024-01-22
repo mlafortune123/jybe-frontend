@@ -1,4 +1,5 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
+import toast, { Toaster } from 'react-hot-toast';
 import { Button } from "../elements/Button";
 import { Navbar } from "../elements/Navbar.js";
 import {Carousel} from "./Carousel.js"
@@ -9,15 +10,39 @@ import { PaymentCalculator } from "./PaymentCalculator";
 import {Footer} from "../elements/Footer.js"
 import { useNavigate } from "react-router-dom";
 import { useAuth0 } from '@auth0/auth0-react';
+import ReactGA from 'react-ga4';
+
+// Initialize react-ga with your tracking ID
 
 const Home = () => {
   const navigate = useNavigate();
   const { loginWithRedirect } = useAuth0();
   const [selectedCarousel, setSelectedCarousel] = useState(1)
+  const socialMediaPlatforms = ['LinkedIn', 'FB', 'Instagram', 'Twitter', 'Snapchat', 'TikTok'];
+  const userAgent = navigator.userAgent.toString()
+
+  useEffect(() => {
+        if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
+  ReactGA.event('page_view', {
+    page_title: window.location.pathname + window.location.search,
+    page_location: window.location.pathname + window.location.search,
+  });
+    }
+    if (socialMediaPlatforms.some(platform => userAgent.includes(platform))) toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca")
+  },[])
 
   return (
     <div className="index">
       <div className="div-2">
+      <Toaster
+              toastOptions={{
+                className: '',
+                style: {
+                  marginTop: '86px',
+                  padding: '16px'
+                },
+              }}
+            />
         <div className="frame-3">
           <div className="frame-4">
             <div className="frame-5">
@@ -33,7 +58,11 @@ const Home = () => {
                   state="default"
                   text="Start Jybing"
                   type="primary"
-                  onClick={() => loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})}
+                  onClick={() => 
+                    socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
+                    toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
+                    loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})
+                  }
                 />
               </div>
               <div className="img-3">
@@ -102,7 +131,11 @@ const Home = () => {
                     state="default"
                     text="Start Jybing"
                     type="primary"
-                    onClick={() => loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})}
+                    onClick={() => 
+                      socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
+                      toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
+                      loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})
+                  }
                   />
                 </div>
               </div>

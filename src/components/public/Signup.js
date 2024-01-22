@@ -92,7 +92,7 @@ return (
               </div>
             </div>
           </div>
-          <img className="signup-img" src="/waluigi.png"/>
+          <img className="signup-img" src="/waluigi.png" alt="waluigi" />
         </div>
         <Footer/>
         <Navbar

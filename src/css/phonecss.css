@@ -102,7 +102,8 @@
     }
     .user-info .div-3{
         width: 100%!important;
-        padding: 140px 14px 0px!important;
+        padding: 100px 0px 0px!important;
+        gap: 0px!important;
     }
     .user-info .img-2{
         width: auto!important;
@@ -193,5 +194,8 @@
         flex-direction: column;
         align-items: flex-start;
         gap: 2.5vh;
+    }
+    .select-subscription-img{
+        width: 100vw;
     }
 }
