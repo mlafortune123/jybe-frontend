@@ -61,4 +61,8 @@
     .select-subscription-frame-6::-webkit-scrollbar {
         width: 11px!important; /* Set the width of the scrollbar */
       }
+      .card-div{
+        margin-top: 20vh;
+        height: 80vh;
+      }
 }

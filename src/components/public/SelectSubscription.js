@@ -32,19 +32,19 @@ const SelectSubscription = () => {
 
     useEffect(() => {
         if (socialMediaPlatforms.some(platform => userAgent.includes(platform))) toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca")
-            if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
-// ReactGA.event({
-//     category: 'User Interaction',
-//     action: 'Clicked Button',
-//     label: 'Homepage',
-//   });
+        if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
+            // ReactGA.event({
+            //     category: 'User Interaction',
+            //     action: 'Clicked Button',
+            //     label: 'Homepage',
+            //   });
 
-  ReactGA.event('page_view', {
-    page_title: window.location.pathname + window.location.search,
-    page_location: window.location.pathname + window.location.search,
-  });
-    }
-      },[])
+            ReactGA.event('page_view', {
+                page_title: window.location.pathname + window.location.search,
+                page_location: window.location.pathname + window.location.search,
+            });
+        }
+    }, [])
 
     useEffect(() => {
         if (selectSubscriptionDivRef.current) {
@@ -80,14 +80,14 @@ const SelectSubscription = () => {
         else {
             localStorage.setItem('cost', cost);
             localStorage.setItem('merchant_name', selectedItem ? selectedItem : merchant_name);
-            og_monthly_cost!= undefined && localStorage.setItem('og_monthly_cost', og_monthly_cost);
-            socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
+            og_monthly_cost != undefined && localStorage.setItem('og_monthly_cost', og_monthly_cost);
+            socialMediaPlatforms.some(platform => userAgent.includes(platform)) ?
                 toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
-                loginWithRedirect({ 
-                    // authorizationParams: {
-                    //     redirect_uri : `${window.location.origin}/select_subscription?${queryString}`
-                    // }
-                    openUrl: () => window.location.replace(`/select_subscription`) 
+                loginWithRedirect({
+                    authorizationParams: {
+                        prompt: 'select_account'
+                    },
+                    openUrl: () => window.location.replace(`/select_subscription`)
                 })
         }
     };
@@ -100,24 +100,24 @@ const SelectSubscription = () => {
                 // 'Authorization': `Bearer ${accessToken}`
             }
         })
-        .then(w => {
-        fetch(`${API_URL}/orders/delete/asasd`, {
-            method: 'GET',
-            headers: {
-                'Content-Type': 'application/json',
-                // 'Authorization': `Bearer ${accessToken}`
-            }
-        })
-            .then(we =>
-                fetch(`${API_URL}/users/delete/asasd`, {
+            .then(w => {
+                fetch(`${API_URL}/orders/delete/asasd`, {
                     method: 'GET',
                     headers: {
                         'Content-Type': 'application/json',
                         // 'Authorization': `Bearer ${accessToken}`
                     }
-                }))
-            .then(we2 => we2.status == 200 ? toast.success("reset complete") : toast.error("reset broke"))
-        })
+                })
+                    .then(we =>
+                        fetch(`${API_URL}/users/delete/asasd`, {
+                            method: 'GET',
+                            headers: {
+                                'Content-Type': 'application/json',
+                                // 'Authorization': `Bearer ${accessToken}`
+                            }
+                        }))
+                    .then(we2 => we2.status == 200 ? toast.success("reset complete") : toast.error("reset broke"))
+            })
     }
 
     const handleMerchantChange = (e) => {
@@ -153,48 +153,49 @@ const SelectSubscription = () => {
                                     {/* <span className="select-subscription-text-wrapper-4">🎉</span> */}
                                 </p>
                                 <div className='select-subscription-inner-box'>
-                                <p className="select-subscription-just-add-your">
-                                    <span className="select-subscription-text-wrapper-5">You can select from this list of subscriptions</span>
-                                </p>
-                                <div className="select-subscription-frame-6">
-                                    <div className="select-subscription-frame-7">
-                                        {subs.map((sub) =>
-                                            <div className="select-subscription-logo-2">
-                                                <img src={sub.image} className="select-subscription-design-component-instance-node-2" />
-                                                <ConcreteComponentNode
-                                                    rectangleClassName="select-subscription-toggle-checkmark"
-                                                    stateDefaultLargerClassName="select-subscription-toggle-checkmark-instance"
-                                                    stateProp="default-larger"
-                                                    onClick={() => {
-                                                        setmerchant_name(sub.name)
-                                                        setSelectedItem(sub.name)
-                                                    }}
-                                                    isChecked={selectedItem == sub.name}
-                                                />
-                                            </div>
-                                        )}
+                                    <p className="select-subscription-just-add-your">
+                                        <span className="select-subscription-text-wrapper-5">You can select from this list of subscriptions</span>
+                                    </p>
+                                    <div className="select-subscription-frame-6">
+                                        <div className="select-subscription-frame-7">
+                                            {subs.map((sub) =>
+                                                <div className="select-subscription-logo-2">
+                                                    <img src={sub.image} className="select-subscription-design-component-instance-node-2" />
+                                                    <ConcreteComponentNode
+                                                        rectangleClassName="select-subscription-toggle-checkmark"
+                                                        stateDefaultLargerClassName="select-subscription-toggle-checkmark-instance"
+                                                        stateProp="default-larger"
+                                                        onClick={() => {
+                                                            setmerchant_name(sub.name)
+                                                            setSelectedItem(sub.name)
+                                                        }}
+                                                        isChecked={selectedItem == sub.name}
+                                                    />
+                                                </div>
+                                            )}
+                                        </div>
                                     </div>
-                                </div>
-                                <p className="select-subscription-just-add-your">
-                                    <span className="select-subscription-text-wrapper-5">Or just </span>
-                                    <span className="select-subscription-text-wrapper-4">add</span>
-                                    <span className="select-subscription-text-wrapper-5"> your Subscription here in case it is not in the list:</span>
-                                </p>
-                                <div className="select-subscription-frame-5">
-                                    <div className="select-subscription-field">
-                                        <input
-                                            type="text"
-                                            id="cost"
-                                            name="cost"
-                                            className="select-subscription-text-wrapper-6"
-                                            placeholder='Subscription Name'
-                                            value={merchant_name}
-                                            onChange={handleMerchantChange}
-                                            onClick={clearNamePlaceHolder}
-                                            onBlur={restoreNamePlaceHolder}
-                                        />
+                                    <p className="select-subscription-just-add-your">
+                                        <span className="select-subscription-text-wrapper-5">Or just </span>
+                                        <span className="select-subscription-text-wrapper-4">add</span>
+                                        <span className="select-subscription-text-wrapper-5"> your Subscription here in case it is not in the list:</span>
+                                    </p>
+                                    <div className="select-subscription-frame-5">
+                                        <div className="select-subscription-field">
+                                            <input
+                                                type="text"
+                                                id="cost"
+                                                name="cost"
+                                                className="select-subscription-text-wrapper-6"
+                                                placeholder='Subscription Name'
+                                                value={merchant_name}
+                                                onChange={handleMerchantChange}
+                                                onClick={clearNamePlaceHolder}
+                                                onBlur={restoreNamePlaceHolder}
+                                                style={{width:'100%'}}
+                                            />
+                                        </div>
                                     </div>
-                                </div>
                                 </div>
                                 <p className="select-subscription-just-add-your">
                                     <span className="select-subscription-text-wrapper-5">Now enter the monthly and / or annual price of your subscription (including taxes!)</span>
@@ -208,9 +209,10 @@ const SelectSubscription = () => {
                                             className="select-subscription-text-wrapper-6"
                                             placeholder="Monthly Subscription Cost"
                                             value={og_monthly_cost}
-                                            onChange={e => {if (!isNaN(e.target.value)) setog_monthly_cost(e.target.value)}}
-                                            // onClick={clearOgCostPlaceHolder}
-                                            // onBlur={restoreOgCostPlaceHolder}
+                                            onChange={e => { if (!isNaN(e.target.value)) setog_monthly_cost(e.target.value) }}
+                                            style={{width:'100%'}}
+                                        // onClick={clearOgCostPlaceHolder}
+                                        // onBlur={restoreOgCostPlaceHolder}
                                         />
                                     </div>
                                     <div className="select-subscription-field" style={{ width: "100%" }}>
@@ -221,21 +223,22 @@ const SelectSubscription = () => {
                                             className="select-subscription-text-wrapper-6"
                                             placeholder="Annual Subscription Cost"
                                             value={cost}
-                                            onChange={e => {if (!isNaN(e.target.value)) setCost(e.target.value)}}
-                                            // onClick={clearCostPlaceHolder}
-                                            // onBlur={restoreCostPlaceHolder}
+                                            onChange={e => { if (!isNaN(e.target.value)) setCost(e.target.value) }}
+                                            style={{width:'100%'}}
+                                        // onClick={clearCostPlaceHolder}
+                                        // onBlur={restoreCostPlaceHolder}
                                         />
                                     </div>
                                     <div className='prices-container' >
                                         <div className='red-container' >
                                             <div className='prices' >
-                                            {cost ? `Price: $${((cost / 12) * 1.15).toFixed(2)} per month` : 'Enter a annual price to see your monthly cost'}
+                                                {cost ? `Price: $${((cost / 12) * 1.15).toFixed(2)} per month` : 'Enter a annual price to see your monthly cost'}
                                             </div>
                                         </div>
                                         <div className='savings-container' >
                                             <div className='prices' >
                                                 {(!isNaN(cost) && og_monthly_cost !== "" && og_monthly_cost !== null && !isNaN(og_monthly_cost) && og_monthly_cost !== 'NaN') ?
-                                                `You save: $${(parseFloat(og_monthly_cost) - (cost / 12 * 1.15)).toFixed(2)} per month` : 'Enter a monthly price to see monthly savings'} 
+                                                    `You save: $${(parseFloat(og_monthly_cost) - (cost / 12 * 1.15)).toFixed(2)} per month` : 'Enter a monthly price to see monthly savings'}
                                             </div>
                                         </div>
                                     </div>

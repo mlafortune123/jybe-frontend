@@ -336,11 +336,11 @@
   }
   
   .index .design-component-instance-node-2 {
-    height: 36px !important;
+    /* height: 36px !important; */
     left: unset !important;
     position: relative !important;
     top: unset !important;
-    width: 103px !important;
+    /* width: 103px !important; */
   }
   
   .index .toggle-checkmark-instance {
@@ -1239,7 +1239,7 @@
     width: 100%;
   }
 
-  .index .button-2 {
+  .button-2 {
     align-items: center;
     background-color: #FF5874;
     border-radius: 8px;
@@ -2690,4 +2690,16 @@ font-size: 0.75rem;
 
 .td{
   text-align: center;
+}
+
+.red{
+  background-color: #FF5874!important;
+}
+
+.black{
+  background-color: #09003A!important;
+}
+
+.yellow{
+  background-color: #FFA842!important;
 }

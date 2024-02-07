@@ -5,11 +5,9 @@
 .index .jybe-virtual-card-wrapper {
     align-items: center;
     border-radius: 16px;
-    flex-direction: row;
     padding: 16px;
     position: relative;
     width: 1000px;
-    margin: 0 auto 40px;
     justify-content: space-around;
     display: flex;
   }
@@ -32,7 +30,9 @@
   }
 
   .card-div{
-    margin-top: 20vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
   }
 
   .overlay{
@@ -99,4 +99,11 @@
   margin-top: 17vh;
   display: flex;
   flex-direction: column;
+}
+
+.button-holder{
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-bottom: 16px;
 }

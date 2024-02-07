@@ -159,6 +159,7 @@ const UserInfo = () => {
         })
             .then(response => {
                 if (response.status == 401) window.location.reload()
+                else if (response.status == 502) toast.error("The requested service is currently unavailable at the moment.")
                 //if (response.status === 500 || response.status === 502) toast.error("The requested service is currently unavailable at the moment.")
                 return response.json()
             })

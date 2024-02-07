@@ -11,6 +11,7 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
   // const [inactiveOrders, setInactiveOrders] = useState()
   const { isAuthenticated, isLoading, loginWithRedirect, getAccessTokenSilently, user } = useAuth0();
   const [accessToken, setAccessToken] = useState()
+  const [refreshToken, setRefreshToken] = useState()
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -46,6 +47,10 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
     getToken()
   },[getAccessTokenSilently])
 
+  const refreshTheClock = () => {
+    setRefreshToken(token => !token)
+  }
+
     if (window.location.search.includes('?error=access_denied&error_description=Please%20verify%20your%20email%20before%20continuing.')) {
       navigate("/IntermediateScreen?noerror")
     }  
@@ -54,10 +59,14 @@ export const ProtectedRoute = ({ component: Component, ...props }) => {
         }
     else if (isAuthenticated) {
           return (
-            <AccountContext.Provider value={{ accountContext, setAccountContext, user, accessToken, navigate }}>
+            <AccountContext.Provider value={{ accountContext, setAccountContext, user, accessToken, navigate, refreshTheClock, refreshToken }}>
               <Component/>
             </AccountContext.Provider>
           ); // User is authenticated, render the component
         }
-    else loginWithRedirect()
+    else loginWithRedirect({
+      authorizationParams : {
+        prompt: 'select_account'
+      }
+    })
 }

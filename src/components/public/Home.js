@@ -61,7 +61,12 @@ const Home = () => {
                   onClick={() => 
                     socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
                     toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
-                    loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})
+                    loginWithRedirect({
+                      openUrl: () => window.location.replace("/userinfo"),
+                      authorizationParams : {
+                        prompt: 'select_account'
+                      }
+                    })
                   }
                 />
               </div>
@@ -134,7 +139,12 @@ const Home = () => {
                     onClick={() => 
                       socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
                       toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
-                      loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})
+                      loginWithRedirect({
+                        openUrl: () => window.location.replace("/userinfo"),
+                        authorizationParams : {
+                          prompt: 'select_account'
+                        }
+                      })
                   }
                   />
                 </div>

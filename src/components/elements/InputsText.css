@@ -28,6 +28,7 @@
     line-height: 26px;
     margin-top: -1px;
     position: relative;
+    display: flex;
   }
   
   .inputs-text .text-wrapper {
@@ -114,5 +115,9 @@
   
   .inputs-text .frame-2.error .password-2 {
     color: var(--neutralsblack);
+  }
+
+  .fodyfo{
+    height: 44px;
   }
   

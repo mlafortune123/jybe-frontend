@@ -198,4 +198,20 @@
     .select-subscription-img{
         width: 100vw;
     }
+    .plan-saving > div > div > p{
+        gap: 9px!important;
+    }
+}
+
+@media screen and (max-width: 331px) {
+    .text{
+        font-size: 12px!important;
+    }
+    .plan-saving > div {
+        padding: 0px 10px!important;
+        gap: 0px!important;
+    }
+    .plan-saving > div > div > p {
+        gap: 6.5px!important;
+    }
 }

@@ -5,11 +5,14 @@ import { Button } from "./Button";
 import toast, { Toaster } from 'react-hot-toast';
 import { useAuth0 } from '@auth0/auth0-react';
 import "./style.css";
+import { useNavigate } from "react-router-dom";
 
 export const Navbar = () => {
-  const { loginWithRedirect, isAuthenticated, logout } = useAuth0();
+  const { loginWithRedirect, isAuthenticated, logout, user } = useAuth0();
   const socialMediaPlatforms = ['LinkedIn', 'FB', 'Instagram', 'Twitter', 'Snapchat', 'TikTok'];
   const userAgent = navigator.userAgent.toString()
+  const navigate = useNavigate();
+
   return (
     <div className={`navbar navbar-instance`}>
             <Toaster
@@ -26,11 +29,11 @@ export const Navbar = () => {
           <img className="logo" alt="Logo" src='/logo.svg' />
         </a>
         <div className="frame-2">
-          <a
+          {/* <a
             href="/"
             className={`nav-item ${window.location.pathname === "/" ? "selected-tab" : "inactive-text-tab-wrapper"}`}>
             Home
-          </a>
+          </a> */}
           <a
             href="/howitworks"
             className={`nav-item ${window.location.pathname === "/howitworks" ? "selected-tab" : "inactive-text-tab-wrapper"}`}>
@@ -41,15 +44,20 @@ export const Navbar = () => {
             onClick={() => 
               socialMediaPlatforms.some(platform => userAgent.includes(platform)) ? 
               toast.error("Our app is unusable in an embedded browser, please open your preferred browser (Google, Safari, etc) and go to jybe.ca") :
-              loginWithRedirect({openUrl: () => window.location.replace("/userinfo")})
+              loginWithRedirect({
+                openUrl: () => window.location.replace("/userinfo"),   
+                appState: {
+                  prompt: "select_account"
+              }
+              })
             }
             className={`nav-item ${window.location.pathname === "/userinfo" ? "selected-tab" : "inactive-text-tab-wrapper"}`}>
               Start Jybing
             </a>
             {/* } */}
-          <a onClick={() => window.open("mailto:michaeltiller@jybe.ca")} className={`nav-item ${window.location.pathname === "/contact" ? "selected-tab" : "inactive-text-tab-wrapper"}`}>
+          {!isAuthenticated ? <a onClick={() => window.open("mailto:michaeltiller@jybe.ca")} className={`nav-item ${window.location.pathname === "/contact" ? "selected-tab" : "inactive-text-tab-wrapper"}`}>
             Contact
-          </a>
+          </a> : <p onClick={() => navigate("/myaccount")} className="nav-item inactive-text-tab-wrapper" > {user.email} </p>}
         </div>
         <Button
           className="design-component-instance-node"
@@ -62,7 +70,11 @@ export const Navbar = () => {
             logoutParams: {
               returnTo: window.location.origin
             }
-          }) : loginWithRedirect}
+          }) : () => loginWithRedirect({
+            authorizationParams : {
+              prompt: 'select_account'
+            }
+          })}
         />
       </div>
     </div>

@@ -90,7 +90,7 @@ export const Footer = () => {
                 />
 
               <div className="p-t">
-                <div className="text-wrapper-24">© 2023 jybe, Inc</div>
+                <div className="text-wrapper-24">© 2024 Jybe Financial Inc.</div>
               </div>
               </div>
             </div>

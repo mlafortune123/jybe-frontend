@@ -16,9 +16,9 @@ const Card = () => {
   const { accountContext, setAccountContext, user, accessToken, navigate } = context
   const [cardInfo, setCardInfo] = useState()
   const [newAmount, setNewAmount] = useState()
+  const [open, setOpen] = useState()
 
   useEffect(() => {
-    console.log(accountContext)
     if (process.env.REACT_APP_API_URL == "https://api.jybe.ca") {
       ReactGA.event('page_view', {
         page_title: window.location.pathname + window.location.search,
@@ -76,24 +76,6 @@ const Card = () => {
     toast.success(`${text} copied`)
   };
 
-  const debitTest = () => {
-    fetch(`${API_URL}/intercashDebitTest`, {
-      method: "POST",
-      headers: {
-        'Authorization': `Bearer ${accessToken}`
-      }
-    })
-      .then(response => {
-        if (response.status == 401) window.location.reload()
-        if (response.status === 500 || response.status === 502 || response.status === 502) toast.error("The requested service is currently unavailable at the moment.")
-        return response.json()
-      })
-      .then(res => {
-        if (res.error) toast.error(res.error)
-        else toast.success("debit successful")
-      })
-  }
-
   const cancelAndRefund = () => {
     fetch(`${API_URL}/stripe/cancelAndRefund`, {
       method: "POST",
@@ -119,7 +101,7 @@ const Card = () => {
         'Authorization': `Bearer ${accessToken}`,
         'Content-Type': 'application/json'
       },
-      body: JSON.stringify({newAmount: parseFloat(newAmount), order_id: accountContext.activeOrders[0].order_id })
+      body: JSON.stringify({ newAmount: parseFloat(newAmount), order_id: accountContext.activeOrders[0].order_id })
     })
       .then(response => {
         if (response.status == 401) window.location.reload()
@@ -140,8 +122,7 @@ const Card = () => {
   return (
     <div className="index">
       <div className="div-2">
-        <div className="body">
-          <div className="card-section">
+        {/* <div className="body"> */}
             <Toaster
               toastOptions={{
                 className: '',
@@ -167,63 +148,11 @@ const Card = () => {
                   />
                 </div>
                 <p className="p" style={{ margin: '16px' }} >
-                  That's it! Take this card to buy your annual subscription and Jybe will bill you back monthly. Click on any information on the card to copy it
+                  Your card is loaded with ${cardInfo.balance} for purchasing the annual option from {accountContext.activeOrders[0].merchant_name}. Click on any information on the card to copy it
                   {/* Number: {cardInfo.img}
                   Expiry: {cardInfo.expiry}
                   CVV: {cardInfo.cvv} */}
                 </p>
-                {(API_URL == "http://localhost:3000" || API_URL == "https://testing-api.jybe.ca") &&
-                  <div style={{
-                    "width": "100%",
-                    "display": "flex",
-                    "justifyContent": "space-between"
-                  }} >
-                    <Button
-                      className="user-info-button-instance thirty"
-                      icon="right"
-                      size="lg"
-                      state="default"
-                      text="Debit test"
-                      type="primary"
-                      onClick={debitTest}
-                    />
-                    <Button
-                      className="user-info-button-instance thirty"
-                      icon="right"
-                      size="lg"
-                      state="default"
-                      text="cancelAndRefund"
-                      type="primary"
-                      onClick={cancelAndRefund}
-                    />
-                    <Button
-                      className="user-info-button-instance thirty"
-                      icon="right"
-                      size="lg"
-                      state="default"
-                      text="topUpCard"
-                      type="primary"
-                      onClick={topUpCard}
-                    />
-                    <InputsText
-                      name="newAmount"
-                      label="New amount"
-                      value={newAmount}
-                      onChange={handleChange}
-                      //className={emptyFields.includes("lastName") && "red-outline"}
-                      type="string"
-                    />
-                    {/* <Button
-                      className="user-info-button-instance thirty"
-                      icon="right"
-                      size="lg"
-                      state="default"
-                      text="Bad credit"
-                      type="primary"
-                      onClick={setBadCredit}
-                    /> */}
-                  </div>
-                }
               </div>
               <div className="jybe-virtual-card-wrapper">
                 <img
@@ -249,17 +178,81 @@ const Card = () => {
                   src="/cardback.png"
                 />
               </div>
+                {!open ? <div className='button-holder' >
+                  <Button
+                    className={`user-info-button-instance red thirty`}
+                    icon="left"
+                    size="lg"
+                    state="default"
+                    text="Cancel"
+                    type="primary"
+                    onClick={cancelAndRefund}
+                  />
+                  <Button
+                    className={`user-info-button-instance ${open ? 'black' : 'yellow'} thirty`}
+                    icon="right"
+                    size="lg"
+                    state="default"
+                    text={'Modify'}
+                    type="primary"
+                    onClick={() => setOpen(!open)}
+                  />
+                  <Button
+                    className={`user-info-button-instance thirty`}
+                    icon="right"
+                    size="lg"
+                    state="default"
+                    text="Continue"
+                    type="primary"
+                    onClick={() => navigate("/myaccount")}
+                  />
+                </div>
+                :
+                <div className='button-holder'>
+                <Button 
+                    className={`approved-button-instance black thirty`}
+                    icon="right"
+                    size="lg"
+                    state="default"
+                    text="Cancel"
+                    type="primary"
+                    onClick={() => {
+                        setOpen(!open)
+                    }}
+                />
+                <InputsText
+                    type="number"
+                    name="New Amount"
+                    label="New Amount"
+                    value={newAmount}
+                    onChange={handleChange}
+                    className={'fodyfo'}
+                    width={'thirty'}
+                />
+                <Button
+                    className={`approved-button-instance yellow thirty`}
+                    icon="right"
+                    size="lg"
+                    state="default"
+                    text="Modify"
+                    type="primary"
+                    onClick={() => {
+                      topUpCard()
+                      setOpen(!open)
+                    }}
+                />
+                </div>
+              }
             </div>
               :
               <div className='card-loading-div' style={{ marginTop: '17vh' }} >
                 <div style={{ textAlign: 'center', marginBottom: '20px' }} >
-                  Your card is being created! Please hold
+                  Your card is being created / retrieved! Please hold
                 </div>
                 <img style={{ height: '73vh' }} src="/loading.gif" />
               </div>
             }
-          </div>
-        </div>
+        {/* </div> */}
         <Footer />
       </div>
       <Navbar />

@@ -18,9 +18,9 @@ const Admin = () => {
     const [resetTheClock, setResetTheClock] = useState()
 
     useEffect(() => {
-        if (!user.email.includes("@jybe.ca")) {
-            navigate("/")
-        }
+        // if (!user.email.includes("@jybe.ca")) {
+        //     navigate("/")
+        // }
         accessToken && fetch(`${API_URL}/adminget`, {
             method: "GET",
             headers: {

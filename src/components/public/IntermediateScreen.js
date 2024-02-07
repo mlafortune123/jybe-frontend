@@ -11,7 +11,10 @@ const IntermediateScreen = () => {
 
     const handleContinue = () => {
             loginWithRedirect({
-                openUrl: () => window.location.replace(`/select_subscription`)
+                openUrl: () => window.location.replace(`/select_subscription`),
+                    authorizationParams : {
+                      prompt: 'select_account'
+                    }
             })
     };
 
